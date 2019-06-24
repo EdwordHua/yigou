@@ -31,6 +31,9 @@ public class indexController {
     // 得到商品
     @RequestMapping("/findMerchs.do")
     public void findMerchs(HttpServletRequest request, HttpServletResponse response)throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=utf-8");
+
         List<Merchandise> merchsAll=merchService.selectAllMerchs();
 
         if(merchsAll != null){
