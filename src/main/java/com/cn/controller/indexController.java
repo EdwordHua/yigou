@@ -2,6 +2,7 @@ package com.cn.controller;
 
 import com.cn.model.Merchandise;
 import com.cn.service.IMerchandiseService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -26,11 +27,14 @@ import java.util.Set;
 public class indexController {
     @Resource
     private IMerchandiseService merchService;
+    ObjectMapper mapper = new ObjectMapper();
     // 得到商品
     @RequestMapping("/findMerchs.do")
     public void findMerchs(HttpServletRequest request, HttpServletResponse response)throws IOException {
         List<Merchandise> merchsAll=merchService.selectAllMerchs();
+
         if(merchsAll != null){
+            System.out.println(mapper.writeValueAsString(merchsAll));
             JSONObject jsonObject=getMerchsJson(merchsAll);
             response.getWriter().print(jsonObject);
             response.getWriter().close();
