@@ -41,6 +41,10 @@ public class indexController {
         }
 
     }
+    @RequestMapping("/findMerchsByType")
+    public void findMerchsByType(HttpServletRequest request, HttpServletResponse response)throws Exception{
+
+    }
     public JSONObject getMerchsJson(List<Merchandise> merchsAll) {
         JSONArray merchs=new JSONArray();
         JSONObject json=new JSONObject();
