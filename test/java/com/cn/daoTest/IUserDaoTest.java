@@ -30,7 +30,7 @@ package com.cn.daoTest;
       private IShopcartDao shopcartDao;
       @Test
       public void testSelectUser() throws Exception {
-          long id = 1;
+          long id = 1234567;
           User user = dao.selectUser(id);
           ObjectMapper mapper =new ObjectMapper();
 

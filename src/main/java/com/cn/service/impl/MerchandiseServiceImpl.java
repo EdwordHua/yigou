@@ -15,8 +15,15 @@ import java.util.List;
 public class MerchandiseServiceImpl implements IMerchandiseService{
 
 
+
     @Resource
     private IMerchandiseDao merchDao;
+
+//    查询所有商品
+    @Override
+    public List<Merchandise> selectAllMerchs() {
+        return this.merchDao.selectAllMerchs();
+    }
     @Override
     public Merchandise selectMerchByID(long Mid) {     //按照Mid搜索商品
         return this.merchDao.selectMerchByID(Mid);
