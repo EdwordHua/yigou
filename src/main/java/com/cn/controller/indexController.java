@@ -33,7 +33,8 @@ public class indexController {
     public void findMerchs(HttpServletRequest request, HttpServletResponse response)throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
-
+        String savedDir1 = request.getSession().getServletContext().getRealPath("");
+        System.out.println("路径：" + savedDir1);
         List<Merchandise> merchsAll=merchService.selectAllMerchs();
 
         if(merchsAll != null){
@@ -46,6 +47,23 @@ public class indexController {
     }
     @RequestMapping("/findMerchsByType")
     public void findMerchsByType(HttpServletRequest request, HttpServletResponse response)throws Exception{
+
+    }
+    @RequestMapping("/findMerchsByMID")
+    public void findMerchsByMID(HttpServletRequest request, HttpServletResponse response)throws Exception{
+        request.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=utf-8");
+        long mid = Long.parseLong(request.getParameter("mid"));
+        Merchandise merch=merchService.selectMerchByID(mid);
+        if(merch != null){
+            System.out.println("json-bug:" + mapper.writeValueAsString(merch));
+            response.getWriter().write(mapper.writeValueAsString(merch));
+            response.getWriter().close();
+        }else{
+            response.getWriter().write(mapper.writeValueAsString("flase"));
+            response.getWriter().close();
+        }
+
 
     }
     public JSONObject getMerchsJson(List<Merchandise> merchsAll) {

@@ -65,8 +65,9 @@ public class MerchandiseController {
     }
 //    上传商品
     @RequestMapping("/updataMerch.do")
-    public void updataMerchs(HttpServletRequest request, HttpServletResponse response)throws IOException{
-
+    public void updataMerchs(HttpServletRequest request, HttpServletResponse response,MultipartFile uploadFile)throws IOException{
+        String savedDir1 = request.getSession().getServletContext().getRealPath("");
+        System.out.println("路径："+savedDir1);
 
     }
 //    删除商品
