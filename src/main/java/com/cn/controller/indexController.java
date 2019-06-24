@@ -45,11 +45,24 @@ public class indexController {
         }
 
     }
-    @RequestMapping("/findMerchsByType")
+    //某类型所有商品
+    @RequestMapping("/findMerchsByType.do")
     public void findMerchsByType(HttpServletRequest request, HttpServletResponse response)throws Exception{
+        request.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=utf-8");
+        String mtype = request.getParameter("mtype");
+        String savedDir1 = request.getSession().getServletContext().getRealPath("");
+        System.out.println("路径：" + savedDir1);
+        List<Merchandise> merchsAll=merchService.selectMerchByType(mtype);
 
+        if(merchsAll != null){
+            System.out.println(mapper.writeValueAsString(merchsAll));
+            JSONObject jsonObject=getMerchsJson(merchsAll);
+            response.getWriter().print(jsonObject);
+            response.getWriter().close();
+        }
     }
-    @RequestMapping("/findMerchsByMID")
+    @RequestMapping("/findMerchsByMID.do")
     public void findMerchsByMID(HttpServletRequest request, HttpServletResponse response)throws Exception{
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
