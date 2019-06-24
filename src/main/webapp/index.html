@@ -5,32 +5,35 @@
     <title>test</title>
 </head>
 <script>
-    function selectUser() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                document.getElementById("test").innerHTML = xmlhttp.responseText;
-            }
-        }
-        xmlhttp.open("POST", "user/showUser.do", true);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("id=123456");
-    }
-    function insertUser() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                document.getElementById("test").innerHTML = xmlhttp.responseText;
-            }
-        }
-        xmlhttp.open("POST", "user/insertUser.do", true);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send();
-    }
+//    function selectUser() {
+//        var xmlhttp = new XMLHttpRequest();
+//        xmlhttp.onreadystatechange = function () {
+//            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+//                document.getElementById("test").innerHTML = xmlhttp.responseText;
+//            }
+//        }
+//        xmlhttp.open("POST", "user/dologin.do", true);
+//        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//        xmlhttp.send("uid=123456&upassword=123");
+//        //xmlhttp.send("upassword=123");
+//    }
+//    function insertUser() {
+//        var xmlhttp = new XMLHttpRequest();
+//        xmlhttp.onreadystatechange = function () {
+//            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+//                document.getElementById("test").innerHTML = xmlhttp.responseText;
+//            }
+//        }
+//        xmlhttp.open("POST", "user/dologin.do", true);
+//        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//        xmlhttp.send();
+//    }
 </script>
 <body>
 <p id="test">Hello World!</p>
-<button type="button" onclick="selectUser()">onclick test</button>
-<button type="button" onclick="insertUser()">insert test</button>
+<!--<button type="button" onclick="selectUser()">onclick test</button>-->
+<!--<button type="button" onclick="insertUser()">insert test</button>-->
+<a href="user/dologin.do?uid=123456">test</a>
+<a href="user/loginOut.do">loginOut</a>
 </body>
 </html>

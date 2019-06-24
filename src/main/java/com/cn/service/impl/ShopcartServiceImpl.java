@@ -3,6 +3,7 @@ package com.cn.service.impl;
 import com.cn.dao.IShopcartDao;
 import com.cn.model.Shopcart;
 import com.cn.service.IShopcartService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2019/6/20 0020.
  */
+@Service("shopcartService")
 public class ShopcartServiceImpl implements IShopcartService{
     @Resource
     private IShopcartDao shopDao;

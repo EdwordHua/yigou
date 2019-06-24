@@ -32,5 +32,13 @@ public class UserServiceImpl implements IUserService
  public int deleteUser(long userId) {   //删除用户
   return this.userDao.deleteUser(userId);
  }
-
+ //登录检测
+ @Override
+ public User checkLogin(long userId,String password) {
+  User user = this.userDao.selectUser(userId);
+  if(user != null && user.getUpassword().equals(password)){
+    return user;
+  }
+  return null;
+ }
 }

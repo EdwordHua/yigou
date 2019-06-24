@@ -3,6 +3,7 @@ package com.cn.service.impl;
 import com.cn.dao.IMerchandiseDao;
 import com.cn.model.Merchandise;
 import com.cn.service.IMerchandiseService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2019/6/20 0020.
  */
+@Service("merchService")
 public class MerchandiseServiceImpl implements IMerchandiseService{
 
 

@@ -10,5 +10,6 @@ public interface IUserService {
     int insertUser(User user);
     int updataUser(User user);
     int deleteUser(long userId);
+    User checkLogin(long userId,String password);
 }
 
