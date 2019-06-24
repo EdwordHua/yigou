@@ -16,25 +16,54 @@
         <script>
             $(function () {
                 function getUrlParam(name) {
-
                     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-
                     var r = window.location.search.substr(1).match(reg);  //匹配目标参数
-
                     if (r != null) return unescape(r[2]);
-
                     return null; //返回参数值
-
                 }
 
-                var productImg = decodeURI(getUrlParam("productImg"));
+                var mid = decodeURI(getUrlParam("mid"));
 
-                console.log(productImg)
+                $.ajax({
+                    type:"post",
+                    url:"generaMerch/findMerchsByMID.do",
+                    data:"mid="+mid,
+
+                    success:function (msg) {
+                        var json = $.parseJSON(msg);
+                        console.log(json);
+                        var mimage = json.mimage;
+                        var mname = json.mname;
+                        var mprice = json.mprice;
+                        var mstock = json.mstock;
+                        var mtype = json.mtype;
+                        var mtime = json.mtime;
+                        var mrecommend = json.mrecommend;
 
 
-                if(productImg.length > 0){
-                    $(".topItem").find("img").attr("src", productImg);
-                }
+                        $(".topItem").find("img").attr("src", mimage);
+                        $("#name").find("h1").text(mname);
+                        $("#p-ad").text(mrecommend);
+                        $("#jd-price").text("￥"+mprice);
+                        $("#J_SpanStock").text(mstock);
+                        $(".hl_red_bg").text(mtype);
+
+                    },
+
+                    error: function (xhr) {
+                        alert(xhr.status)
+                    }
+                });
+
+
+
+
+
+
+
+//                $(".topItem").find("img").attr("src", productImg);
+
+
 
             })
         </script>
@@ -391,12 +420,12 @@
                             </div>
                             <div id="J-summary-top" class="summary-top">
                                 <div id="summary-promotion" class="hide" style="display: block;">
-                                    <div class="dt">促销信息：</div>
+                                    <div class="dt">商品类型：</div>
                                     <div class="dd J-prom-wrap p-promotions-wrap" style="padding-bottom: 5px;">
                                         <div class="p-promotions">
                                             <div class="J-prom-bvalue">
-                                                <a class="hl_red_bg">通信B </a>
-                                                <a class="hl_red"> 赠送153个时代通信B</a>
+                                                <a class="hl_red_bg"> </a>
+                                                <!--<a class="hl_red"> 赠送153个时代通信B</a>-->
                                                 <a href="" target="_blank">&nbsp;&nbsp;详情 &gt;&gt;</a>
                                             </div>
                                         </div>

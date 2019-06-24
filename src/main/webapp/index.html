@@ -15,13 +15,6 @@
 
         <script>
             $(function () {
-                $(".product").click(function () {
-                    var imgSRC = $(this).find("img").attr("src");
-                    console.log(imgSRC);
-                    var url = 'showDetail.html?productImg='+imgSRC+'';
-                    var url = encodeURI(encodeURI(url));
-                    window.location = url;
-                });
 
                 //从后台接收所有数据，显示在主页上
                 $.ajax({
@@ -29,13 +22,38 @@
                     url:"generaMerch/findMerchs.do",
 
                     success:function (msg) {
-                        console.log(msg);
+                        var json = $.parseJSON(msg);
+                        setImage(json);
                     },
 
                     error: function (xhr) {
                         alert(xhr.status)
                     }
-                })
+                });
+
+                //设置页面所有的图片
+                function setImage(allData){
+                    var products = $(".product");
+
+                    $.each(allData.allMerchandise, function(key, value){
+
+                        var mid = value.mid;
+                        var mimage = value.mimage;
+                        $(products[key]).find("img").attr("src", mimage);
+                        $(products[key]).find("img").attr("alt", mid);
+                    });
+
+                }
+
+//                点击莫一个商品图片
+                $(".product").click(function () {
+                    var mid = $(this).find("img").attr("alt");
+                    var url = 'showDetail.html?mid='+mid+'';
+                    var url = encodeURI(encodeURI(url));
+                    window.location = url;
+                });
+
+
 
 
             })
