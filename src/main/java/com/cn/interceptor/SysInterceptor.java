@@ -5,6 +5,7 @@ import com.cn.tools.Constants;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 
+import javax.servlet.Filter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,7 +24,7 @@ public class SysInterceptor extends HandlerInterceptorAdapter {
         if (null == user) {
            // response.sendRedirect(request.getContextPath() + "/401.html");
             System.out.println("SysInterceptor:TRUR");
-
+//            Filter
             return true;
         }else
         {
