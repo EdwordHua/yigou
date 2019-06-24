@@ -45,11 +45,11 @@ public class indexController {
         }
 
     }
-    @RequestMapping("/findMerchsByType")
+    @RequestMapping("/findMerchsByType.do")
     public void findMerchsByType(HttpServletRequest request, HttpServletResponse response)throws Exception{
 
     }
-    @RequestMapping("/findMerchsByMID")
+    @RequestMapping("/findMerchsByMID.do")
     public void findMerchsByMID(HttpServletRequest request, HttpServletResponse response)throws Exception{
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
