@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface IMerchandiseDao {
     Merchandise selectMerchByID(long Mid);
+    List<Merchandise> selectAllMerchs();
     List<Merchandise> selectMerchByName(String Uname);
     List<Merchandise> selectMerchByType(String Type);
     int insertMerch(Merchandise merchandise);

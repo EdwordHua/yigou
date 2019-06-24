@@ -12,7 +12,9 @@
             <result property="Mtime" column="String"/>
             <result property="Mrecommend" column="String"/>
     </resultMap>
-
+    <select id="selectAllMerchs" resultMap="MerchMap">
+        SELECT * FROM merchandise
+    </select>
     <select id="selectMerchByID" resultType="Merchandise" parameterType="long">
         SELECT * FROM merchandise WHERE Mid = #{Mid}
     </select>

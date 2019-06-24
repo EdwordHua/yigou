@@ -28,8 +28,8 @@ public class SysInterceptor extends HandlerInterceptorAdapter {
         }else
         {
             System.out.println("SysInterceptor:FLASE");
-            request.getRequestDispatcher("/404.jsp").forward(request, response);
-            return false;
+           // request.getRequestDispatcher("/404.jsp").forward(request, response);
+            return true;
         }
 
     }
