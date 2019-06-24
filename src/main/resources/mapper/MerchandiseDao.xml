@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.cn.dao.IMerchandiseDao">
+    <resultMap id="MerchMap" type="Merchandise">
+            <id property="Mid" column="long"/>
+            <result property="Mname" column="String" />
+            <result property="Mimage" column="String" />
+            <result property="Mprice" column="int" />
+            <result property="Mstock" column="int"/>
+            <result property="Mtype" column="String"/>
+            <result property="Mtime" column="String"/>
+            <result property="Mrecommend" column="String"/>
+    </resultMap>
+
+    <select id="selectMerchByID" resultType="Merchandise" parameterType="long">
+        SELECT * FROM merchandise WHERE Mid = #{Mid}
+    </select>
+    <select id="selectMerchByName" resultMap="MerchMap" parameterType="String">
+        SELECT * FROM merchandise WHERE Mname = #{Mname}
+    </select>
+    <select id="selectMerchByType" resultMap="MerchMap" parameterType="String">
+        SELECT * FROM merchandise WHERE type = #{Type}
+    </select>
+    <insert id="insertMerch" parameterType="Merchandise">
+        INSERT INTO  merchandise(Mname,Mimage,Mprice,Mstock,Mtype,Mtime,Mrecommend)
+        VALUES (#{Mname},#{Mimage},#{Mprice},#{Mstock},#{Mtype},#{Mtime},#{Mrecommend})
+    </insert>
+    <update id="updataMerch" parameterType="Merchandise">
+        UPDATE merchandise
+        SET  Mname=#{Mname},Mimage=#{Mimage},Mprice=#{Mprice},Mstock=#{Mstock},Mtype=#{Mtype},Mtime=#{Mtime},Mrecommend=#{Mrecommend}
+        WHERE Mid=#{Mid}
+    </update>
+    <delete id="deleteMerch" parameterType="long">
+        DELETE FROM merchandise
+        WHERE Mid=#{Mid}
+    </delete>
+</mapper>

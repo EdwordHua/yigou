@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="yigou:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="yigou.war">
+      <element id="artifact" artifact-name="yigou:war exploded" />
+    </root>
+  </artifact>
+</component>

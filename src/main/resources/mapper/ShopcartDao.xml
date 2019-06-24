@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.cn.dao.IShopcartDao">
+    <resultMap id="ShopMap" type="Shopcart">
+            <id  property="Sid" column="long"/>
+            <result  property="Uid" column="long" />
+            <result  property="Mid" column="long" />
+            <result  property="Snum" column="int" />
+            <result  property="Ssum" column="int"/>
+            <result  property="Sisbuy" column="int"/>
+    </resultMap>
+    <select id="selectShopcartBySID" resultType="Shopcart" parameterType="long">
+      SELECT * FROM shopcart WHERE Sid = #{Sid}
+    </select>
+    <select id="selectShopcartByUID" resultMap="ShopMap" parameterType="long">
+        SELECT * FROM shopcart WHERE Uid = #{Uid}
+    </select>
+    <insert id="insertShopcart" parameterType="Shopcart">
+        INSERT INTO  shopcart (Uid,Mid,Snum,Ssum,Sisbuy) VALUES (#{Uid},#{Mid},#{Snum},#{Ssum},#{Sisbuy})
+    </insert>
+   <delete id="deleteShopcart" parameterType="long">
+       DELETE FROM shopcart WHERE Sid=#{Sid}
+   </delete>
+    <update id="updataShopcart" parameterType="Shopcart">
+        UPDATE shopcart
+        SET  Uid=#{Uid},Mid=#{Mid},Snum=#{Snum},Ssum=#{Ssum},Sisbuy=#{Sisbuy}
+        WHERE Sid=#{Sid}
+    </update>
+</mapper>
