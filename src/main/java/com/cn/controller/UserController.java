@@ -101,10 +101,14 @@ public class UserController {
         user.setUaddress(uaddress);
         user = this.userService.insertUser(user);
         ObjectMapper mapper = new ObjectMapper();
-
-        System.out.println("Result:"+mapper.writeValueAsString(user));
-        response.getWriter().write(mapper.writeValueAsString(user));
-        response.getWriter().close();
+        if(user != null) {
+            System.out.println("Result:" + mapper.writeValueAsString(user));
+            response.getWriter().write(mapper.writeValueAsString(user));
+            response.getWriter().close();
+        }else{
+            response.getWriter().write(mapper.writeValueAsString("false"));
+            response.getWriter().close();
+        }
     }
 }
 
