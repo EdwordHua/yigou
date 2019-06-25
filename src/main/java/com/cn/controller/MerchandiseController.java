@@ -59,12 +59,9 @@ public class MerchandiseController {
        if (uploadFile != null) {
            String filename = uploadFile.getOriginalFilename();
            System.out.print(filename);
-           merch.setMimage("/image/products/"+filename);
-
+           merch.setMimage("\\image\\products\\"+filename);
            File newFile = new File(savedDir1+ filename);
-
            merchService.insertMerch(merch);
-
            try {
                uploadFile.transferTo(newFile);
 
@@ -72,7 +69,7 @@ public class MerchandiseController {
                e.printStackTrace();
            }
        }
-        response.getWriter().write(mapper.writeValueAsString(""));
+        response.getWriter().write(mapper.writeValueAsString("true"));
         response.getWriter().close();
     }
  // 得到商品
