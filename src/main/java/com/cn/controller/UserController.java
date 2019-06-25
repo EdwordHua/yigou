@@ -5,7 +5,6 @@ import com.cn.tools.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -60,9 +59,9 @@ public class UserController {
             //return "redirect:hello.action";
            if(user.getULevel()==0)
            {
-               return "admin/index";
+               return "redirect:/admin/index.html";
            }
-           return  "index";
+           return  "redirect:/index.html";
         }else{
             response.getWriter().write(mapper.writeValueAsString("flase"));
             response.getWriter().close();
