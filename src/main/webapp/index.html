@@ -4,33 +4,18 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>易购在线 || bookshop</title>
-        <meta name="description" content="时代图书在线，是由武汉科技大学电子商务专业 陈凯 开发，该项目用于图书管理，现在阅读及销售，功能还在不断完善中！">
-        <meta name="keywords" content="时代图书在线 | 陈凯 | 武汉科技大学">
+        <title>易购在线</title>
+        <meta name="description" content="易购在线">
+        <meta name="keywords" content="易购在线">
         <link rel="shortcut icon" href="image/icon/litIcon.ico">
         <link href="css/reset.css" rel="stylesheet" type="text/css" />
         <link href="css/page.css" rel="stylesheet" type="text/css" />
         <script src="js/jquey-1.8.0.min.js"></script>
-        <!--<script type="text/javascript" src="../js/index.js"></script>-->
+        <script type="text/javascript" src="js/isLogin.js"></script>
 
         <script>
 
-//            $(function)
-
             $(function () {
-
-//                判断用户是否登录
-                function isLogin(){
-                    $.ajax({
-                        type:"post",
-                        data:"",
-                        url:"",
-                        success:function(msg){
-
-                        },
-                        error:function(xhr){console.log("用户未登录！")}
-                    })
-                }
 
                 //从后台接收所有数据，显示在主页上
                 $.ajax({
@@ -69,9 +54,6 @@
                     window.location = url;
                 });
 
-
-
-
             })
         </script>
 
@@ -90,10 +72,9 @@
         <div id="top">
             <div class="wrap clear">
                 <div class="welcome fl">
-                    <span class="cor3">欢迎光临时代，请
-                            <a title="会员直接登录" style="color:#FF2832;" target="_self" href="login.html" name="登录" title="请登录网站">登录</a>
-                            <a title="新用户请先注册" rel="nofollw" target="_self" href="inputRegisterMess.html" name="免费注册" title="免费注册当当账户">免费注册
-                            </a>
+                    <span class="cor3">欢迎光临时代，
+                            <a title="会员直接登录" id="isLogin1" style="color:#FF2832;" target="_self" href="login.html" name="登录" title="请登录网站">登录</a>
+                            <a title="新用户请先注册" id="isLogin2" rel="nofollw" target="_self" href="inputRegisterMess.html" name="免费注册" title="免费注册当当账户">免费注册</a>
                         </span>
                 </div>
                 <div class="topRight fr clear">
