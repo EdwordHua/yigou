@@ -5,6 +5,23 @@
     <title></title>
 </head>
 <body>
+<form action="" method="post" enctype="multipart/form-data">
+    <input type="file" name="upFile"/><br>
+    <input type="submit" value="上传"/><br>
+</form>
+
+后端：
+1、获取上传文件对应的字典
+$fileInfo = $_FILES["upFile"];
+
+2、获取上传文件名称
+$fileName = $fileInfo["name"];
+
+3、获取上传文件保存的临时路径
+$filePath = $fileInfo["tmp_name"];
+
+4、移动文件
+move_uploaded_file($filePath, "目标地址");
 
 </body>
 </html>
