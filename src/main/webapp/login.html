@@ -11,6 +11,27 @@
         <link href="css/page.css" rel="stylesheet" type="text/css" />
         <link href="css/reset.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="js/jquey-1.8.0.min.js"></script>
+
+        <!--<script>-->
+            <!--$(function(){-->
+
+                <!--$(":submit").click(function(){-->
+                    <!--var username = $("#logname").val();-->
+                    <!--var password = $("#password").val();-->
+                    <!--$.ajax({-->
+                        <!--url:"user/dologin.do",-->
+                        <!--data:"uid="+username+"&upassword="+password,-->
+                        <!--type:"get",-->
+                        <!--success:function(msg){-->
+                            <!--console.log(msg);-->
+                        <!--},-->
+                        <!--error:function(xhr){console.log(xhr.state())}-->
+                    <!--})-->
+
+                <!--});-->
+            <!--})-->
+        <!--</script>-->
+
     </head>
 
     <body>
@@ -49,10 +70,10 @@
                     <span class="metTra fr">遇到困难？</span>
                 </div>
 
-                    <form action="index.html" method="post" style="margin:20px 0">
+                    <form action="user/dologin.do" method="get" style="margin:20px 0">
                         <div class="loginName">
                             <label for="logname" class="login_name"><span></span></label>
-                            <Input type=text id="logname" autofocus autocomplete="off" placeholder="邮箱/昵称/手机号">
+                            <Input type=text id="logname" name="uid" autofocus autocomplete="off" placeholder="邮箱/昵称/手机号">
                         </div>
                         <script>
                             $(function () {
@@ -63,13 +84,13 @@
                         </script>
                         <div class="loginPaw">
                             <label for="password" class="login_paw"><span></span></label>
-                            <Input type=password id="password" autocomplete="off" placeholder="密码">
+                            <Input type=password id="password" name="upassword" autocomplete="off" placeholder="密码">
                         </div>
                         <div class="login_links clear">
                             <a class="fl" href=""><span class="tipS" >忘记登陆密码？</span></a>
                             <script type="text/javascript">
                             $(".tipS").click(function  () {
-                                alert("您的注册名是：陈凯  "  +  "  您的密码是：123456");
+                                alert("您的注册名是：XXX  "  +  "  您的密码是：123456");
                             })
                             </script>
 
