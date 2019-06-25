@@ -14,7 +14,23 @@
         <!--<script type="text/javascript" src="../js/index.js"></script>-->
 
         <script>
+
+//            $(function)
+
             $(function () {
+
+//                判断用户是否登录
+                function isLogin(){
+                    $.ajax({
+                        type:"post",
+                        data:"",
+                        url:"",
+                        success:function(msg){
+
+                        },
+                        error:function(xhr){console.log("用户未登录！")}
+                    })
+                }
 
                 //从后台接收所有数据，显示在主页上
                 $.ajax({

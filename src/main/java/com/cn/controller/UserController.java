@@ -91,8 +91,9 @@ public class UserController {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        System.out.println("时间："+df.format(new Date()));// new Date()为获取当前系统时间
-        User user = new User();
+        System.out.println("时间：" + df.format(new Date()));// new Date()为获取当前系统时间
+        User user ;
+        user = new User();
         String uname = request.getParameter("uname");
         String upassword = request.getParameter("upassword");
         String uaddress = request.getParameter("uaddress");

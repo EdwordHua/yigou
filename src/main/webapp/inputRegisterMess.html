@@ -12,7 +12,46 @@
     <link href="css/reset.css" rel="stylesheet">
     <link href="css/page.css" rel="stylesheet">
     <script src="js/jquey-1.8.0.min.js" type="text/javascript"></script>
+    <script>
+        $(function(){
+            $("#btn_register").click(function(){
+                var username = $("#txt_username").val();
+                var password = $("#txt_password").val();
+                var confirm_password = $("#txt_repassword").val();
+                var address = $("#txt_vcode").val();
 
+                if(password === confirm_password && username.length>0 && password.length>0){
+
+                    console.log("用户名："+username +" 密码:"+password+" 确认密码："+confirm_password+" 地址："+address);
+
+                    $.ajax({
+                        type:"post",
+                        data:"uname="+username+"&upassword="+password+"&uaddress="+address,
+                        url:"user/insertUser.do",
+                        success:function(msg){
+
+                            console.log(msg);
+                            if(msg == "false"){
+                                console.log("注册失败！");
+                            }else{
+                                var json = $.parseJSON(msg);
+                                console.log(json);
+                                console.log("注册成功！")
+
+                                window.location.href = "success.html"+"?uid="+json.uid;
+                            }
+
+
+                        },
+                        error:function(xhr){console.log(xhr.status)}
+                    })
+                }else{
+                    console.log("输入的数据不和规范");
+                }
+
+            })
+        })
+    </script>
 </head>
 
 <body>
@@ -40,7 +79,7 @@
     <!-- /注册页面头部 -->
     <!-- 注册页面主体 -->
     <div class="registerMian">
-        <form  action="success.html" method="post" id="register_form" name="form">
+        <!--<form  >-->
             <div id="bd">
                 <div class="register_box">
                     <div class="head">
@@ -55,7 +94,7 @@
                             <tbody>
                                 <tr>
                                     <td class="t">
-                                        邮箱/手机号码：
+                                        用户名：
                                     </td>
                                     <td class="z_index2">
                                         <input type="text" value="" tabindex="1" onfocus="check_username_focus()" maxlength="40" autocomplete="off" class="text" name="logname" id="txt_username" style="border-color: rgb(127, 157, 185);">
@@ -100,42 +139,42 @@
                                 </tr>
                                 <tr style="display: " id="tb_tr_reg_vcode">
                                     <td class="t">
-                                        邮寄地址：
+                                        用户地址：
                                     </td>
                                     <td>
                                         <input type="text"  maxlength="20" autocomplete="off" class="text" name="address" id="txt_vcode"><span class="warn" id="spn_vcode_ok"></span><span style="display: none;" class="cue" id="spn_vcode_wrong"></span>
-                                        <div class="v_box" style="display:none">
-                                            <a tabindex="5" name="change_code_img" href="javascript:show_vcode('imgVcode')">
-                                                <img width="238" height="68" class="v" alt="点击更换验证码" title="点击更换验证码" id="imgVcode" src="p/tmp_proxy.php?t=1429334247356"></a>看不清?<a tabindex="6" name="change_code_link" href="javascript:show_vcode('imgVcode')">换张图</a>
-                                        </div>
+                                        <!--<div class="v_box" style="display:none">-->
+                                            <!--<a tabindex="5" name="change_code_img" href="javascript:show_vcode('imgVcode')">-->
+                                                <!--<img width="238" height="68" class="v" alt="点击更换验证码" title="点击更换验证码" id="imgVcode" src="p/tmp_proxy.php?t=1429334247356"></a>看不清?<a tabindex="6" name="change_code_link" href="javascript:show_vcode('imgVcode')">换张图</a>-->
+                                        <!--</div>-->
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="t">
-                                        用户姓名：
-                                    </td>
-                                    <td id="in_repassword">
-                                        <input type="text" tabindex="3" style="display:'';" onpaste="return false" onkeydown="CheckdoSubmit(event)" onkeyup="repassword_session_check()" onblur="repassword_check()" onfocus="check_repassword_focus()" class="text" name="realname" id="realname">
-                                        <input type="text" tabindex="3" style="display:none" onpaste="return false" onkeydown="CheckdoSubmit(event)" onkeyup="repassword_session_check()" onblur="repassword_check()" onfocus="check_repassword_focus()" class="text" name="hid_txt_repassword" id="hid_txt_repassword">
-                                        <span style="display: none;" class="warn" id="spn_repassword_ok"></span><span class="cue" style="display: none;" id="spn_repassword_wrong"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="t">
-                                        联系方式：
-                                    </td>
-                                    <td id="in_repassword">
-                                        <input type="text" tabindex="3" onpaste="return false" onkeydown="CheckdoSubmit(event)" onkeyup="repassword_session_check()" onblur="repassword_check()" onfocus="check_repassword_focus()" class="text" name="phone" id="txt_repassword">
-                                        <input type="text" tabindex="3" style="display:none" onpaste="return false" onkeydown="CheckdoSubmit(event)" onkeyup="repassword_session_check()" onblur="repassword_check()" onfocus="check_repassword_focus()" class="text" name="hid_txt_repassword" id="hid_txt_repassword">
-                                        <span style="display: none;" class="warn" id="spn_repassword_ok"></span><span class="cue" style="display: none;" id="spn_repassword_wrong"></span>
-                                    </td>
-                                </tr>
+                                <!--<tr>-->
+                                    <!--<td class="t">-->
+                                        <!--用户姓名：-->
+                                    <!--</td>-->
+                                    <!--<td id="in_repassword">-->
+                                        <!--<input type="text" tabindex="3" style="display:'';" onpaste="return false" onkeydown="CheckdoSubmit(event)" onkeyup="repassword_session_check()" onblur="repassword_check()" onfocus="check_repassword_focus()" class="text" name="realname" id="realname">-->
+                                        <!--<input type="text" tabindex="3" style="display:none" onpaste="return false" onkeydown="CheckdoSubmit(event)" onkeyup="repassword_session_check()" onblur="repassword_check()" onfocus="check_repassword_focus()" class="text" name="hid_txt_repassword" id="hid_txt_repassword">-->
+                                        <!--<span style="display: none;" class="warn" id="spn_repassword_ok"></span><span class="cue" style="display: none;" id="spn_repassword_wrong"></span>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td class="t">-->
+                                        <!--联系方式：-->
+                                    <!--</td>-->
+                                    <!--<td id="in_repassword">-->
+                                        <!--<input type="text" tabindex="3" onpaste="return false" onkeydown="CheckdoSubmit(event)" onkeyup="repassword_session_check()" onblur="repassword_check()" onfocus="check_repassword_focus()" class="text" name="phone" id="txt_repassword">-->
+                                        <!--<input type="text" tabindex="3" style="display:none" onpaste="return false" onkeydown="CheckdoSubmit(event)" onkeyup="repassword_session_check()" onblur="repassword_check()" onfocus="check_repassword_focus()" class="text" name="hid_txt_repassword" id="hid_txt_repassword">-->
+                                        <!--<span style="display: none;" class="warn" id="spn_repassword_ok"></span><span class="cue" style="display: none;" id="spn_repassword_wrong"></span>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
                                 <tr>
                                     <td class="t">
                                         &nbsp;
                                     </td>
                                     <td>
-                                        <input type="submit" tabindex="7" onclick="check_register();" value="立刻注册" title="注册" class="btn_login" name="g" id="btn_register">
+                                        <input type="submit" tabindex="7" value="立刻注册" title="注册" class="btn_login" name="g" id="btn_register">
                                         <input type="submit" style="display: none" id="btn_confirm">
                                         <input type="hidden" id="hdn_username" name="hdn_username">
                                         <input type="hidden" id="hdn_password" name="hdn_password">
@@ -165,9 +204,9 @@
                 </div>
             </div>
             <script type="text/javascript">
-            $(".btn_login").click(function  () {
-                alert("您已经注册成功，请登录您的账户，去商城购物！");
-            });
+//            $(".btn_login").click(function  () {
+//                alert("您已经注册成功，请登录您的账户，去商城购物！");
+//            });
             </script>
             <div style="display:none" class="register_pop" id="div_identity_verification">
                 <div class="close">
@@ -208,7 +247,7 @@
             </div>
             <div style="display: none; height: 728px;" class="mask" id="div_mask_cover">
             </div>
-        </form>
+        <!--</form>-->
     </div>
     <!-- /注册页面主体 -->
     <div id="footer" class="padb10">

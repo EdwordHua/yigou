@@ -13,6 +13,20 @@
         <script type="text/javascript" src="js/jquey-1.8.0.min.js"></script>
     </head>
         <script type="text/javascript">
+
+        $(function(){
+            function getUrlParam(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+                var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+                if (r != null) return unescape(r[2]);
+                return null; //返回参数值
+            }
+
+            var uid = decodeURI(getUrlParam("uid"));
+            $("#account").text(uid);
+        })
+
+
         $(function  () {
             $("document").triggerHandler("click");
             $(".gotoLogin").click(function  () {
@@ -166,7 +180,7 @@
         <!-- /logo与进度反馈区域 -->
         <!-- 购买结果反馈 -->
         <div class="backInfo car_wrap">
-            <p class="info">尊敬的顾客，您已经注册成功，请登录您的账户，去商城购物！更多精彩等您来发现! <a class="red gotoLogin" href="login.html"> &nbsp; &nbsp;立刻登陆&gt;&gt;</a></p>
+            <p class="info">尊敬的顾客，您已经注册成功，您的账号是：<span id="account" style="color:#ff0000;font-size: 18px;font-weight: bold;">XXX</span>，请登录您的账户，更多精彩等您来发现! <a class="red gotoLogin" href="login.html"> &nbsp; &nbsp;立刻登陆&gt;&gt;</a></p>
         </div>
         <div id="footer" class="clear">
             <p class="padt10 textc cor2 lh20">
