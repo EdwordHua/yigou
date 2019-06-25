@@ -3,6 +3,7 @@ package com.cn.controller;
 import com.cn.model.Merchandise;
 import com.cn.service.IMerchandiseService;
 import com.cn.service.IUserService;
+import com.cn.tools.STime;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -43,10 +44,34 @@ public class MerchandiseController {
 //上传商品
    @RequestMapping("/insertMerch.do")
     public void insertMerch(HttpServletRequest request, HttpServletResponse response,MultipartFile uploadFile)throws IOException{
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        ObjectMapper mapper = new ObjectMapper();
-        System.out.println("BUG-TEST-json:"+mapper.writeValueAsString(""));
+       request.setCharacterEncoding("UTF-8");
+       response.setCharacterEncoding("UTF-8");
+       response.setContentType("text/html;charset=utf-8");
+       Merchandise merch=new Merchandise();
+       String savedDir1 = request.getSession().getServletContext().getRealPath("")+"\\webapp\\image\\products\\";
+       merch.setMname(request.getParameter("mname"));
+       merch.setMtime(STime.getTime());
+       merch.setMrecommend(request.getParameter("mrecommend"));
+       merch.setMtype(request.getParameter("mtype"));
+       merch.setMprice(Integer.valueOf(request.getParameter("mprice")));
+       merch.setMstock(Integer.valueOf(request.getParameter("mstock")));
+       System.out.println("路径："+savedDir1);
+       if (uploadFile != null) {
+           String filename = uploadFile.getOriginalFilename();
+           System.out.print(filename);
+           merch.setMimage("/image/products/"+filename);
+
+           File newFile = new File(savedDir1+ filename);
+
+           merchService.insertMerch(merch);
+
+           try {
+               uploadFile.transferTo(newFile);
+
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+       }
         response.getWriter().write(mapper.writeValueAsString(""));
         response.getWriter().close();
     }
@@ -64,11 +89,28 @@ public class MerchandiseController {
         }
 
     }
-//    上传商品
+//    更新商品
     @RequestMapping("/updataMerch.do")
     public void updataMerchs(HttpServletRequest request, HttpServletResponse response,MultipartFile uploadFile)throws IOException{
-        String savedDir1 = request.getSession().getServletContext().getRealPath("");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=utf-8");
+        String savedDir1 = request.getSession().getServletContext().getRealPath("")+"\\webapp\\image\\products\\";
+
         System.out.println("路径："+savedDir1);
+        if (uploadFile != null) {
+            String filename = uploadFile.getOriginalFilename();
+            System.out.print(filename);
+
+            File newFile = new File(savedDir1+ filename);
+//            merchService.insertMerch()
+            try {
+                uploadFile.transferTo(newFile);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 //    删除商品
