@@ -2,6 +2,7 @@ package com.cn.controller;
 import com.cn.model.User;
 import com.cn.service.IUserService;
 import com.cn.tools.Constants;
+import com.cn.tools.MD5T;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +20,8 @@ import java.io.IOException;
 @RequestMapping("/user")
 public class UserController {
     @Resource
-
     private IUserService userService;
+    private MD5T md5T;
     @RequestMapping("/showUser.do")
     public void selectUser(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
@@ -47,6 +48,12 @@ public class UserController {
         long userId = Long.parseLong(request.getParameter("uid"));
         String upassword = request.getParameter("upassword");
         System.out.println("1:UID:" + userId + ",Upassword:" + upassword);
+        try {
+           // String md5str = MD5T.md5(upassword, "a");
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         User user = this.userService.checkLogin(userId,upassword); //登录检测
         String path = request.getServletPath();//获取当前访问路径
         String root = request.getContextPath();//获取项目的上下文
