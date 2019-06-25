@@ -4,6 +4,7 @@ import com.cn.model.Merchandise;
 import com.cn.service.IMerchandiseService;
 import com.cn.service.IUserService;
 import com.cn.tools.STime;
+import com.cn.tools.deleteFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -59,12 +60,13 @@ public class MerchandiseController {
        merch.setMstock(mstock);
        System.out.println("Mname："+merch.getMname()+"Mtype："+merch.getMtype());
        System.out.println("路径："+savedDir1);
+       merchService.insertMerch(merch);
        if (uploadFile != null) {
            String filename = uploadFile.getOriginalFilename();
            System.out.print(filename);
            merch.setMimage("\\image\\products\\"+filename);
            File newFile = new File(savedDir1+ filename);
-           merchService.insertMerch(merch);
+
            try {
                uploadFile.transferTo(newFile);
 
@@ -116,8 +118,13 @@ public class MerchandiseController {
 //    删除商品
     @RequestMapping("/deleteMerch.do")
     public void deleteMerchs(HttpServletRequest request, HttpServletResponse response)throws IOException{
-
-
+        long mid = Long.parseLong(request.getParameter("mid"));
+        Merchandise merch=merchService.selectMerchByID(mid);
+        String fileDir = request.getSession().getServletContext().getRealPath("")+"\\webapp"+merch.getMimage();
+        System.out.println(fileDir);
+        deleteFile.delete(fileDir);
+        merchService.deleteMerch(mid);
+        getMerchs( request,response);
     }
     private String getUrl(String filename){
         String url="";
