@@ -95,7 +95,7 @@ public class UserController {
             response.getWriter().close();
             //return "redirect:hello.action";
         }else{
-            response.getWriter().write(mapper.writeValueAsString("flase"));
+            response.getWriter().write("false");
             response.getWriter().close();
         }
     }
