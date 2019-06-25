@@ -5,6 +5,9 @@
     <select id="selectUser" resultType="User" parameterType="long">
           SELECT * FROM user WHERE Uid = #{Uid}
      </select>
+    <select id="selectUserByin" resultType="User" parameterType="User">
+        SELECT * FROM user WHERE Uname = #{Uname} AND Utime=#{Utime} AND Upassword=#{Upassword}
+    </select>
     <insert id="insertUser" parameterType="User">
           INSERT INTO  user(Uname,Upassword,ULevel,Utime,Uaddress) VALUES (#{Uname},#{Upassword},#{ULevel},#{Utime},#{Uaddress})
     </insert>

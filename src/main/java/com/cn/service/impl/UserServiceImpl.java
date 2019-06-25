@@ -20,14 +20,17 @@ public class UserServiceImpl implements IUserService
     }
 
  @Override
- public int insertUser(User user) {   //插入用户
-
+ public User insertUser(User user) {   //插入用户
+  String password=user.getUpassword();
   try{
       user.setUpassword(MD5T.md5(user.getUpassword(),"a"));   //加密
   }catch (Exception e){
       e.printStackTrace();
   }
-  return this.userDao.insertUser(user);
+  this.userDao.insertUser(user);
+  user=this.userDao.selectUserByin(user); //查询
+  user.setUpassword(password);
+  return user;
  }
 
  @Override

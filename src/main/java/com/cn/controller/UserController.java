@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Administrator on 2019/6/19 0019.
@@ -43,6 +45,7 @@ public class UserController {
        // User user = iUserService.login(userCode, userPassword);
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=utf-8");
         ObjectMapper mapper = new ObjectMapper();
         HttpSession session=request.getSession();
         long userId = Long.parseLong(request.getParameter("uid"));
@@ -72,7 +75,7 @@ public class UserController {
         }else{
             response.getWriter().write(mapper.writeValueAsString("flase"));
             response.getWriter().close();
-            return "login";
+            return "redirect:/login.html";
         }
     }
     @RequestMapping( "/loginOut.do")  //注销
@@ -84,17 +87,23 @@ public class UserController {
     public void insertUser(HttpServletRequest request, HttpServletResponse response)throws IOException{
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-
+        response.setContentType("text/html;charset=utf-8");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        System.out.println("时间："+df.format(new Date()));// new Date()为获取当前系统时间
         User user = new User();
-        user.setUname("test_insert");
-        user.setUpassword("123");
+        String uname = request.getParameter("uname");
+        String upassword = request.getParameter("upassword");
+        String uaddress = request.getParameter("uaddress");
+        user.setUname(uname);
+        user.setUpassword(upassword);
         user.setULevel(1);
-        user.setUtime("Test_insert");
-        user.setUaddress("湖北师范大学学舍6");
-        int result = this.userService.insertUser(user);
-        System.out.println("Result:"+result);
+        user.setUtime(df.format(new Date()));
+        user.setUaddress(uaddress);
+        user = this.userService.insertUser(user);
         ObjectMapper mapper = new ObjectMapper();
-        response.getWriter().write(mapper.writeValueAsString(result));
+
+        System.out.println("Result:"+mapper.writeValueAsString(user));
+        response.getWriter().write(mapper.writeValueAsString(user));
         response.getWriter().close();
     }
 }

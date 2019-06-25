@@ -7,7 +7,7 @@ import com.cn.model.User;
 
 public interface IUserService {
     User selectUser(long userId);
-    int insertUser(User user);
+    User insertUser(User user);
     int updataUser(User user);
     int deleteUser(long userId);
     User checkLogin(long userId,String password);
