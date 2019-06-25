@@ -17,55 +17,40 @@
 </fieldset>
 <form class="layui-form">
     <div class="layui-form-item">
-        <label class="layui-form-label">商品编号</label>
+        <label class="layui-form-label">粉丝评价</label>
         <div class="layui-input-block">
-            <input type="text" name="title" id="pid" maxlength="13" onkeyup="this.value=this.value.replace(/[^0-9-]+/,'');" autocomplete="off" placeholder="商品编号" class="layui-input">
+            <input type="text" name="mrecommend" id="mrecommend" maxlength="13" onkeyup="this.value=this.value.replace(/[^0-9-]+/,'');" autocomplete="off" placeholder="商品编号" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">商品名称</label>
         <div class="layui-input-block">
-            <input type="text" name="title" id="mname" lay-verify="required" autocomplete="off" placeholder="商品名称" class="layui-input">
+            <input type="text" name="mname" id="mname" lay-verify="required" autocomplete="off" placeholder="商品名称" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">商品类型</label>
         <div class="layui-input-block">
-            <select name="quiz" lay-verify="selecttype" lay-search="" lay-filter="selecttype" id="mtype">
-                <option value="">服装首饰</option>
-                <option value="">签名照</option>
-                <option value="">背包</option>
-            </select>
+            <input type="text" name="mtype" id="mtype" lay-verify="required" autocomplete="off" placeholder="商品类型" class="layui-input">
         </div>
     </div>
-    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-        <legend>上传图片</legend>
-    </fieldset>
-    <div class="layui-form-item">
-        <div class="layui-upload">
-            <button type="button" class="layui-btn" id="test1">上传图片</button>
-                <img class="layui-upload-img"style="border: 1px solid red;width: 100px;height: 100px;" id="demo1">
-                <p id="demoText"></p>
+
+        <button type="button" class="layui-btn" id="test1">上传图片</button>
+        <div class="layui-upload-list">
+            <img class="layui-upload-img" id="demo1">
+            <p id="demoText"></p>
         </div>
-    </div>
-    </div>
+
     <div class="layui-form-item">
         <label class="layui-form-label">商品价格</label>
         <div class="layui-input-block">
-            <input type="number" name="title" id="pprice"  lay-search="required"  autocomplete="off" placeholder="商品价格" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">状态</label>
-        <div class="layui-input-block">
-            <input type="radio" name="sex" id="pstatus"  title="上架中" checked="">
-            <input type="radio" name="sex"  title="未上架">
+            <input type="number" name="mprice" id="mprice"  lay-search="required"  autocomplete="off" placeholder="商品价格" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">库存数量</label>
         <div class="layui-input-block">
-            <input type="number" name="title" id="pnumber" lay-verify="number" onkeyup="this.value=this.value.replace(/[^0-9-]+/,'');" autocomplete="off" placeholder="库存数量" class="layui-input">
+            <input type="number" name="mstock" id="mstock" lay-verify="number" onkeyup="this.value=this.value.replace(/[^0-9-]+/,'');" autocomplete="off" placeholder="库存数量" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -78,70 +63,22 @@
 <script src="../layui/layui.js" charset="utf-8"></script>
 <script src="../layui/jquery-3.3.1.min.js"></script>
 <script>
-    var pimg="";
-    $.ajax({
-        type:"get",
-        url:"/ProductTypeweb?action=gson",//请求路径
-        success:function(data){//请求成功后的事件
-            $.each(data,function(index,obj){
-                var option=$("<option value='"+obj.tid+"'>"+obj.tname+"</option>");
-                $("#ptid").append(option);
-            })
-
-        }
-    })
-    layui.use('upload', function() {
-        var $ = layui.jquery
-            , upload = layui.upload;
-        //普通图片上传
-        var uploadInst = upload.render({
-            elem: '#test1'
-            , url: '/UploadFile'
-            , before: function (obj) {
-                obj.preview(function (index, file, result) {
-                    $('#demo1').attr('src', result); //图片链接（base64）
-                });
-            }
-            , done: function (res) {
-                //如果上传失败
-                if (res.code > 0) {
-                    return layer.msg('上传失败');
-                }
-                //上传成功
-                layer.msg(res.msg);
-                pimg=res.data.src;
-            }
-            , error: function () {
-                //演示失败状态，并实现重传
-                var demoText = $('#demoText');
-                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-                demoText.find('.demo-reload').on('click', function () {
-                    uploadInst.upload();
-                });
-            }
-        });
-    })
-
    $("#insert").click(function () {
-       var pid=$("#pid").val();
-       var pname=$("#pname").val();
-       var ptid=$("#ptid").val();
-       var pprice=$("#pprice").val();
-       var pstatus=$("#pstatus").prop("checked")?"上架中":"已下架";
-       var pnumber=$("#pnumber").val();
-       if(pid==""){layer.msg("商品编号不能为空");return;}
-       if(pname==""){layer.msg("商品名称不能为空");return;}
-       if(pprice==""){layer.msg("商品价格不能为空");return;}
-       if(pnumber==""){layer.msg("商品数量不能为空");return;}
-       if(pimg==""){layer.msg("请上传图片");return;}
-        $.post("/Productweb?action=insert",{
-            pid:pid,
-            pname:pname,
-            ptid:ptid,
-            pprice:pprice,
-            pstatus:pstatus,
-            pnumber:pnumber,
-            pimg:pimg
+       var mrecommend=$("#mrecommend").val();
+       var mname=$("#mname").val();
+       var mtype=$("#mtype").val();
+       var mprice=$("#mprice").val();
+       var mstock=$("#mstock").val();
+       if(mname==""){layer.msg("商品名称不能为空");return;}
+       if(mprice==""){layer.msg("商品价格不能为空");return;}
+       if(mstock==""){layer.msg("商品数量不能为空");return;}
+
+        $.post("/masterMerch/insertMerch.do",{
+            mrecommend:mrecommend,
+            mname:mname,
+            mtype:mtype,
+            mprice:mprice,
+            mstock:mstock
         },function (data) {
             if(data.msg=="添加成功"){
                 setTimeout(function () {
@@ -157,8 +94,42 @@
             form = layui.form;
             form.render();
         });
-    },100)
+    });
 </script>
-</body>
 
+<script>
+    layui.use('upload', function(){
+        var $ = layui.jquery
+                ,upload = layui.upload;
+
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#test1'
+            ,url: '/masterMerch/insertMerch.do'
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                //如果上传失败
+                if(res.code > 0){
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+            }
+            ,error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
+    });
+</script>
+
+</body>
 </html>

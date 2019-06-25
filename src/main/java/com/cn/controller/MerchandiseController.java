@@ -124,7 +124,7 @@ public class MerchandiseController {
         System.out.println(fileDir);
         deleteFile.delete(fileDir);
         merchService.deleteMerch(mid);
-        getMerchs( request,response);
+       // getMerchs( request,response);
     }
     private String getUrl(String filename){
         String url="";

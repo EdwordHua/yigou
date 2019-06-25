@@ -11,7 +11,7 @@
 </head>
 <body>
 
-  <div class="layui-fluid">   
+  <div class="layui-fluid">
     <div class="layui-card">
       <div class="layui-form layui-card-header layuiadmin-card-header-auto">
         <div class="layui-form-item">
@@ -54,14 +54,14 @@
           </div>
         </div>
       </div>
-      
+
       <div class="layui-card-body">
         <div style="padding-bottom: 10px;">
           <button class="layui-btn layuiadmin-btn-admin" data-type="batchdel">删除</button>
           <button class="layui-btn layuiadmin-btn-admin" data-type="add">添加</button>
         </div>
-        
-        <table id="LAY-user-back-manage" lay-filter="LAY-user-back-manage"></table>  
+
+        <table id="LAY-user-back-manage" lay-filter="LAY-user-back-manage"></table>
         <script type="text/html" id="buttonTpl">
           {{#  if(d.check == true){ }}
             <button class="layui-btn layui-btn-xs">已审核</button>
@@ -91,17 +91,17 @@
     var $ = layui.$
     ,form = layui.form
     ,table = layui.table;
-    
+
     //监听搜索
     form.on('submit(LAY-user-back-search)', function(data){
       var field = data.field;
-      
+
       //执行重载
       table.reload('LAY-user-back-manage', {
         where: field
       });
     });
-  
+
     //事件
     var active = {
       batchdel: function(){
@@ -111,15 +111,15 @@
         if(checkData.length === 0){
           return layer.msg('请选择数据');
         }
-        
+
         layer.prompt({
           formType: 1
           ,title: '敏感操作，请验证口令'
         }, function(value, index){
           layer.close(index);
-          
+
           layer.confirm('确定删除吗？', function(index) {
-            
+
             //执行 Ajax 后重载
             /*
             admin.req({
@@ -130,7 +130,7 @@
             table.reload('LAY-user-back-manage');
             layer.msg('已删除');
           });
-        }); 
+        });
       }
       ,add: function(){
         layer.open({
@@ -147,18 +147,18 @@
             //监听提交
             iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
               var field = data.field; //获取提交的字段
-              
+
               //提交 Ajax 成功后，静态更新表格中的数据
               //$.ajax({});
               table.reload('LAY-user-front-submit'); //数据刷新
               layer.close(index); //关闭弹层
-            });  
-            
+            });
+
             submit.trigger('click');
           }
-        }); 
+        });
       }
-    }  
+    }
     $('.layui-btn.layuiadmin-btn-admin').on('click', function(){
       var type = $(this).data('type');
       active[type] ? active[type].call(this) : '';
