@@ -58,6 +58,7 @@ public class UserController {
             //response.getWriter().write(mapper.writeValueAsString(user));
             //response.getWriter().close();
             //return "redirect:hello.action";
+
            return  "index";
         }else{
             response.getWriter().write(mapper.writeValueAsString("flase"));
