@@ -80,6 +80,25 @@ public class UserController {
             return "redirect:/login.html";
         }
     }
+    @RequestMapping( "/islogin.do")
+    public void isLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // User user = iUserService.login(userCode, userPassword);
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=utf-8");
+        ObjectMapper mapper = new ObjectMapper();
+        HttpSession session=request.getSession();
+        User user = (User)session.getAttribute(Constants.USER_SESSION);
+        if (null != user) {
+            System.out.println("BUG-TEST-json:"+mapper.writeValueAsString(user));
+            response.getWriter().write(mapper.writeValueAsString(user));
+            response.getWriter().close();
+            //return "redirect:hello.action";
+        }else{
+            response.getWriter().write(mapper.writeValueAsString("flase"));
+            response.getWriter().close();
+        }
+    }
     @RequestMapping( "/loginOut.do")  //注销
     public String LoginOut(HttpServletRequest request, HttpServletResponse response)throws IOException{
         request.getSession().invalidate();
