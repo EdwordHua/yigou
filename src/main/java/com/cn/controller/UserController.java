@@ -4,6 +4,8 @@ import com.cn.service.IUserService;
 import com.cn.tools.Constants;
 import com.cn.tools.MD5T;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -101,12 +103,15 @@ public class UserController {
         user.setUaddress(uaddress);
         user = this.userService.insertUser(user);
         ObjectMapper mapper = new ObjectMapper();
+//        JSONArray merchs=new JSONArray();
+//        JSONObject json=new JSONObject();
+
         if(user != null) {
             System.out.println("Result:" + mapper.writeValueAsString(user));
             response.getWriter().write(mapper.writeValueAsString(user));
             response.getWriter().close();
         }else{
-            response.getWriter().write(mapper.writeValueAsString("false"));
+            response.getWriter().write("false");
             response.getWriter().close();
         }
     }
