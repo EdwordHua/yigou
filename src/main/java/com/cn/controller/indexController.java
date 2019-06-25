@@ -48,7 +48,7 @@ public class indexController {
     @RequestMapping("/findMerchsByType.do")
     public void findMerchsByType(HttpServletRequest request, HttpServletResponse response)throws Exception{
 
-    }
+        }
     @RequestMapping("/findMerchsByMID.do")
     public void findMerchsByMID(HttpServletRequest request, HttpServletResponse response)throws Exception{
         request.setCharacterEncoding("utf-8");

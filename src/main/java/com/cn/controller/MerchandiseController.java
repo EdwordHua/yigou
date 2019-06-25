@@ -54,7 +54,8 @@ public class MerchandiseController {
     @RequestMapping("/getMerch.do")
     public void getMerchs(HttpServletRequest request, HttpServletResponse response)throws IOException{
         List<Merchandise> merchsAll=merchService.selectAllMerchs();
-
+        request.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=utf-8");
         if(merchsAll != null){
             System.out.println(mapper.writeValueAsString(merchsAll));
             JSONObject jsonObject=getMerchsJson(merchsAll);
