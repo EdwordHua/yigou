@@ -102,7 +102,7 @@ public class UserController {
     @RequestMapping( "/loginOut.do")  //注销
     public String LoginOut(HttpServletRequest request, HttpServletResponse response)throws IOException{
         request.getSession().invalidate();
-        return  "index";
+        return   "redirect:/index.html";
     }
     @RequestMapping("/insertUser.do")
     public void insertUser(HttpServletRequest request, HttpServletResponse response)throws IOException{
