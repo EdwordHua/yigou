@@ -53,8 +53,11 @@ public class MerchandiseController {
        merch.setMtime(STime.getTime());
        merch.setMrecommend(request.getParameter("mrecommend"));
        merch.setMtype(request.getParameter("mtype"));
-       merch.setMprice(Integer.valueOf(request.getParameter("mprice")));
-       merch.setMstock(Integer.valueOf(request.getParameter("mstock")));
+       int mprice=Integer.valueOf(request.getParameter("mprice"));
+       int mstock=Integer.valueOf(request.getParameter("mstock"));
+       merch.setMprice(mprice);
+       merch.setMstock(mstock);
+       System.out.println("Mname："+merch.getMname()+"Mtype："+merch.getMtype());
        System.out.println("路径："+savedDir1);
        if (uploadFile != null) {
            String filename = uploadFile.getOriginalFilename();
