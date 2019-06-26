@@ -44,6 +44,7 @@
 
                 var mid = decodeURI(getUrlParam("mid"));
                 var isLogin = false;
+                var snum = 0;
 
                 $.ajax({
                     type:"post",
@@ -87,7 +88,26 @@
                         return;
                     }
 
-                    var snum = $("#J_IptAmount").val();
+                    snum = $("#J_IptAmount").val();
+                    addShopCart(mid, snum);
+
+                });
+
+//                立即购买按钮点击
+                $("#nowBuy").click(function(){
+                    isLogin = getIsLogin();
+                    console.log("islogin:"+isLogin);
+                    if(isLogin == false){
+                        prompt("用户未登陆");
+                        return;
+                    }
+                    snum = $("#J_IptAmount").val();
+                    addShopCart(mid, snum);
+                    window.location.href = "lookShoppingCar.html";
+                })
+
+//               添加购物车
+                function addShopCart(mid, snum){
 
                     $.ajax({
                         url:"shopcart/addShop.do",
@@ -106,8 +126,8 @@
                             console.log(" request shopcart/addShop.do  error");
                         }
 
-                    })
-                })
+                    });
+                }
 
             })
         </script>
@@ -629,7 +649,7 @@
                         <!-- 立即购买，放入购物车 -->
                         <div id="J_juValid" class="action clear">
                             <div class="btn-buy fl">
-                                <a href="lookShoppingCar.html" data-addfastbuy="true" title="点击此按钮，到下一步确认购买信息" class="J_LinkBuy" data-spm-click="gostr=/tbdetail;locaid=d1" shortcut-key="b" shortcut-label="立即购买" shortcut-effect="click" data-spm-anchor-id="2013.1.20140002.d1">立即购买</a>
+                                <a id="nowBuy" data-addfastbuy="true" title="点击此按钮，到下一步确认购买信息" class="J_LinkBuy"  shortcut-key="b" shortcut-label="立即购买"  >立即购买</a>
                             </div>
                             <div class="btn-add fl">
                                 <a title="加入购物车" class="J_LinkAdd" shortcut-label="加入购物车"><i class="iconfont"></i>加入购物车</a>
