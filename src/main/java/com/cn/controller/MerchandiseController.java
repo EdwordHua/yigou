@@ -8,7 +8,11 @@ import com.cn.tools.deleteFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,8 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Administrator on 2019/6/20 0020.
@@ -31,7 +34,7 @@ public class MerchandiseController {
     @Resource
     private IMerchandiseService merchService;
     ObjectMapper mapper = new ObjectMapper();
-    @RequestMapping("/upload.do")
+
     public String upload(HttpServletRequest request, HttpServletResponse response,MultipartFile uploadFile) throws IOException {
         if (uploadFile != null) {
             String filename = uploadFile.getOriginalFilename();
@@ -47,36 +50,27 @@ public class MerchandiseController {
     }
 //上传商品
    @RequestMapping("/insertMerch.do")
-    public void insertMerch(HttpServletRequest request, HttpServletResponse response,MultipartFile uploadFile)throws IOException{
+    public void insertMerch(HttpServletRequest request, HttpServletResponse response)throws IOException{
        request.setCharacterEncoding("UTF-8");
        response.setCharacterEncoding("UTF-8");
        response.setContentType("text/html;charset=utf-8");
        Merchandise merch=new Merchandise();
-       String savedDir1 = request.getSession().getServletContext().getRealPath("")+"\\webapp\\image\\products\\";
+       //String savedDir1 = request.getSession().getServletContext().getRealPath("")+"\\webapp\\image\\products\\";
+       String mimage="image/products"+request.getParameter("mimage");
+       System.out.println("mimage:"+mimage);
        merch.setMname(request.getParameter("mname"));
        merch.setMtime(STime.getTime());
        merch.setMrecommend(request.getParameter("mrecommend"));
        merch.setMtype(request.getParameter("mtype"));
        int mprice=Integer.valueOf(request.getParameter("mprice"));
        int mstock=Integer.valueOf(request.getParameter("mstock"));
+
        merch.setMprice(mprice);
        merch.setMstock(mstock);
        System.out.println("Mname："+merch.getMname()+"Mtype："+merch.getMtype());
-       System.out.println("路径："+savedDir1);
-       merchService.insertMerch(merch);
-       if (uploadFile != null) {
-           String filename = uploadFile.getOriginalFilename();
-           System.out.print(filename);
-           merch.setMimage("\\image\\products\\"+filename);
-           File newFile = new File(savedDir1+ filename);
+//       System.out.println("路径："+savedDir1);
+     //  merchService.insertMerch(merch);
 
-           try {
-               uploadFile.transferTo(newFile);
-
-           } catch (IOException e) {
-               e.printStackTrace();
-           }
-       }
         response.getWriter().write(mapper.writeValueAsString("true"));
         response.getWriter().close();
     }
@@ -176,4 +170,31 @@ public class MerchandiseController {
         return json;
     }
 
+@RequestMapping("/uploadimage.do")   //上传图片
+    public Map<String,Object> image(MultipartFile file,HttpServletRequest request,@PathVariable String type)throws  Exception{
+        Map<String,Object> map = new HashMap<String,Object>();
+        String path=request.getSession().getServletContext().getRealPath("\\image\\products\\");
+        String image=uploadFile(file,path);
+        System.out.println("path:"+image);
+        map.put("code",0);
+        map.put("image",image);
+        return map;
+    }
+
+    public static String uploadFile(MultipartFile file,String path)throws  Exception{
+        String name=file.getOriginalFilename();
+        String suffixName =name.substring(name.lastIndexOf("."));
+        String hash=Integer.toHexString(new Random().nextInt());
+        String fileName=hash + suffixName;
+        File tempFile = new File(path,fileName);
+        if(!tempFile.getParentFile().exists()){
+            tempFile.getParentFile().mkdir();
+        }
+        if(tempFile .exists()){
+            tempFile.delete();
+        }
+        tempFile.createNewFile();
+        file.transferTo(tempFile);
+        return  tempFile.getName();
+    }
 }
