@@ -35,15 +35,48 @@
 
                 //设置页面所有的图片
                 function setImage(allData){
-                    var products = $(".product");
+                    var art_products = $(".art_products").find(".product");
+                    var caixukun_products = $(".caixukun_products").find(".product");
+                    var goods_products = $(".goods_products").find(".product");
+                    var other_products = $(".other_products").find(".product");
+
+                    var count1 = 0;
+                    var count2 = 0;
+                    var count3 = 0;
+                    var count4 = 0;
 
                     $.each(allData.allMerchandise, function(key, value){
 
+
                         var mid = value.mid;
                         var mimage = value.mimage;
-                        $(products[key]).find("img").attr("src", mimage);
-                        $(products[key]).find("img").attr("alt", mid);
+                        var mtype = value.mtype;
+
+                        if(mtype == "文艺图书"){
+//                            console.log($art_products);
+                            $(art_products[count1]).find("img").attr("src", mimage);
+                            $(art_products[count1]).find("img").attr("alt", mid);
+                            count1++;
+
+                        }else if(mtype == "蔡徐坤类"){
+                            $(caixukun_products[count2]).find("img").attr("src", mimage);
+                            $(caixukun_products[count2]).find("img").attr("alt", mid);
+                            count2++;
+
+                        }else if(mtype == "粉丝服饰"){
+                            $(goods_products[count3]).find("img").attr("src", mimage);
+                            $(goods_products[count3]).find("img").attr("alt", mid);
+                            count3++;
+
+                        }else if(mtype == "明星周边"){
+                            $(other_products[count4]).find("img").attr("src", mimage);
+                            $(other_products[count4]).find("img").attr("alt", mid);
+                            count4++;
+                        }
+
                     });
+
+
 
                 }
 
@@ -722,7 +755,7 @@
                     <h4>文学艺术</h4>
                     <span><a class="getLoveList2"  href="">更多&gt;&gt;</a></span>
                 </div>
-                <div class="shopList">
+                <div class="shopList art_products">
                     <div class="shopListLeft">
                         <a href="" class="product"><img src="image/shopclassbg2.jpg" alt=""></a>
                         <div class="shopList_info">
@@ -771,7 +804,7 @@
                     <h4>蔡徐坤</h4>
                     <span><a class="getLoveList1" href="">更多&gt;&gt;</a></span>
                 </div>
-                <div class="shopList">
+                <div class="shopList caixukun_products">
                     <div class="shopListLeft">
                         <a href="byPageShow.html" class="product"><img src="image/caixukun/蔡徐坤-1.jpg" alt=""></a>
                         <div class="shopList_info">
@@ -821,9 +854,9 @@
                     <h4>粉丝服饰</h4>
                     <span><a class="getLoveList3"  href="">更多&gt;&gt;</a></span>
                 </div>
-                <div class="shopList">
+                <div class="shopList goods_products">
                     <div class="shopListLeft">
-                        <a href=""><img src="image/caixukun/蔡徐坤-2-1-9.webp.jpg" alt=""></a>
+                        <a href="" class="product"><img src="image/caixukun/蔡徐坤-2-1-9.webp.jpg" alt=""></a>
                          <div class="shopList_info">
                             <h3>618购书享受超低价！</h3>
                             <h3>时代独家好书来袭</h3>
@@ -868,9 +901,9 @@
                     <h4>明星周边</h4>
                     <span><a class="getLoveList4"  href="">更多&gt;&gt;</a></span>
                 </div>
-                <div class="shopList">
+                <div class="shopList other_products">
                     <div class="shopListLeft">
-                        <a href=""><img src="image/caixukun/蔡徐坤-3-1-10.webp.jpg" alt=""></a>
+                        <a href="" class="product"><img src="image/caixukun/蔡徐坤-3-1-10.webp.jpg" alt=""></a>
                          <div class="shopList_info">
                             <h3>618购书享受超低价！</h3>
                             <h3>时代独家好书来袭</h3>
