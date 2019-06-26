@@ -28,7 +28,7 @@ public class ShopcartController {
     @Resource
     private IMerchandiseService merchService;
     @RequestMapping("/addShop.do")
-    public String addShopcart(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void addShopcart(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
@@ -41,7 +41,8 @@ public class ShopcartController {
             uid = user.getUid();
         }else
         {
-            return "false";
+            response.getWriter().write("false");
+            response.getWriter().close();
         }
         mid=Long.parseLong(request.getParameter("mid"));
         snum=Integer.valueOf(request.getParameter("snum"));
@@ -52,8 +53,10 @@ public class ShopcartController {
         shopcart.setSisbuy(0);
         shopcart.setSsum(merchService.selectMerchByID(mid).getMprice() * snum);
 
-        shopcartService.insertShop(shopcart);
-        return "true";
+        int res=shopcartService.insertShop(shopcart);
+        System.out.println(res);
+        response.getWriter().write("true");
+        response.getWriter().close();
     }
     @RequestMapping("/delShop.do")
     public void delShopcart(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -71,36 +74,32 @@ public class ShopcartController {
 
     }
     public JSONObject getShopJson(List<Shopcart> shoplist) {
-//        JSONArray merchs=new JSONArray();
-//        JSONObject json=new JSONObject();
-//        for(int i=0;i<shoplist.size();i++)
-//        {
-////
-////                long mid = merchsAll.get(i).getMid();
-////                String mname = merchsAll.get(i).getMname();
-////                String mimage = merchsAll.get(i).getMimage();
-////                int mprice = merchsAll.get(i).getMprice();
-////                int mstock = merchsAll.get(i).getMstock();
-////                String mtype = merchsAll.get(i).getMtype();
-////                String mtime = merchsAll.get(i).getMtime();
-////                String mrecommend = merchsAll.get(i).getMrecommend();
+        JSONArray shops=new JSONArray();
+        JSONObject json=new JSONObject();
+        for(int i=0;i<shoplist.size();i++)
+        {
 //
-//            JSONObject member_temp=new JSONObject();
-//
-//            member_temp.put("mid", merchsAll.get(i).getMid());
-//            member_temp.put("mname", merchsAll.get(i).getMname());
-//            member_temp.put("mimage", merchsAll.get(i).getMimage());
-//            member_temp.put("mprice", merchsAll.get(i).getMprice());
-//            member_temp.put("mstock", merchsAll.get(i).getMstock());
-//            member_temp.put("mtype", merchsAll.get(i).getMtype());
-//            member_temp.put("mtime", merchsAll.get(i).getMtime());
-//            member_temp.put("mrecommend", merchsAll.get(i).getMrecommend());
-//
-//            merchs.add(member_temp);
-//        }
-//
-//        json.put("allMerchandise", merchs);
-//        json.put("num",merchsAll.size());
-        return null;
+//                long mid = merchsAll.get(i).getMid();
+//                String mname = merchsAll.get(i).getMname();
+//                String mimage = merchsAll.get(i).getMimage();
+//                int mprice = merchsAll.get(i).getMprice();
+//                int mstock = merchsAll.get(i).getMstock();
+//                String mtype = merchsAll.get(i).getMtype();
+//                String mtime = merchsAll.get(i).getMtime();
+//                String mrecommend = merchsAll.get(i).getMrecommend();
+
+            JSONObject member_temp=new JSONObject();
+
+            member_temp.put("sid", shoplist.get(i).getSid());
+            member_temp.put("mid", shoplist.get(i).getMid());
+            member_temp.put("snum", shoplist.get(i).getSnum());
+            member_temp.put("ssum", shoplist.get(i).getSsum());
+            member_temp.put("sisbuy", shoplist.get(i).getSisbuy());
+            shops.add(member_temp);
+        }
+
+        json.put("Shopcarts", shops);
+        json.put("num",shoplist.size());
+        return json;
     }
 }
