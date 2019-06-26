@@ -35,13 +35,28 @@
         </div>
     </div>
 
-        <button type="button" class="layui-btn" id="test1">上传图片</button>
-        <div class="layui-upload-list">
-            <img class="layui-upload-img" id="demo1">
-            <p id="demoText"></p>
+    <div class="layui-fluid">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">普通图片上传</div>
+                    <div class="layui-card-body">
+                        <div class="layui-upload">
+                            <button type="button" class="layui-btn" id="test-upload-normal">上传图片</button>
+                            <div class="layui-upload-list">
+                                <img class="layui-upload-img" id="test-upload-normal-img">
+                                <p id="test-upload-demoText"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
 
-    <div class="layui-form-item">
+
+
+            <div class="layui-form-item">
         <label class="layui-form-label">商品价格</label>
         <div class="layui-input-block">
             <input type="number" name="mprice" id="mprice"  lay-search="required"  autocomplete="off" placeholder="商品价格" class="layui-input">
@@ -98,37 +113,37 @@
 </script>
 
 <script>
-    layui.use('upload', function(){
+    layui.use('upload', function() {
         var $ = layui.jquery
-                ,upload = layui.upload;
+                , upload = layui.upload;
 
         //普通图片上传
         var uploadInst = upload.render({
-            elem: '#test1'
-            ,url: '/masterMerch/insertMerch.do'
-            ,before: function(obj){
+            elem: '#test-upload-normal'
+            , url: '/upload/'
+            , before: function (obj) {
                 //预读本地文件示例，不支持ie8
-                obj.preview(function(index, file, result){
-                    $('#demo1').attr('src', result); //图片链接（base64）
+                obj.preview(function (index, file, result) {
+                    $('#test-upload-normal-img').attr('src', result); //图片链接（base64）
                 });
             }
-            ,done: function(res){
+            , done: function (res) {
                 //如果上传失败
-                if(res.code > 0){
+                if (res.code > 0) {
                     return layer.msg('上传失败');
                 }
                 //上传成功
             }
-            ,error: function(){
+            , error: function () {
                 //演示失败状态，并实现重传
-                var demoText = $('#demoText');
-                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-                demoText.find('.demo-reload').on('click', function(){
+                var demoText = $('#test-upload-demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
                     uploadInst.upload();
                 });
             }
         });
-    });
+    })
 </script>
 
 </body>

@@ -43,11 +43,10 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.3.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-test:4.3.5.RELEASE" />
           <element id="library" level="project" name="Maven: javax.annotation:jsr250-api:1.0" />
-          <element id="library" level="project" name="Spring-4.3.18.RELEASE" />
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="F:\yigou\target/MANIFEST.MF" />
+        <element id="file-copy" path="E:\yigou\target/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="yigou/web/Web" />
     </root>
