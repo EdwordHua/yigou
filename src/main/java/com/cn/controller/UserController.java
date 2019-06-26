@@ -137,11 +137,8 @@ public class UserController {
             member_temp.put("ulevel", userAll.get(i).getULevel());
             member_temp.put("upassword", userAll.get(i).getUpassword());
             member_temp.put("utime", userAll.get(i).getUtime());
-
-
             users.add(member_temp);
         }
-
         json.put("data", users);
         json.put("count",userAll.size());
         json.put("msg","");
