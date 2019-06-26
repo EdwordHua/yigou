@@ -8,7 +8,11 @@ import com.cn.tools.deleteFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,8 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Administrator on 2019/6/20 0020.
@@ -31,7 +34,7 @@ public class MerchandiseController {
     @Resource
     private IMerchandiseService merchService;
     ObjectMapper mapper = new ObjectMapper();
-    @RequestMapping("/upload.do")
+
     public String upload(HttpServletRequest request, HttpServletResponse response,MultipartFile uploadFile) throws IOException {
         if (uploadFile != null) {
             String filename = uploadFile.getOriginalFilename();
@@ -175,5 +178,61 @@ public class MerchandiseController {
         json.put("code",0);
         return json;
     }
-
+//    private String uploadPath = "E:\\temp"; // 上传文件的目录
+//    File tempPathFile;
+//    @RequestMapping("upload")
+//    public void uploadImg(Long classesId,HttpServletRequest request) throws Exception{
+//        try {
+//            // Create a factory for disk-based file items
+//            DiskFileItemFactory factory = new DiskFileItemFactory();
+//            // Set factory constraints
+//            factory.setSizeThreshold(4096); // 设置缓冲区大小，这里是4kb
+//            factory.setRepository(tempPathFile);// 设置缓冲区目录
+//            // Create a new file upload handler
+//            ServletFileUpload upload = new ServletFileUpload(factory);
+//            // Set overall request size constraint
+//            upload.setSizeMax(4194304); // 设置最大文件尺寸，这里是4MB
+//            List<FileItem> items = upload.parseRequest(request);// 得到所有的文件
+//            System.out.println(items.size());
+//            Iterator<FileItem> i = items.iterator();
+//            while (i.hasNext()) {
+//                FileItem fi = (FileItem) i.next();
+//                String fileName = fi.getName();
+//                if (fileName != null) {
+//                    File fullFile = new File(new String(fi.getName().getBytes(), "utf-8")); // 解决文件名乱码问题
+//                    File savedFile = new File(uploadPath, fullFile.getName());
+//                    fi.write(savedFile);
+//                }
+//            }
+//            System.out.print("上传成功！");
+//        } catch (Exception e) {
+//
+//        }
+//    }
+@RequestMapping("/uploadimage.do")
+    public Map<String,Object> image(MultipartFile file,HttpServletRequest request,@PathVariable String type)throws  Exception{
+        Map<String,Object> map = new HashMap<String,Object>();
+        String path=request.getSession().getServletContext().getRealPath("\\image\\products\\");
+        String image=uploadFile(file,path);
+        System.out.println("path:"+image);
+        map.put("code",0);
+        map.put("image",image);
+        return map;
+    }
+    public static String uploadFile(MultipartFile file,String path)throws  Exception{
+        String name=file.getOriginalFilename();
+        String suffixName =name.substring(name.lastIndexOf("."));
+        String hash=Integer.toHexString(new Random().nextInt());
+        String fileName=hash + suffixName;
+        File tempFile = new File(path,fileName);
+        if(!tempFile.getParentFile().exists()){
+            tempFile.getParentFile().mkdir();
+        }
+        if(tempFile .exists()){
+            tempFile.delete();
+        }
+        tempFile.createNewFile();
+        file.transferTo(tempFile);
+        return  tempFile.getName();
+    }
 }
