@@ -2,8 +2,11 @@
  * Created by Administrator on 2019/6/25 0025.
  */
 
+var isUserLogin = false;
+
 $(function(){
     isLogin();
+
 //                判断用户是否登录
     function isLogin(){
         $.ajax({
@@ -23,7 +26,7 @@ $(function(){
 
                     $(".cor3").text("欢迎光临，"+uname);
                     $(".cor3").css({"color":"red"});
-
+                    isUserLogin = true;
                     console.log(json);
                 }
 
@@ -31,5 +34,8 @@ $(function(){
             error:function(xhr){console.log("请求后台接口 user/islogin.do 失败！")}
         })
     }
+
+
 })
 
+function getIsLogin(){return isUserLogin}

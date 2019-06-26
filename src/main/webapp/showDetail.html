@@ -13,8 +13,26 @@
         <link href="css/detailPage.css" rel="stylesheet" type="text/css" />
         <script src="js/jquey-1.8.0.min.js"></script>
         <script type="text/javascript" src="js/isLogin.js"></script>
+        <script src="js/prompt.js"></script>
 
+        <!--设定选择商品+ - 按钮-->
+        <script>
+            $(function(){
+                $(".J_Increase").click(function(){
+                    var num =parseInt($("#J_IptAmount").val()) + 1;
+                    $("#J_IptAmount").val(num);
+                })
 
+                $(".J_Reduce").click(function(){
+                    if(parseInt($("#J_IptAmount").val()) > 1){
+                        var num =parseInt($("#J_IptAmount").val()) - 1;
+                        $("#J_IptAmount").val(num);
+                    }
+                })
+            })
+        </script>
+
+        <!--设定商品详情页面的商品图片和其他信息-->
         <script>
             $(function () {
                 function getUrlParam(name) {
@@ -25,6 +43,7 @@
                 }
 
                 var mid = decodeURI(getUrlParam("mid"));
+                var isLogin = false;
 
                 $.ajax({
                     type:"post",
@@ -57,10 +76,45 @@
                     }
                 });
 
+                <!--加入购物车点击事件-->
+                $('.J_LinkAdd').click(function(){
+
+                    isLogin = getIsLogin();
+                    console.log("islogin:"+isLogin);
+
+                    if(isLogin == false){
+                        prompt("用户未登陆");
+                        return;
+                    }
+
+                    var snum = $("#J_IptAmount").val();
+
+                    $.ajax({
+                        url:"shopcart/addShop.do",
+                        type:"post",
+                        data:"mid="+mid+"&snum="+snum,
+                        success:function(msg){
+                            console.log("添加购物车返回数据："+msg);
+                            if(msg == "true"){
+                                prompt("添加成功");
+                            }else{
+                                prompt("添加失败");
+                            }
+
+                        },
+                        error:function(xhr){
+                            console.log(" request shopcart/addShop.do  error");
+                        }
+
+                    })
+                })
 
             })
         </script>
-        
+
+
+
+
     </head>
 
     <body>
@@ -564,8 +618,9 @@
                             <dt class="property-type">数&nbsp;&nbsp;&nbsp; 量：</dt>
                             <dd>
                                 <span class="stock" id="J_Stock">
-                                        <a href="#" hidefocus="" class="reduce J_Reduce iconfont disable-reduce" data-spm-anchor-id="2013.1.20140002.5">-</a>
-                                        <input id="J_IptAmount" type="text" class="tb-text" value="1" maxlength="8" title="请输入购买量"><a href="#" hidefocus="" class="tb-increase J_Increase tb-iconfont" data-spm-anchor-id="2013.1.20140002.6">+</a>&nbsp;&nbsp;&nbsp;  件
+                                        <a hidefocus="" class="reduce J_Reduce iconfont disable-reduce" data-spm-anchor-id="2013.1.20140002.5">-</a>
+                                        <input id="J_IptAmount" type="text" class="tb-text" value="1" maxlength="8" title="请输入购买量">
+                                        <a hidefocus="" class="tb-increase J_Increase tb-iconfont" data-spm-anchor-id="2013.1.20140002.6">+</a>&nbsp;&nbsp;&nbsp;  件
                                     </span>
                                 <em>(库存<span id="J_SpanStock" class="count">1462</span>件)</em>
                             </dd>
@@ -577,7 +632,7 @@
                                 <a href="lookShoppingCar.html" data-addfastbuy="true" title="点击此按钮，到下一步确认购买信息" class="J_LinkBuy" data-spm-click="gostr=/tbdetail;locaid=d1" shortcut-key="b" shortcut-label="立即购买" shortcut-effect="click" data-spm-anchor-id="2013.1.20140002.d1">立即购买</a>
                             </div>
                             <div class="btn-add fl">
-                                <a href="#" title="加入购物车" class="J_LinkAdd" data-spm-click="gostr=/tbdetail;locaid=d2" shortcut-key="a" shortcut-label="加入购物车" shortcut-effect="click" data-spm-anchor-id="2013.1.20140002.9"><i class="iconfont"></i>加入购物车</a>
+                                <a title="加入购物车" class="J_LinkAdd" shortcut-label="加入购物车"><i class="iconfont"></i>加入购物车</a>
                             </div>
                         </div>
                         <!-- /立即购买，放入购物车 -->
@@ -1331,6 +1386,7 @@
         <!-- /页尾链接和版权信息 -->
         <script src="js/jquery-1.4.2.min.js"></script>
         <script src="js/imgTab.js"></script>
+
     </body>
 
 </html>
