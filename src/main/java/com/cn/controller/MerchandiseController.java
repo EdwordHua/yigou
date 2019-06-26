@@ -140,6 +140,7 @@ public class MerchandiseController {
     @RequestMapping("/deleteMerch.do")
     public void deleteMerchs(HttpServletRequest request, HttpServletResponse response)throws IOException{
         long mid = Long.parseLong(request.getParameter("mid"));
+        System.out.println(mid);
         Merchandise merch=merchService.selectMerchByID(mid);
         String fileDir = request.getSession().getServletContext().getRealPath("")+"\\webapp"+merch.getMimage();
         System.out.println(fileDir);
