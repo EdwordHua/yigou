@@ -65,7 +65,11 @@ public class ShopcartController {
         response.setContentType("text/html;charset=utf-8");
         long sid=Long.parseLong(request.getParameter("sid")) ;
         shopcartService.deleteShop(sid);
-        response.getWriter().write("true");
+        HttpSession session=request.getSession();
+        User user = (User)session.getAttribute(Constants.USER_SESSION);
+        List<Shopcart> shoplist=shopcartService.selectShopByUID(user.getUid());
+        JSONObject jsonObject=getShopJson(shoplist);
+        response.getWriter().print(shoplist);
         response.getWriter().close();
     }
     @RequestMapping("/showShop.do")
@@ -107,6 +111,7 @@ public class ShopcartController {
         json.put("AllMerchandise", shops);
         json.put("num",shoplist.size());
         json.put("sum",money);
+        json.put("status","true");
         return json;
     }
 }
