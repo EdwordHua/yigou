@@ -33,11 +33,11 @@ public class ShopcartServiceImpl implements IShopcartService{
 
     @Override
     public int deleteShop(long Sid) {
-        return this.deleteShop(Sid);
+        return this.shopDao.deleteShopcart(Sid);
     }
 
     @Override
     public int updataShop(Shopcart shopcart) {
-        return this.updataShop(shopcart);
+        return this.shopDao.updataShopcart(shopcart);
     }
 }
