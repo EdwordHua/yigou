@@ -169,7 +169,6 @@ public class MerchandiseController {
 
             merchs.add(member_temp);
         }
-
         json.put("data", merchs);
         json.put("count",merchsAll.size());
         json.put("msg","");

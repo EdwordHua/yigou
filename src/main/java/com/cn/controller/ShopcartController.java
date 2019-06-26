@@ -98,7 +98,6 @@ public class ShopcartController {
             money=money+shoplist.get(i).getSsum();
             shops.add(member_temp);
         }
-
         json.put("AllMerchandise", shops);
         json.put("num",shoplist.size());
         json.put("sum",money);
