@@ -50,6 +50,6 @@ public class MerchandiseServiceImpl implements IMerchandiseService{
 
     @Override
     public int deleteMerch(long Mid) {          //删除商品
-        return this.deleteMerch(Mid);
+        return this.merchDao.deleteMerch(Mid);
     }
 }
