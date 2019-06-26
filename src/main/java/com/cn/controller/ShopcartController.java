@@ -69,7 +69,7 @@ public class ShopcartController {
         User user = (User)session.getAttribute(Constants.USER_SESSION);
         List<Shopcart> shoplist=shopcartService.selectShopByUID(user.getUid());
         JSONObject jsonObject=getShopJson(shoplist);
-        response.getWriter().print(shoplist);
+        response.getWriter().print(jsonObject);
         response.getWriter().close();
     }
     @RequestMapping("/showShop.do")
