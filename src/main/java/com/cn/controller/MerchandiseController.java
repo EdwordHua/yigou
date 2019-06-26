@@ -102,7 +102,21 @@ public class MerchandiseController {
         response.setContentType("text/html;charset=utf-8");
         long mid=Long.parseLong(request.getParameter("mid"));
         String mname=request.getParameter("mname");
+        int mprice=Integer.valueOf(request.getParameter("mprice"));
+        int mstock=Integer.valueOf(request.getParameter("mstock"));
+        Merchandise merchandise=new Merchandise();
+        merchandise.setMid(mid);
+        merchandise.setMname(mname);
+        merchandise.setMprice(mprice);
+        merchandise.setMstock(mstock);
+        merchandise.setMimage(request.getParameter("mimage"));
+        merchandise.setMtype(request.getParameter("mtype"));
+        merchandise.setMrecommend(request.getParameter("mrecommend"));
+        merchandise.setMtime(request.getParameter("mtime"));
+        int res= merchService.updataMerch(merchandise);
+        System.out.println(res);
         System.out.println("mid:"+mid+",mname:"+mname);
+
         response.getWriter().write("true");
         response.getWriter().close();
     }
