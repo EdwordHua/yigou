@@ -11,6 +11,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="../layui/css/layui.css" media="all">
     <link rel="stylesheet" href="../css/xu/admin.css" media="all">
+    <style type="text/css">
+    .layui-table img {
+    width: auto;
+    height: auto;
+    max-width: 100% !important;
+    max-height: 100%;
+    }
+    </style>
 </head>
 <body>
 
@@ -33,12 +41,13 @@
                         <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
                         <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
                         <button class="layui-btn" data-type="isAll">验证是否全选</button>
+                        <button type="button" lay-submit="" class="layui-btn layui-btn-warm" id="exportExcel" name="exportExcel">
+                            <i class="layui-icon"></i>导出Excel</button>
                     </div>
 
                     <table class="layui-hide" id="test-table-operate" lay-filter="test-table-operate"></table>
 
                     <script type="text/html" id="test-table-operate-barDemo">
-                        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
                         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                     </script>
@@ -49,6 +58,9 @@
 </div>
 
 <script src="../layui/layui.js"></script>
+<script type="text/html" id="imgTpl">
+    <img src="../{{ d.mimage }}">
+</script>
 <script>
     layui.use('table', function(){
         var table = layui.table
@@ -56,23 +68,25 @@
 
         table.render({
             elem: '#test-table-operate'
-            ,height: 290
             ,title: '商品数据表'
+            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
             ,url: '/masterMerch/getMerch.do' //数据接口
             ,toolbar: '#toolbarDemo'
             ,page: true //开启分页
             ,cols: [[ //表头
-                {type: 'checkbox', fixed: 'left'}
-                ,{field: 'mid', title: 'ID', width:80, sort: true, fixed: 'left'}
-                ,{field: 'mname', title: '商品名词',align:'center'}
-                ,{field: 'mprice', title: '价格',align:'center'}
-                ,{field: 'mstock', title: '库存',align:'center'}
-                ,{field: 'mtype', title: '种类', align:'center'}
-                ,{field: 'mtime', title: '上架时间', align:'center'}
-                ,{field: 'mrecommend', title: '评价',align:'center'}
+                {type: 'checkbox', fixed: 'left',align:'center'}
+                ,{field: 'mid', title: 'ID', sort: true, fixed: 'left',align:'center'}
+                ,{field: 'mname', title: '商品名词',edit: 'text',align:'center'}
+                ,{field: 'mprice', title: '价格',edit: 'text',align:'center'}
+                ,{field: 'mimage', title: '商品图片',templet:'<div class="layui-table img"><img src="../{{d.mimage}}"></div>', style:'height:48px;width:48px;line-height:48px!important;',align:'center'}
+                ,{field: 'mstock', title: '库存',edit: 'text',align:'center'}
+                ,{field: 'mtype', title: '种类', edit: 'text',align:'center'}
+                ,{field: 'mtime', title: '上架时间',edit: 'text', align:'center'}
+                ,{field: 'mrecommend', title: '评价',edit: 'text',align:'center'}
                 ,{field: 'right', title: '操作', align:'center',  toolbar: '#test-table-operate-barDemo'}
             ]]
         });
+
         //监听表格复选框选择
         table.on('checkbox(test-table-operate)', function(obj){
             console.log(obj)
@@ -80,9 +94,8 @@
         //监听工具条
         table.on('tool(test-table-operate)', function(obj){
             var data = obj.data;
-            if(obj.event === 'detail'){
-                layer.msg('ID：'+ data.mid + ' 的查看操作');
-            } else if(obj.event === 'del'){
+
+            if(obj.event === 'del'){
                 layer.confirm('真的删除行么', function(index){
                     layer.msg('ID：'+ data.mid + ' 的删除操作');
                     $.ajax({
@@ -99,6 +112,15 @@
                 });
             } else if(obj.event === 'edit'){
                 layer.alert('编辑行：<br>'+ JSON.stringify(data))
+                $.ajax({
+                    url:"/masterMerch/updataMerch.do",
+                    data:"mid="+data.mid+"&mname="+data.mname+"&mprice="+data.mprice+"&mstock="+data.mstock+"&mtype="+data.mtype+"&mtime="+data.mtime+"&mrecommend="+data.mrecommend+"&mimage="+data.mimage,
+                    type:"post",
+                    success:function(msg){
+                        console.log(msg)
+                    },
+                    error:function(msg){console.log(msg)}
+                })
             }
         });
 
@@ -123,7 +145,6 @@
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
-
     });
 </script>
 </body>
