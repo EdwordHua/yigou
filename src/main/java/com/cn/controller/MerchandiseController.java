@@ -172,7 +172,8 @@ public class MerchandiseController {
 
 @RequestMapping("/uploadimage.do")   //上传图片
     public Map<String,Object> image(MultipartFile file,HttpServletRequest request,@PathVariable String type)throws  Exception{
-        Map<String,Object> map = new HashMap<String,Object>();
+    System.out.println("path:");
+    Map<String,Object> map = new HashMap<String,Object>();
         String path=request.getSession().getServletContext().getRealPath("\\image\\products\\");
         String image=uploadFile(file,path);
         System.out.println("path:"+image);
