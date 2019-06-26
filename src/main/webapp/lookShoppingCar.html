@@ -13,8 +13,11 @@
     <link href="css/page.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="js/jquey-1.8.0.min.js"></script>
     <script type="text/javascript" src="js/isLogin.js"></script>
+    <script src="js/prompt.js"></script>
 
     <script>
+
+//        获取购物车的数据，显示在前端
         $(function(){
             $.ajax({
                 type:"post",
@@ -145,27 +148,39 @@
             }
         });
 
+        //删除购物车的条目
         $(function(){
-            //            删除购物车的条目
+            //删除购物车的条目
             $("body").delegate("#delete_item", "click", function(){
                 console.log("删除按钮！")
 
                 var sid = $(this).parents("tbody").attr("sid");
-                removeShopCartItem(sid);
+                removeShopCartItem(sid, $(this).parents("tbody"));
             })
 
-            function removeShopCartItem(sid){
+            function removeShopCartItem(sid, $tbody){
                 $.ajax({
                     type:"post",
                     data:"sid="+sid,
                     url:"shopcart/delShop.do",
                     success:function(msg){
-                        if(msg == "true"){
 
-                            $item = $(this).parents("tbody");
-                            $item.remove();
+                        var json = $.parseJSON(msg);
+
+                        if(json.status == "true"){
+
+                            $tbody.remove();
+
+                            console.log($tbody);
 
                             prompt("删除成功");
+
+                            var allSum = json.sum;
+                            var num = json.num;
+                            $(".group_total_price").text("￥"+allSum)
+                            $(".total_amount").text(num);
+                            $(".total_price").text("￥"+allSum);
+
                         }else{
                             prompt("删除失败");
                         }
