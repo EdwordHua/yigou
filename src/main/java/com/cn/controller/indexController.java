@@ -71,18 +71,7 @@ public class indexController {
         JSONObject json=new JSONObject();
         for(int i=0;i<merchsAll.size();i++)
           {
-//
-//                long mid = merchsAll.get(i).getMid();
-//                String mname = merchsAll.get(i).getMname();
-//                String mimage = merchsAll.get(i).getMimage();
-//                int mprice = merchsAll.get(i).getMprice();
-//                int mstock = merchsAll.get(i).getMstock();
-//                String mtype = merchsAll.get(i).getMtype();
-//                String mtime = merchsAll.get(i).getMtime();
-//                String mrecommend = merchsAll.get(i).getMrecommend();
-
                 JSONObject member_temp=new JSONObject();
-
                 member_temp.put("mid", merchsAll.get(i).getMid());
                 member_temp.put("mname", merchsAll.get(i).getMname());
                 member_temp.put("mimage", merchsAll.get(i).getMimage());
@@ -91,10 +80,8 @@ public class indexController {
                 member_temp.put("mtype", merchsAll.get(i).getMtype());
                 member_temp.put("mtime", merchsAll.get(i).getMtime());
                 member_temp.put("mrecommend", merchsAll.get(i).getMrecommend());
-
-              merchs.add(member_temp);
+                merchs.add(member_temp);
             }
-
         json.put("allMerchandise", merchs);
         json.put("num",merchsAll.size());
         return json;
