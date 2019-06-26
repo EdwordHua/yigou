@@ -9,7 +9,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2019/6/20 0020.
@@ -115,6 +118,24 @@ public class MerchandiseController {
         }
 
     }
+
+
+//
+//    @ResponseBody
+//    public Items jsonTest(@RequestBody Items items) {
+//        return items;
+//    }
+
+    @RequestMapping("/Test.do")
+    @ResponseBody
+    public String Test(@RequestBody Map<String,String> params, HttpServletRequest request,HttpServletResponse response) throws Exception{
+        System.out.println("总共获取到："+params.size()+"个参数");
+        for(String key : params.keySet()){
+            System.out.println(key + " : " + params.get(key));
+        }
+        return "";
+    }
+
 //    删除商品
     @RequestMapping("/deleteMerch.do")
     public void deleteMerchs(HttpServletRequest request, HttpServletResponse response)throws IOException{
