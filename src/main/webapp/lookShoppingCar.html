@@ -14,6 +14,142 @@
     <script type="text/javascript" src="js/jquey-1.8.0.min.js"></script>
     <script type="text/javascript" src="js/isLogin.js"></script>
 
+    <script>
+        $(function(){
+            $.ajax({
+                type:"post",
+                url:"shopcart/showShop.do",
+                data:"",
+                success:function (msg) {
+                    var json = $.parseJSON(msg);
+                    var merchandise_num = json.num;
+
+                    // 购物车没有商品
+                    if(merchandise_num == "0"){
+                        console.log("购物车为空！")
+                        return;
+                    }else{
+                        // var json_allMerch = json.AllMerchandise;
+                        console.log(json);
+                        parseData(json);
+                    }
+
+                },
+                error:function (xhr) {
+                    console.log(xhr);
+                }
+            });
+
+            function parseData(json) {
+                $.each(json.AllMerchandise, function (key, value) {
+                    var mid = value.mid;
+                    var mname = value.mname;
+                    var mimage = value.mimage;
+                    var mprice = value.mprice;
+                    var mnum = value.snum;
+                    var mTotalPrice = value.ssum;
+                    var mtype = value.mtype;
+                    var uid = value.uid;
+
+                    $merch = getMerchandise(mid, mname, mimage, mprice, mnum, mTotalPrice, mtype);
+                    $(".cart_group_item").append($merch);
+                });
+
+                var allSum = json.sum;
+                var num = json.num;
+                $(".total_amount").text(num);
+                $(".total_price").text(allSum);
+
+            }
+
+
+            function getMerchandise(mid, mname, mimage, mprice, mnum, mTotalPrice, mtype){
+
+                $mech = $("<tbody>\n" +
+                    "                    <tr class=\"cart_item \" >\n" +
+                    "                        <td valign=\"top\">\n" +
+                    "                            <div class=\"cart_item_desc clear\">\n" +
+                    "                                <input class=\"js_item_selector cart_item_selector\" checked=\"'checked'/\" type=\"checkbox\">\n" +
+                    "                                <div class=\"cart_item_desc_wrapper\">\n" +
+                    "\n" +
+                    "                                    <a class=\"cart_item_pic\" href=\"\" target=\"_blank\">\n" +
+                    "                                        <img src=\"image/book/book_list7/list7_lit1.jpg\" alt=\"有一个地方我们知道\">\n" +
+                    "                                        <span class=\"sold_out_pic png\"></span>\n" +
+                    "                                    </a>\n" +
+                    "\n" +
+                    "                                    <a class=\"cart_item_link\"  href=\"\" target=\"_blank\">有一个地方我们知道</a>\n" +
+                    "                                    <p class=\"sku_info\"> 规格：<span class=\"cart_item_attribute\">彩色</span>&nbsp; </p>\n" +
+                    "                                    <div class=\"sale_info clear\">\n" +
+                    "                                        <div class=\"tips_pop_full float_box JS_tips_pop_full\">\n" +
+                    "                                            <div> <a class=\"sale_tag gift JS_sale_tag\" data-promo-type=\"gift\"> 满赠 <i class=\"icon_small png\"></i> </a> </div>\n" +
+                    "                                            <div class=\"pop_box JS_pop_box\">\n" +
+                    "                                                <div><span class=\"arrow_t_1\"><span class=\"arrow_t_2\"></span></span>\n" +
+                    "                                                </div>\n" +
+                    "                                                <div>\n" +
+                    "                                                    <a class=\"clear promo_sale_item promo_has_url\" target=\"_blank\" href=\"\"> <span class=\"title\">时代图书团满99送109</span> <span class=\"tips\">查看活动</span> </a>\n" +
+                    "                                                </div>\n" +
+                    "                                            </div>\n" +
+                    "                                        </div>\n" +
+                    "                                        <div class=\"tips_pop_full float_box JS_tips_pop_full\">\n" +
+                    "                                            <div> <a class=\"sale_tag reduce JS_sale_tag\" data-promo-type=\"reduce\"> 满减 <i class=\"icon_small png\"></i> </a> </div>\n" +
+                    "                                            <div class=\"pop_box JS_pop_box\">\n" +
+                    "                                                <div><span class=\"arrow_t_1\"><span class=\"arrow_t_2\"></span></span>\n" +
+                    "                                                </div>\n" +
+                    "                                                <div>\n" +
+                    "                                                    <a class=\"clear promo_sale_item promo_has_url\" target=\"_blank\" href=\"\"> <span class=\"title\">时代图书团满99减20</span> <span class=\"tips\">查看活动</span> </a>\n" +
+                    "                                                </div>\n" +
+                    "                                            </div>\n" +
+                    "                                        </div>\n" +
+                    "                                    </div>\n" +
+                    "                                </div>\n" +
+                    "                            </div>\n" +
+                    "                        </td>\n" +
+                    "                        <td>\n" +
+                    "                            <div class=\"cart_item_price\">\n" +
+                    "                                <p class=\"jumei_price\">27.00</p>\n" +
+                    "                                <p class=\"market_price\">39.00</p>\n" +
+                    "                            </div>\n" +
+                    "                        </td>\n" +
+                    "                        <td>\n" +
+                    "                            <div class=\"cart_item_num \">\n" +
+                    "                                <div class=\"item_quantity_editer clear\"> <span class=\"decrease_one disabled \">-</span>\n" +
+                    "                                    <input class=\"item_quantity\" value=\"1\" type=\"text\"> <span class=\"increase_one \">+</span> </div>\n" +
+                    "                                <div class=\"item_shortage_tip\"> </div>\n" +
+                    "                            </div>\n" +
+                    "                        </td>\n" +
+                    "                        <td>\n" +
+                    "                            <div class=\"cart_item_total\">\n" +
+                    "                                <p class=\"item_total_price\">27.00</p>\n" +
+                    "                                <p>省 <span class=\"item_saved_price\">12.00</span></p>\n" +
+                    "                            </div>\n" +
+                    "                        </td>\n" +
+                    "                        <td>\n" +
+                    "                            <div class=\"cart_item_option\">\n" +
+                    "                                <a class=\"icon_small delete_item png\" href=\"javascript:void(0)\" title=\"删除\"></a>\n" +
+                    "                            </div>\n" +
+                    "                        </td>\n" +
+                    "                    </tr>\n" +
+                    "                    </tbody>");
+
+                $mech.find(".cart_item_link").text(mname);
+                $($mech.find(".cart_item_pic")).find("img").attr("src", mimage)
+                $($mech.find(".cart_item_pic")).find("img").attr("alt", mid)
+                $mech.find(".jumei_price").text(mprice);
+                $mech.find(".item_quantity").val(mnum);
+                $mech.find(".item_total_price").text(mTotalPrice);
+                $mech.find(".cart_item_attribute").text(mtype);
+
+                return $mech;
+            }
+            var mechandise = getMerchandise();
+
+            $(".cart_group_item").append($(mechandise));
+
+        })
+
+       
+
+    </script>
 </head>
 
 <body>
@@ -183,7 +319,7 @@
                             <th class="cart_overview">
                                 <div class="cart_group_header">
                                     <input class="js_group_selector cart_group_selector" checked="checked" type="checkbox">
-                                    <h2>时代在线发货</h2>
+                                    <h2>易购在线发货</h2>
                                 </div>
                             </th>
                             <th class="cart_price">时代价（元）</th>
@@ -192,248 +328,262 @@
                             <th class="cart_option">操作</th>
                         </tr>
                     </thead>
-                    <tbody class="hide">
-                        <tr class="cart_item " hashid="d150603p892053zc" id="1057066_d150603p892053zc" product_id="892053" item_price="48.00" category_v3_3="18" brand_id="623" product_type="product">
-                            <td valign="top">
-                                <div class="cart_item_desc clear">
-                                    <input class="js_item_selector cart_item_selector" data-item-key="1057066_d150603p892053zc" checked="'checked'/" type="checkbox">
-                                    <div class="cart_item_desc_wrapper">
-                                        <a class="cart_item_pic" href="http://sh.jumei.com/i/deal/d150603p892053zc.html" target="_blank"> <img src="image/book/book_list4/list4_lit1.jpg" alt="世界那么大，我想去看看！"> <span class="sold_out_pic png"></span> </a> <a class="cart_item_link" title="世界那么大，我想去看看" href="http://sh.jumei.com/i/deal/d150603p892053zc.html" target="_blank">世界那么大，我想去看看！</a>
-                                        <p class="sku_info">规格：<span class="cart_item_attribute">彩色</span>&nbsp; </p>
-                                        <div class="sale_info clear">
-                                            <div class="tips_pop_full float_box JS_tips_pop_full">
-                                                <div> <a class="sale_tag gift JS_sale_tag" data-promo-type="gift"> 满赠 <i class="icon_small png"></i> </a> </div>
-                                                <div class="pop_box JS_pop_box">
-                                                    <div><span class="arrow_t_1"><span class="arrow_t_2"></span></span>
-                                                    </div>
-                                                    <div>
-                                                        <a class="clear promo_sale_item promo_has_url" target="_blank" href="http://hd.jumei.com/act/4-3-6035-ppt_maybelline_150603.html"> <span class="title">时代图书团满99送109</span> <span class="tips">查看活动</span> </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="tips_pop_full float_box JS_tips_pop_full">
-                                                <div> <a class="sale_tag reduce JS_sale_tag" data-promo-type="reduce"> 满减 <i class="icon_small png"></i> </a> </div>
-                                                <div class="pop_box JS_pop_box">
-                                                    <div><span class="arrow_t_1"><span class="arrow_t_2"></span></span>
-                                                    </div>
-                                                    <div>
-                                                        <a class="clear promo_sale_item promo_has_url" target="_blank" href="http://hd.jumei.com/act/4-3-6035-ppt_maybelline_150603.html"> <span class="title">时代图书团满99减20</span> <span class="tips">查看活动</span> </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="cart_item_price">
-                                    <p class="jumei_price">48.00</p>
-                                    <p class="market_price">59.00</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="cart_item_num ">
-                                    <div class="item_quantity_editer clear" data-item-key="1057066_d150603p892053zc"> <span class="decrease_one disabled ">-</span>
-                                        <input class="item_quantity" value="1" type="text"> <span class="increase_one ">+</span> </div>
-                                    <div class="item_shortage_tip"> </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="cart_item_total">
-                                    <p class="item_total_price">48.00</p>
-                                    <p>省 <span class="item_saved_price">11.00</span></p>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="cart_item_option">
-                                    <a class="icon_small delete_item png" data-item-key="1057066_d150603p892053zc" href="javascript:void(0)" title="删除"></a>
-                                </div>
-                                <script type="text/javascript">
-                                $(".delete_item").click(function  () {
-                                    $(".hide").hide();
-                                })
-                                </script>
 
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tbody class="hide2">
-                        <tr class="cart_item " hashid="d150603p892053zc" id="1057066_d150603p892053zc" product_id="892053" item_price="32.00" category_v3_3="18" brand_id="623" product_type="product">
-                            <td valign="top">
-                                <div class="cart_item_desc clear">
-                                    <input class="js_item_selector cart_item_selector" data-item-key="1057066_d150603p892053zc" checked="'checked'/" type="checkbox">
-                                    <div class="cart_item_desc_wrapper">
-                                        <a class="cart_item_pic" href="http://sh.jumei.com/i/deal/d150603p892053zc.html" target="_blank"> <img src="image/book/book_list2/list2_lit1.jpg" alt="傲慢与偏见"> <span class="sold_out_pic png"></span> </a> <a class="cart_item_link" title="傲慢与偏见" href="http://sh.jumei.com/i/deal/d150603p892053zc.html" target="_blank">傲慢与偏见（精包装）</a>
-                                        <p class="sku_info"> 规格：<span class="cart_item_attribute">彩色</span>&nbsp; </p>
-                                        <div class="sale_info clear">
-                                            <div class="tips_pop_full float_box JS_tips_pop_full">
-                                                <div> <a class="sale_tag gift JS_sale_tag" data-promo-type="gift"> 满赠 <i class="icon_small png"></i> </a> </div>
-                                                <div class="pop_box JS_pop_box">
-                                                    <div><span class="arrow_t_1"><span class="arrow_t_2"></span></span>
-                                                    </div>
-                                                    <div>
-                                                        <a class="clear promo_sale_item promo_has_url" target="_blank" href="http://hd.jumei.com/act/4-3-6035-ppt_maybelline_150603.html"> <span class="title">时代图书团满99送109</span> <span class="tips">查看活动</span> </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="tips_pop_full float_box JS_tips_pop_full">
-                                                <div> <a class="sale_tag reduce JS_sale_tag" data-promo-type="reduce"> 满减 <i class="icon_small png"></i> </a> </div>
-                                                <div class="pop_box JS_pop_box">
-                                                    <div><span class="arrow_t_1"><span class="arrow_t_2"></span></span>
-                                                    </div>
-                                                    <div>
-                                                        <a class="clear promo_sale_item promo_has_url" target="_blank" href="http://hd.jumei.com/act/4-3-6035-ppt_maybelline_150603.html"> <span class="title">时代图书团满99减20</span> <span class="tips">查看活动</span> </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="cart_item_price">
-                                    <p class="jumei_price">32.00</p>
-                                    <p class="market_price">45.00</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="cart_item_num ">
-                                    <div class="item_quantity_editer clear" data-item-key="1057066_d150603p892053zc"> <span class="decrease_one disabled ">-</span>
-                                        <input class="item_quantity" value="1" type="text"> <span class="increase_one ">+</span> </div>
-                                    <div class="item_shortage_tip"> </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="cart_item_total">
-                                    <p class="item_total_price">32.00</p>
-                                    <p>省 <span class="item_saved_price">13.00</span></p>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="cart_item_option">
-                                    <a class="icon_small delete_item png" data-item-key="1057066_d150603p892053zc" href="javascript:void(0)" title="删除"></a>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <!--<tbody class="hide">-->
+                        <!--<tr class="cart_item " hashid="d150603p892053zc" id="" product_id="892053" item_price="48.00" category_v3_3="18" brand_id="623" product_type="product">-->
+                            <!--<td valign="top">-->
+                                <!--<div class="cart_item_desc clear">-->
+                                    <!--<input class="js_item_selector cart_item_selector" data-item-key="1057066_d150603p892053zc" checked="'checked'/" type="checkbox">-->
+                                    <!--<div class="cart_item_desc_wrapper">-->
+                                        <!--<a class="cart_item_pic" href="http://sh.jumei.com/i/deal/d150603p892053zc.html" target="_blank"> <img src="image/book/book_list4/list4_lit1.jpg" alt="世界那么大，我想去看看！"> <span class="sold_out_pic png"></span> </a> <a class="cart_item_link" title="世界那么大，我想去看看" href="http://sh.jumei.com/i/deal/d150603p892053zc.html" target="_blank">世界那么大，我想去看看！</a>-->
+                                        <!--<p class="sku_info">规格：<span class="cart_item_attribute">彩色</span>&nbsp; </p>-->
+                                        <!--<div class="sale_info clear">-->
+                                            <!--<div class="tips_pop_full float_box JS_tips_pop_full">-->
+                                                <!--<div> <a class="sale_tag gift JS_sale_tag" data-promo-type="gift"> 满赠 <i class="icon_small png"></i> </a> </div>-->
+                                                <!--<div class="pop_box JS_pop_box">-->
+                                                    <!--<div><span class="arrow_t_1"><span class="arrow_t_2"></span></span>-->
+                                                    <!--</div>-->
+                                                    <!--<div>-->
+                                                        <!--<a class="clear promo_sale_item promo_has_url" target="_blank" href="http://hd.jumei.com/act/4-3-6035-ppt_maybelline_150603.html"> <span class="title">时代图书团满99送109</span> <span class="tips">查看活动</span> </a>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                            <!--<div class="tips_pop_full float_box JS_tips_pop_full">-->
+                                                <!--<div> <a class="sale_tag reduce JS_sale_tag" data-promo-type="reduce"> 满减 <i class="icon_small png"></i> </a> </div>-->
+                                                <!--<div class="pop_box JS_pop_box">-->
+                                                    <!--<div><span class="arrow_t_1"><span class="arrow_t_2"></span></span>-->
+                                                    <!--</div>-->
+                                                    <!--<div>-->
+                                                        <!--<a class="clear promo_sale_item promo_has_url" target="_blank" href="http://hd.jumei.com/act/4-3-6035-ppt_maybelline_150603.html"> <span class="title">时代图书团满99减20</span> <span class="tips">查看活动</span> </a>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<div class="cart_item_price">-->
+                                    <!--<p class="jumei_price">48.00</p>-->
+                                    <!--<p class="market_price">59.00</p>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<div class="cart_item_num ">-->
+                                    <!--<div class="item_quantity_editer clear" data-item-key="1057066_d150603p892053zc"> <span class="decrease_one disabled ">-</span>-->
+                                        <!--<input class="item_quantity" value="1" type="text"> <span class="increase_one ">+</span> </div>-->
+                                    <!--<div class="item_shortage_tip"> </div>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<div class="cart_item_total">-->
+                                    <!--<p class="item_total_price">48.00</p>-->
+                                    <!--<p>省 <span class="item_saved_price">11.00</span></p>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<div class="cart_item_option">-->
+                                    <!--<a class="icon_small delete_item png" data-item-key="1057066_d150603p892053zc" href="javascript:void(0)" title="删除"></a>-->
+                                <!--</div>-->
+                                <!--<script type="text/javascript">-->
+                                <!--$(".delete_item").click(function  () {-->
+                                    <!--$(".hide").hide();-->
+                                <!--})-->
+                                <!--</script>-->
+
+                            <!--</td>-->
+                        <!--</tr>-->
+                    <!--</tbody>-->
+                    <!--<tbody class="hide2">-->
+                        <!--<tr class="cart_item " hashid="d150603p892053zc" id="1057066_d150603p892053zc" product_id="892053" item_price="32.00" category_v3_3="18" brand_id="623" product_type="product">-->
+                            <!--<td valign="top">-->
+                                <!--<div class="cart_item_desc clear">-->
+                                    <!--<input class="js_item_selector cart_item_selector" data-item-key="1057066_d150603p892053zc" checked="'checked'/" type="checkbox">-->
+                                    <!--<div class="cart_item_desc_wrapper">-->
+                                        <!--<a class="cart_item_pic" href="http://sh.jumei.com/i/deal/d150603p892053zc.html" target="_blank"> <img src="image/book/book_list2/list2_lit1.jpg" alt="傲慢与偏见"> <span class="sold_out_pic png"></span> </a> <a class="cart_item_link" title="傲慢与偏见" href="http://sh.jumei.com/i/deal/d150603p892053zc.html" target="_blank">傲慢与偏见（精包装）</a>-->
+                                        <!--<p class="sku_info"> 规格：<span class="cart_item_attribute">彩色</span>&nbsp; </p>-->
+                                        <!--<div class="sale_info clear">-->
+                                            <!--<div class="tips_pop_full float_box JS_tips_pop_full">-->
+                                                <!--<div> <a class="sale_tag gift JS_sale_tag" data-promo-type="gift"> 满赠 <i class="icon_small png"></i> </a> </div>-->
+                                                <!--<div class="pop_box JS_pop_box">-->
+                                                    <!--<div><span class="arrow_t_1"><span class="arrow_t_2"></span></span>-->
+                                                    <!--</div>-->
+                                                    <!--<div>-->
+                                                        <!--<a class="clear promo_sale_item promo_has_url" target="_blank" href="http://hd.jumei.com/act/4-3-6035-ppt_maybelline_150603.html"> <span class="title">时代图书团满99送109</span> <span class="tips">查看活动</span> </a>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                            <!--<div class="tips_pop_full float_box JS_tips_pop_full">-->
+                                                <!--<div> <a class="sale_tag reduce JS_sale_tag" data-promo-type="reduce"> 满减 <i class="icon_small png"></i> </a> </div>-->
+                                                <!--<div class="pop_box JS_pop_box">-->
+                                                    <!--<div><span class="arrow_t_1"><span class="arrow_t_2"></span></span>-->
+                                                    <!--</div>-->
+                                                    <!--<div>-->
+                                                        <!--<a class="clear promo_sale_item promo_has_url" target="_blank" href="http://hd.jumei.com/act/4-3-6035-ppt_maybelline_150603.html"> <span class="title">时代图书团满99减20</span> <span class="tips">查看活动</span> </a>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<div class="cart_item_price">-->
+                                    <!--<p class="jumei_price">32.00</p>-->
+                                    <!--<p class="market_price">45.00</p>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<div class="cart_item_num ">-->
+                                    <!--<div class="item_quantity_editer clear" data-item-key="1057066_d150603p892053zc"> <span class="decrease_one disabled ">-</span>-->
+                                        <!--<input class="item_quantity" value="1" type="text"> <span class="increase_one ">+</span> </div>-->
+                                    <!--<div class="item_shortage_tip"> </div>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<div class="cart_item_total">-->
+                                    <!--<p class="item_total_price">32.00</p>-->
+                                    <!--<p>省 <span class="item_saved_price">13.00</span></p>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<div class="cart_item_option">-->
+                                    <!--<a class="icon_small delete_item png" data-item-key="1057066_d150603p892053zc" href="javascript:void(0)" title="删除"></a>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                    <!--</tbody>-->
+                    <!--<tbody>-->
+                        <!--<tr class="cart_item " hashid="d150603p892053zc" id="1057066_d150603p892053zc" product_id="892053" item_price="34.00" category_v3_3="18" brand_id="623" product_type="product">-->
+                            <!--<td valign="top">-->
+                                <!--<div class="cart_item_desc clear">-->
+                                    <!--<input class="js_item_selector cart_item_selector" data-item-key="1057066_d150603p892053zc" checked="'checked'/" type="checkbox">-->
+                                    <!--<div class="cart_item_desc_wrapper">-->
+                                        <!--<a class="cart_item_pic" href="http://sh.jumei.com/i/deal/d150603p892053zc.html" target="_blank"> <img src="image/book/book_list1/list1_lit1.jpg" alt="平凡的世界"> <span class="sold_out_pic png"></span> </a> <a class="cart_item_link" title="平凡的世界" href="http://sh.jumei.com/i/deal/d150603p892053zc.html" target="_blank">平凡的世界</a>-->
+                                        <!--<p class="sku_info"> 规格：<span class="cart_item_attribute">彩色</span>&nbsp; </p>-->
+                                        <!--<div class="sale_info clear">-->
+                                            <!--<div class="tips_pop_full float_box JS_tips_pop_full">-->
+                                                <!--<div> <a class="sale_tag gift JS_sale_tag" data-promo-type="gift"> 满赠 <i class="icon_small png"></i> </a> </div>-->
+                                                <!--<div class="pop_box JS_pop_box">-->
+                                                    <!--<div><span class="arrow_t_1"><span class="arrow_t_2"></span></span>-->
+                                                    <!--</div>-->
+                                                    <!--<div>-->
+                                                        <!--<a class="clear promo_sale_item promo_has_url" target="_blank" href="http://hd.jumei.com/act/4-3-6035-ppt_maybelline_150603.html"> <span class="title">时代图书团满99送109</span> <span class="tips">查看活动</span> </a>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                            <!--<div class="tips_pop_full float_box JS_tips_pop_full">-->
+                                                <!--<div> <a class="sale_tag reduce JS_sale_tag" data-promo-type="reduce"> 满减 <i class="icon_small png"></i> </a> </div>-->
+                                                <!--<div class="pop_box JS_pop_box">-->
+                                                    <!--<div><span class="arrow_t_1"><span class="arrow_t_2"></span></span>-->
+                                                    <!--</div>-->
+                                                    <!--<div>-->
+                                                        <!--<a class="clear promo_sale_item promo_has_url" target="_blank" href="http://hd.jumei.com/act/4-3-6035-ppt_maybelline_150603.html"> <span class="title">时代图书团满99减20</span> <span class="tips">查看活动</span> </a>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<div class="cart_item_price">-->
+                                    <!--<p class="jumei_price">34.00</p>-->
+                                    <!--<p class="market_price">38.00</p>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<div class="cart_item_num ">-->
+                                    <!--<div class="item_quantity_editer clear" data-item-key="1057066_d150603p892053zc"> <span class="decrease_one disabled ">-</span>-->
+                                        <!--<input class="item_quantity" value="1" type="text"> <span class="increase_one ">+</span> </div>-->
+                                    <!--<div class="item_shortage_tip"> </div>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<div class="cart_item_total">-->
+                                    <!--<p class="item_total_price">34.00</p>-->
+                                    <!--<p>省 <span class="item_saved_price">4.00</span></p>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<div class="cart_item_option">-->
+                                    <!--<a class="icon_small delete_item png" data-item-key="1057066_d150603p892053zc" href="javascript:void(0)" title="删除"></a>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                    <!--</tbody>-->
+
+
+
+
                     <tbody>
-                        <tr class="cart_item " hashid="d150603p892053zc" id="1057066_d150603p892053zc" product_id="892053" item_price="34.00" category_v3_3="18" brand_id="623" product_type="product">
-                            <td valign="top">
-                                <div class="cart_item_desc clear">
-                                    <input class="js_item_selector cart_item_selector" data-item-key="1057066_d150603p892053zc" checked="'checked'/" type="checkbox">
-                                    <div class="cart_item_desc_wrapper">
-                                        <a class="cart_item_pic" href="http://sh.jumei.com/i/deal/d150603p892053zc.html" target="_blank"> <img src="image/book/book_list1/list1_lit1.jpg" alt="平凡的世界"> <span class="sold_out_pic png"></span> </a> <a class="cart_item_link" title="平凡的世界" href="http://sh.jumei.com/i/deal/d150603p892053zc.html" target="_blank">平凡的世界</a>
-                                        <p class="sku_info"> 规格：<span class="cart_item_attribute">彩色</span>&nbsp; </p>
-                                        <div class="sale_info clear">
-                                            <div class="tips_pop_full float_box JS_tips_pop_full">
-                                                <div> <a class="sale_tag gift JS_sale_tag" data-promo-type="gift"> 满赠 <i class="icon_small png"></i> </a> </div>
-                                                <div class="pop_box JS_pop_box">
-                                                    <div><span class="arrow_t_1"><span class="arrow_t_2"></span></span>
-                                                    </div>
-                                                    <div>
-                                                        <a class="clear promo_sale_item promo_has_url" target="_blank" href="http://hd.jumei.com/act/4-3-6035-ppt_maybelline_150603.html"> <span class="title">时代图书团满99送109</span> <span class="tips">查看活动</span> </a>
-                                                    </div>
+                    <tr class="cart_item " >
+                        <td valign="top">
+                            <div class="cart_item_desc clear">
+                                <input class="js_item_selector cart_item_selector" checked="'checked'/" type="checkbox">
+                                <div class="cart_item_desc_wrapper">
+
+                                    <a class="cart_item_pic" href="" target="_blank">
+                                        <img src="image/book/book_list7/list7_lit1.jpg" alt="有一个地方我们知道">
+                                        <span class="sold_out_pic png"></span>
+                                    </a>
+
+                                    <a class="cart_item_link"  href="" target="_blank">有一个地方我们知道</a>
+                                    <p class="sku_info"> 规格：<span class="cart_item_attribute">彩色</span>&nbsp; </p>
+                                    <div class="sale_info clear">
+                                        <div class="tips_pop_full float_box JS_tips_pop_full">
+                                            <div> <a class="sale_tag gift JS_sale_tag" data-promo-type="gift"> 满赠 <i class="icon_small png"></i> </a> </div>
+                                            <div class="pop_box JS_pop_box">
+                                                <div><span class="arrow_t_1"><span class="arrow_t_2"></span></span>
+                                                </div>
+                                                <div>
+                                                    <a class="clear promo_sale_item promo_has_url" target="_blank" href=""> <span class="title">时代图书团满99送109</span> <span class="tips">查看活动</span> </a>
                                                 </div>
                                             </div>
-                                            <div class="tips_pop_full float_box JS_tips_pop_full">
-                                                <div> <a class="sale_tag reduce JS_sale_tag" data-promo-type="reduce"> 满减 <i class="icon_small png"></i> </a> </div>
-                                                <div class="pop_box JS_pop_box">
-                                                    <div><span class="arrow_t_1"><span class="arrow_t_2"></span></span>
-                                                    </div>
-                                                    <div>
-                                                        <a class="clear promo_sale_item promo_has_url" target="_blank" href="http://hd.jumei.com/act/4-3-6035-ppt_maybelline_150603.html"> <span class="title">时代图书团满99减20</span> <span class="tips">查看活动</span> </a>
-                                                    </div>
+                                        </div>
+                                        <div class="tips_pop_full float_box JS_tips_pop_full">
+                                            <div> <a class="sale_tag reduce JS_sale_tag" data-promo-type="reduce"> 满减 <i class="icon_small png"></i> </a> </div>
+                                            <div class="pop_box JS_pop_box">
+                                                <div><span class="arrow_t_1"><span class="arrow_t_2"></span></span>
+                                                </div>
+                                                <div>
+                                                    <a class="clear promo_sale_item promo_has_url" target="_blank" href=""> <span class="title">时代图书团满99减20</span> <span class="tips">查看活动</span> </a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </td>
-                            <td>
-                                <div class="cart_item_price">
-                                    <p class="jumei_price">34.00</p>
-                                    <p class="market_price">38.00</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="cart_item_num ">
-                                    <div class="item_quantity_editer clear" data-item-key="1057066_d150603p892053zc"> <span class="decrease_one disabled ">-</span>
-                                        <input class="item_quantity" value="1" type="text"> <span class="increase_one ">+</span> </div>
-                                    <div class="item_shortage_tip"> </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="cart_item_total">
-                                    <p class="item_total_price">34.00</p>
-                                    <p>省 <span class="item_saved_price">4.00</span></p>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="cart_item_option">
-                                    <a class="icon_small delete_item png" data-item-key="1057066_d150603p892053zc" href="javascript:void(0)" title="删除"></a>
-                                </div>
-                            </td>
-                        </tr>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="cart_item_price">
+                                <p class="jumei_price">27.00</p>
+                                <p class="market_price">39.00</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="cart_item_num ">
+                                <div class="item_quantity_editer clear"> <span class="decrease_one disabled ">-</span>
+                                    <input class="item_quantity" value="1" type="text"> <span class="increase_one ">+</span> </div>
+                                <div class="item_shortage_tip"> </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="cart_item_total">
+                                <p class="item_total_price">27.00</p>
+                                <p>省 <span class="item_saved_price">12.00</span></p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="cart_item_option">
+                                <a class="icon_small delete_item png" href="javascript:void(0)" title="删除"></a>
+                            </div>
+                        </td>
+                    </tr>
                     </tbody>
-                    <tbody>
-                        <tr class="cart_item " hashid="d150603p892053zc" id="1057066_d150603p892053zc" product_id="892053" item_price="48.00" category_v3_3="18" brand_id="623" product_type="product">
-                            <td valign="top">
-                                <div class="cart_item_desc clear">
-                                    <input class="js_item_selector cart_item_selector" data-item-key="1057066_d150603p892053zc" checked="'checked'/" type="checkbox">
-                                    <div class="cart_item_desc_wrapper">
-                                        <a class="cart_item_pic" href="http://sh.jumei.com/i/deal/d150603p892053zc.html" target="_blank"> <img src="image/book/book_list7/list7_lit1.jpg" alt="有一个地方我们知道"> <span class="sold_out_pic png"></span> </a> <a class="cart_item_link" title="有一个地方我们知道" href="http://sh.jumei.com/i/deal/d150603p892053zc.html" target="_blank">有一个地方我们知道</a>
-                                        <p class="sku_info"> 规格：<span class="cart_item_attribute">彩色</span>&nbsp; </p>
-                                        <div class="sale_info clear">
-                                            <div class="tips_pop_full float_box JS_tips_pop_full">
-                                                <div> <a class="sale_tag gift JS_sale_tag" data-promo-type="gift"> 满赠 <i class="icon_small png"></i> </a> </div>
-                                                <div class="pop_box JS_pop_box">
-                                                    <div><span class="arrow_t_1"><span class="arrow_t_2"></span></span>
-                                                    </div>
-                                                    <div>
-                                                        <a class="clear promo_sale_item promo_has_url" target="_blank" href="http://hd.jumei.com/act/4-3-6035-ppt_maybelline_150603.html"> <span class="title">时代图书团满99送109</span> <span class="tips">查看活动</span> </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="tips_pop_full float_box JS_tips_pop_full">
-                                                <div> <a class="sale_tag reduce JS_sale_tag" data-promo-type="reduce"> 满减 <i class="icon_small png"></i> </a> </div>
-                                                <div class="pop_box JS_pop_box">
-                                                    <div><span class="arrow_t_1"><span class="arrow_t_2"></span></span>
-                                                    </div>
-                                                    <div>
-                                                        <a class="clear promo_sale_item promo_has_url" target="_blank" href="http://hd.jumei.com/act/4-3-6035-ppt_maybelline_150603.html"> <span class="title">时代图书团满99减20</span> <span class="tips">查看活动</span> </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="cart_item_price">
-                                    <p class="jumei_price">27.00</p>
-                                    <p class="market_price">39.00</p>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="cart_item_num ">
-                                    <div class="item_quantity_editer clear" data-item-key="1057066_d150603p892053zc"> <span class="decrease_one disabled ">-</span>
-                                        <input class="item_quantity" value="1" type="text"> <span class="increase_one ">+</span> </div>
-                                    <div class="item_shortage_tip"> </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="cart_item_total">
-                                    <p class="item_total_price">27.00</p>
-                                    <p>省 <span class="item_saved_price">12.00</span></p>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="cart_item_option">
-                                    <a class="icon_small delete_item png" data-item-key="1057066_d150603p892053zc" href="javascript:void(0)" title="删除"></a>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
+
+
+
                     <tfoot>
                         <tr>
                             <td colspan="5"> 商品金额： <span class="group_total_price">￥141.00</span> </td>
