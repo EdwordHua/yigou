@@ -125,25 +125,12 @@ public class UserController {
             response.getWriter().close();
         }
     }
-
-
     public JSONObject getUserJson(List<User> userAll) {
         JSONArray users=new JSONArray();
         JSONObject json=new JSONObject();
         for(int i=0;i<userAll.size();i++)
         {
-//
-//                long mid = merchsAll.get(i).getMid();
-//                String mname = merchsAll.get(i).getMname();
-//                String mimage = merchsAll.get(i).getMimage();
-//                int mprice = merchsAll.get(i).getMprice();
-//                int mstock = merchsAll.get(i).getMstock();
-//                String mtype = merchsAll.get(i).getMtype();
-//                String mtime = merchsAll.get(i).getMtime();
-//                String mrecommend = merchsAll.get(i).getMrecommend();
-
             JSONObject member_temp=new JSONObject();
-
             member_temp.put("uid", userAll.get(i).getUid());
             member_temp.put("uname", userAll.get(i).getUname());
             member_temp.put("uaddress", userAll.get(i).getUaddress());
