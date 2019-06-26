@@ -50,36 +50,27 @@ public class MerchandiseController {
     }
 //上传商品
    @RequestMapping("/insertMerch.do")
-    public void insertMerch(HttpServletRequest request, HttpServletResponse response,MultipartFile uploadFile)throws IOException{
+    public void insertMerch(HttpServletRequest request, HttpServletResponse response)throws IOException{
        request.setCharacterEncoding("UTF-8");
        response.setCharacterEncoding("UTF-8");
        response.setContentType("text/html;charset=utf-8");
        Merchandise merch=new Merchandise();
-       String savedDir1 = request.getSession().getServletContext().getRealPath("")+"\\webapp\\image\\products\\";
+       //String savedDir1 = request.getSession().getServletContext().getRealPath("")+"\\webapp\\image\\products\\";
+       String mimage="image/products"+request.getParameter("mimage");
+       System.out.println("mimage:"+mimage);
        merch.setMname(request.getParameter("mname"));
        merch.setMtime(STime.getTime());
        merch.setMrecommend(request.getParameter("mrecommend"));
        merch.setMtype(request.getParameter("mtype"));
        int mprice=Integer.valueOf(request.getParameter("mprice"));
        int mstock=Integer.valueOf(request.getParameter("mstock"));
+
        merch.setMprice(mprice);
        merch.setMstock(mstock);
        System.out.println("Mname："+merch.getMname()+"Mtype："+merch.getMtype());
-       System.out.println("路径："+savedDir1);
-       merchService.insertMerch(merch);
-       if (uploadFile != null) {
-           String filename = uploadFile.getOriginalFilename();
-           System.out.print(filename);
-           merch.setMimage("\\image\\products\\"+filename);
-           File newFile = new File(savedDir1+ filename);
+//       System.out.println("路径："+savedDir1);
+     //  merchService.insertMerch(merch);
 
-           try {
-               uploadFile.transferTo(newFile);
-
-           } catch (IOException e) {
-               e.printStackTrace();
-           }
-       }
         response.getWriter().write(mapper.writeValueAsString("true"));
         response.getWriter().close();
     }
@@ -178,38 +169,8 @@ public class MerchandiseController {
         json.put("code",0);
         return json;
     }
-//    private String uploadPath = "E:\\temp"; // 上传文件的目录
-//    File tempPathFile;
-//    @RequestMapping("upload")
-//    public void uploadImg(Long classesId,HttpServletRequest request) throws Exception{
-//        try {
-//            // Create a factory for disk-based file items
-//            DiskFileItemFactory factory = new DiskFileItemFactory();
-//            // Set factory constraints
-//            factory.setSizeThreshold(4096); // 设置缓冲区大小，这里是4kb
-//            factory.setRepository(tempPathFile);// 设置缓冲区目录
-//            // Create a new file upload handler
-//            ServletFileUpload upload = new ServletFileUpload(factory);
-//            // Set overall request size constraint
-//            upload.setSizeMax(4194304); // 设置最大文件尺寸，这里是4MB
-//            List<FileItem> items = upload.parseRequest(request);// 得到所有的文件
-//            System.out.println(items.size());
-//            Iterator<FileItem> i = items.iterator();
-//            while (i.hasNext()) {
-//                FileItem fi = (FileItem) i.next();
-//                String fileName = fi.getName();
-//                if (fileName != null) {
-//                    File fullFile = new File(new String(fi.getName().getBytes(), "utf-8")); // 解决文件名乱码问题
-//                    File savedFile = new File(uploadPath, fullFile.getName());
-//                    fi.write(savedFile);
-//                }
-//            }
-//            System.out.print("上传成功！");
-//        } catch (Exception e) {
-//
-//        }
-//    }
-@RequestMapping("/uploadimage.do")
+
+@RequestMapping("/uploadimage.do")   //上传图片
     public Map<String,Object> image(MultipartFile file,HttpServletRequest request,@PathVariable String type)throws  Exception{
         Map<String,Object> map = new HashMap<String,Object>();
         String path=request.getSession().getServletContext().getRealPath("\\image\\products\\");
@@ -219,6 +180,7 @@ public class MerchandiseController {
         map.put("image",image);
         return map;
     }
+
     public static String uploadFile(MultipartFile file,String path)throws  Exception{
         String name=file.getOriginalFilename();
         String suffixName =name.substring(name.lastIndexOf("."));
