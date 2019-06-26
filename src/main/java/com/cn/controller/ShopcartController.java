@@ -60,7 +60,13 @@ public class ShopcartController {
     }
     @RequestMapping("/delShop.do")
     public void delShopcart(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=utf-8");
+        long sid=Long.parseLong(request.getParameter("sid")) ;
+        shopcartService.deleteShop(sid);
+        response.getWriter().write("true");
+        response.getWriter().close();
     }
     @RequestMapping("/showShop.do")
     public void showShopcart(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -76,7 +82,7 @@ public class ShopcartController {
 
     }
     public JSONObject getShopJson(List<Shopcart> shoplist) {
-        int money=0;
+        float money=0;
         JSONArray shops=new JSONArray();
         JSONObject json=new JSONObject();
         for(int i=0;i<shoplist.size();i++)
@@ -90,7 +96,7 @@ public class ShopcartController {
             member_temp.put("ssum", shoplist.get(i).getSsum());
             member_temp.put("sisbuy", shoplist.get(i).getSisbuy());
             member_temp.put("mimage", merch.getMimage());
-            member_temp.put("mprice", merch.getMprice());
+            member_temp.put("mprice", (float)merch.getMprice());
             member_temp.put("mstock", merch.getMstock());
             member_temp.put("mtype", merch.getMtype());
             member_temp.put("mtime", merch.getMtime());
