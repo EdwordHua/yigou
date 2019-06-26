@@ -33,8 +33,11 @@ public class UserController {
     {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-
+        response.setContentType("text/html;charset=utf-8");
         List<User> userlist = this.userService.selectAllUser();
+        JSONObject jsonObject=getUserJson(userlist);
+        response.getWriter().print(jsonObject);
+        response.getWriter().close();
 //        if(user != null){
 //            System.out.println("BUG-TEST:Uid:"+user.getUid()+",u_password:"+user.getUpassword()+",Uname:"+user.getUname()+",ULevel:"+user.getULevel()+",address:"+user.getUaddress()+",Utime:"+user.getUtime());
 //        }
