@@ -41,6 +41,18 @@ public class UserController {
         response.getWriter().print(jsonObject);
         response.getWriter().close();
     }
+    @RequestMapping("/showUserAdmin.do")
+    public void selectUserAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException
+    {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=utf-8");
+        List<User> userlist = this.userService.selectAllUserAdmin();
+        System.out.println(mapper.writeValueAsString(userlist));
+        JSONObject jsonObject=getUserJson(userlist);
+        response.getWriter().print(jsonObject);
+        response.getWriter().close();
+    }
     @RequestMapping( "/dologin.do")
     public String doLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
        // User user = iUserService.login(userCode, userPassword);

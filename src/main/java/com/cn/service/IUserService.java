@@ -11,6 +11,7 @@ public interface IUserService {
     User selectUser(long userId);
     User insertUser(User user);
     List<User> selectAllUser();
+    List<User> selectAllUserAdmin();
     int updataUser(User user);
     int deleteUser(long userId);
     User checkLogin(long userId,String password);

@@ -71,4 +71,7 @@ public class UserServiceImpl implements IUserService
  public List<User> selectAllUser() {
   return this.userDao.selectAllUser();
  }
+ public List<User> selectAllUserAdmin(){
+  return this.userDao.selectAllUserAdmin();
+ }
 }

@@ -14,7 +14,10 @@
           SELECT * FROM user WHERE Uid = #{Uid}
      </select>
     <select id="selectAllUser" resultMap="UserMap" >
-        SELECT * FROM user
+        SELECT * FROM user WHERE  ulevel  = 1
+    </select>
+    <select id="selectAllUserAdmin" resultMap="UserMap" >
+        SELECT * FROM user WHERE  ulevel  = 0
     </select>
     <select id="selectUserByin" resultType="User" parameterType="User">
         SELECT * FROM user WHERE Uname = #{Uname} AND Utime=#{Utime} AND Upassword=#{Upassword}
