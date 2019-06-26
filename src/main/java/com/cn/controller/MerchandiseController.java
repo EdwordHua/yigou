@@ -100,23 +100,11 @@ public class MerchandiseController {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
-        String savedDir1 = request.getSession().getServletContext().getRealPath("")+"\\webapp\\image\\products\\";
-
-        System.out.println("路径："+savedDir1);
-        if (uploadFile != null) {
-            String filename = uploadFile.getOriginalFilename();
-            System.out.print(filename);
-
-            File newFile = new File(savedDir1+ filename);
-//            merchService.insertMerch()
-            try {
-                uploadFile.transferTo(newFile);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
+        long mid=Long.parseLong(request.getParameter("mid"));
+        String mname=request.getParameter("mname");
+        System.out.println("mid:"+mid+",mname:"+mname);
+        response.getWriter().write("true");
+        response.getWriter().close();
     }
 
 
@@ -144,8 +132,9 @@ public class MerchandiseController {
         Merchandise merch=merchService.selectMerchByID(mid);
         String fileDir = request.getSession().getServletContext().getRealPath("")+"\\webapp"+merch.getMimage();
         System.out.println(fileDir);
-        deleteFile.delete(fileDir);
-        merchService.deleteMerch(mid);
+        //deleteFile.delete(fileDir);
+        int res=merchService.deleteMerch(mid);
+        System.out.println("res:"+res);
        // getMerchs( request,response);
     }
     private String getUrl(String filename){

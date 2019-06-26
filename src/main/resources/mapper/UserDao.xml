@@ -2,9 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 设置为IUserDao接口方法提供sql语句配置 -->
 <mapper namespace="com.cn.dao.IUserDao">
+    <resultMap id="UserMap" type="User">
+        <id  property="Uid" column="long"/>
+        <result  property="Uname" column="String" />
+        <result  property="Upassword" column="String" />
+        <result  property="Uaddress" column="String" />
+        <result  property="Utime" column="String"/>
+        <result  property="ULevel" column="int"/>
+    </resultMap>
     <select id="selectUser" resultType="User" parameterType="long">
           SELECT * FROM user WHERE Uid = #{Uid}
      </select>
+    <select id="selectAllUser" resultMap="UserMap" >
+        SELECT * FROM user
+    </select>
     <select id="selectUserByin" resultType="User" parameterType="User">
         SELECT * FROM user WHERE Uname = #{Uname} AND Utime=#{Utime} AND Upassword=#{Upassword}
     </select>

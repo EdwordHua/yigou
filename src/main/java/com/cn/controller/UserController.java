@@ -1,4 +1,5 @@
 package com.cn.controller;
+import com.cn.model.Merchandise;
 import com.cn.model.User;
 import com.cn.service.IUserService;
 import com.cn.tools.Constants;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2019/6/19 0019.
@@ -31,16 +33,15 @@ public class UserController {
     {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        long userId = Long.parseLong(request.getParameter("uid"));
-        System.out.println("Uid:"+userId);
-        User user = this.userService.selectUser(userId);
-        if(user != null){
-            System.out.println("BUG-TEST:Uid:"+user.getUid()+",u_password:"+user.getUpassword()+",Uname:"+user.getUname()+",ULevel:"+user.getULevel()+",address:"+user.getUaddress()+",Utime:"+user.getUtime());
-        }
-        ObjectMapper mapper = new ObjectMapper();
-        System.out.println("BUG-TEST-json:"+mapper.writeValueAsString(user));
-        response.getWriter().write(mapper.writeValueAsString(user));
-        response.getWriter().close();
+
+        List<User> userlist = this.userService.selectAllUser();
+//        if(user != null){
+//            System.out.println("BUG-TEST:Uid:"+user.getUid()+",u_password:"+user.getUpassword()+",Uname:"+user.getUname()+",ULevel:"+user.getULevel()+",address:"+user.getUaddress()+",Utime:"+user.getUtime());
+//        }
+//        ObjectMapper mapper = new ObjectMapper();
+//        System.out.println("BUG-TEST-json:"+mapper.writeValueAsString(user));
+//        response.getWriter().write(mapper.writeValueAsString(user));
+//        response.getWriter().close();
     }
     @RequestMapping( "/dologin.do")
     public String doLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -134,6 +135,42 @@ public class UserController {
             response.getWriter().write("false");
             response.getWriter().close();
         }
+    }
+
+
+    public JSONObject getUserJson(List<User> userAll) {
+        JSONArray users=new JSONArray();
+        JSONObject json=new JSONObject();
+        for(int i=0;i<userAll.size();i++)
+        {
+//
+//                long mid = merchsAll.get(i).getMid();
+//                String mname = merchsAll.get(i).getMname();
+//                String mimage = merchsAll.get(i).getMimage();
+//                int mprice = merchsAll.get(i).getMprice();
+//                int mstock = merchsAll.get(i).getMstock();
+//                String mtype = merchsAll.get(i).getMtype();
+//                String mtime = merchsAll.get(i).getMtime();
+//                String mrecommend = merchsAll.get(i).getMrecommend();
+
+            JSONObject member_temp=new JSONObject();
+
+            member_temp.put("uid", userAll.get(i).getUid());
+            member_temp.put("uname", userAll.get(i).getUname());
+            member_temp.put("uaddress", userAll.get(i).getUaddress());
+            member_temp.put("ulevel", userAll.get(i).getULevel());
+            member_temp.put("upassword", userAll.get(i).getUpassword());
+            member_temp.put("utime", userAll.get(i).getUtime());
+
+
+            users.add(member_temp);
+        }
+
+        json.put("data", users);
+        json.put("count",userAll.size());
+        json.put("msg","");
+        json.put("code",0);
+        return json;
     }
 }
 
