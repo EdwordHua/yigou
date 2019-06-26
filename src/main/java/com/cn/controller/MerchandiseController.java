@@ -137,28 +137,13 @@ public class MerchandiseController {
         System.out.println("res:"+res);
        // getMerchs( request,response);
     }
-    private String getUrl(String filename){
-        String url="";
-        return url;
-    }
 
     public JSONObject getMerchsJson(List<Merchandise> merchsAll) {
         JSONArray merchs=new JSONArray();
         JSONObject json=new JSONObject();
         for(int i=0;i<merchsAll.size();i++)
         {
-//
-//                long mid = merchsAll.get(i).getMid();
-//                String mname = merchsAll.get(i).getMname();
-//                String mimage = merchsAll.get(i).getMimage();
-//                int mprice = merchsAll.get(i).getMprice();
-//                int mstock = merchsAll.get(i).getMstock();
-//                String mtype = merchsAll.get(i).getMtype();
-//                String mtime = merchsAll.get(i).getMtime();
-//                String mrecommend = merchsAll.get(i).getMrecommend();
-
             JSONObject member_temp=new JSONObject();
-
             member_temp.put("mid", merchsAll.get(i).getMid());
             member_temp.put("mname", merchsAll.get(i).getMname());
             member_temp.put("mimage", merchsAll.get(i).getMimage());

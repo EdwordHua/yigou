@@ -27,7 +27,8 @@ import java.util.List;
 public class UserController {
     @Resource
     private IUserService userService;
-    private MD5T md5T;
+//    private MD5T md5T;
+    ObjectMapper mapper = new ObjectMapper();
     @RequestMapping("/showUser.do")
     public void selectUser(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
@@ -35,16 +36,10 @@ public class UserController {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
         List<User> userlist = this.userService.selectAllUser();
+        System.out.println(mapper.writeValueAsString(userlist));
         JSONObject jsonObject=getUserJson(userlist);
         response.getWriter().print(jsonObject);
         response.getWriter().close();
-//        if(user != null){
-//            System.out.println("BUG-TEST:Uid:"+user.getUid()+",u_password:"+user.getUpassword()+",Uname:"+user.getUname()+",ULevel:"+user.getULevel()+",address:"+user.getUaddress()+",Utime:"+user.getUtime());
-//        }
-//        ObjectMapper mapper = new ObjectMapper();
-//        System.out.println("BUG-TEST-json:"+mapper.writeValueAsString(user));
-//        response.getWriter().write(mapper.writeValueAsString(user));
-//        response.getWriter().close();
     }
     @RequestMapping( "/dologin.do")
     public String doLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -57,12 +52,6 @@ public class UserController {
         long userId = Long.parseLong(request.getParameter("uid"));
         String upassword = request.getParameter("upassword");
         System.out.println("1:UID:" + userId + ",Upassword:" + upassword);
-        try {
-           // String md5str = MD5T.md5(upassword, "a");
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
         User user = this.userService.checkLogin(userId,upassword); //登录检测
         String path = request.getServletPath();//获取当前访问路径
         String root = request.getContextPath();//获取项目的上下文
@@ -127,9 +116,6 @@ public class UserController {
         user.setUaddress(uaddress);
         user = this.userService.insertUser(user);
         ObjectMapper mapper = new ObjectMapper();
-//        JSONArray merchs=new JSONArray();
-//        JSONObject json=new JSONObject();
-
         if(user != null) {
             System.out.println("Result:" + mapper.writeValueAsString(user));
             response.getWriter().write(mapper.writeValueAsString(user));
