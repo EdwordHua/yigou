@@ -62,7 +62,11 @@
           </li>
           <li class="layui-nav-item" lay-unselect>
             <a href="javascript:;">
-              <cite>易购</cite>
+              <cite>
+                <form action="/user/islogin.do" method="get">
+                  用户名：<input type="text" name="username" />
+                </form>
+              </cite>
             </a>
             <dl class="layui-nav-child">
               <dd><a lay-href="info.html">基本资料</a></dd>
