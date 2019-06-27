@@ -78,10 +78,12 @@
                 //                点击莫一个商品图片
                 $(".imgBox").click(function () {
                     var mid = $(this).find("img").attr("alt");
+                
                     var url = 'showDetail.html?mid='+mid+'';
                     var url = encodeURI(encodeURI(url));
 
-                    var mtype = $(this).attr("mtype");
+
+                    window.location = url;
                 });
 
             });
