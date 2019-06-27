@@ -37,7 +37,9 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/user/loginOut.do"/>
-            <mvc:mapping path="/merch/**"/>
+            <mvc:mapping path="/user/showUser.do"/>
+            <mvc:mapping path="/user/showUserAdmin.do"/>
+            <mvc:mapping path="/masterMerch/**"/>
             <mvc:mapping path="/shopcart/**"/>
             <bean class="com.cn.interceptor.SysInterceptor"/>
         </mvc:interceptor>
