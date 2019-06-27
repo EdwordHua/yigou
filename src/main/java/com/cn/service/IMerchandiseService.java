@@ -12,6 +12,7 @@ import java.util.List;
 public interface IMerchandiseService {
     List<Merchandise> selectAllMerchs();
     Merchandise selectMerchByID(long Mid);
+    List<Merchandise> searchMerchs(String mname);
     List<Merchandise> selectMerchByName(String Uname);
     List<Merchandise> selectMerchByType(String Type);
     int insertMerch(Merchandise merchandise);

@@ -49,6 +49,21 @@ public class indexController {
     public void findMerchsByType(HttpServletRequest request, HttpServletResponse response)throws Exception{
 
         }
+    //搜索接口
+    @RequestMapping("/searchMerchs.do")
+    public void searchMerchs(HttpServletRequest request, HttpServletResponse response)throws Exception{
+        request.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=utf-8");
+        String mname=request.getParameter("mname");
+        List<Merchandise> merchsAll=merchService.searchMerchs(mname);
+        if(merchsAll != null){
+            System.out.println(mapper.writeValueAsString(merchsAll));
+            JSONObject jsonObject=getMerchsJson(merchsAll);
+            response.getWriter().print(jsonObject);
+            response.getWriter().close();
+        }
+
+    }
     @RequestMapping("/findMerchsByMID.do")
     public void findMerchsByMID(HttpServletRequest request, HttpServletResponse response)throws Exception{
         request.setCharacterEncoding("utf-8");
@@ -63,8 +78,6 @@ public class indexController {
             response.getWriter().write(mapper.writeValueAsString("flase"));
             response.getWriter().close();
         }
-
-
     }
     public JSONObject getMerchsJson(List<Merchandise> merchsAll) {
         JSONArray merchs=new JSONArray();

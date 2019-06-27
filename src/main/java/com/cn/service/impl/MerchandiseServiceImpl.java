@@ -52,4 +52,9 @@ public class MerchandiseServiceImpl implements IMerchandiseService{
     public int deleteMerch(long Mid) {          //删除商品
         return this.merchDao.deleteMerch(Mid);
     }
+//搜索商品
+    @Override
+    public List<Merchandise> searchMerchs(String mname) {
+        return this.merchDao.searchMerchs(mname);
+    }
 }

@@ -21,6 +21,9 @@
     <select id="selectMerchByName" resultMap="MerchMap" parameterType="String">
         SELECT * FROM merchandise WHERE Mname = #{Mname}
     </select>
+    <select id="searchMerchs" resultMap="MerchMap" parameterType="String">
+        SELECT * FROM merchandise WHERE Mname like  "%" #{Mname}"%"
+    </select>
     <select id="selectMerchByType" resultMap="MerchMap" parameterType="String">
         SELECT * FROM merchandise WHERE type = #{Type}
     </select>
