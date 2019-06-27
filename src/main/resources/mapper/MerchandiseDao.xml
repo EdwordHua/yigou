@@ -25,7 +25,7 @@
         SELECT * FROM merchandise WHERE Mname like  "%" #{Mname}"%"
     </select>
     <select id="selectMerchByType" resultMap="MerchMap" parameterType="String">
-        SELECT * FROM merchandise WHERE type = #{Type}
+        SELECT * FROM merchandise WHERE mtype = #{mtype}
     </select>
     <insert id="insertMerch" parameterType="Merchandise">
         INSERT INTO  merchandise(Mname,Mimage,Mprice,Mstock,Mtype,Mtime,Mrecommend)

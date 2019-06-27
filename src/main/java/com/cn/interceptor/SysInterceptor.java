@@ -23,12 +23,12 @@ public class SysInterceptor extends HandlerInterceptorAdapter {
         String username = (String)session.getAttribute("username");
         if (null == user) {
            // response.sendRedirect(request.getContextPath() + "/401.html");
-            System.out.println("SysInterceptor:TRUR");
+            System.out.println("SysInterceptor:false");
 //            Filter
-            return true;
+            return false;
         }else
         {
-            System.out.println("SysInterceptor:FLASE");
+            System.out.println("SysInterceptor:True");
            // request.getRequestDispatcher("/404.jsp").forward(request, response);
             return true;
         }

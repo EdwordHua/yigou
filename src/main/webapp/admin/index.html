@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="../layui/css/layui.css" media="all">
   <link rel="stylesheet" href="../css/xu/admin.css" media="all">
+  <script src="../js/jquery-1.4.2.min.js"></script>
 </head>
 <body class="layui-layout-body">
 
@@ -63,16 +64,16 @@
           <li class="layui-nav-item" lay-unselect>
             <a href="javascript:;">
               <cite>
-                <form action="/user/islogin.do" method="get">
-                  用户名：<input type="text" name="username" />
-                </form>
+              <div id="name">
+                欢迎您：
+              </div>
               </cite>
             </a>
             <dl class="layui-nav-child">
               <dd><a lay-href="info.html">基本资料</a></dd>
               <dd><a lay-href="password.html">修改密码</a></dd>
               <hr>
-              <dd layadmin-event="logout" style="text-align: center;"><a >退出</a></dd>
+              <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
             </dl>
           </li>
           <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
@@ -203,12 +204,39 @@
         </div>
       </div>
 
-      <!-- 辅助元素，一般用于移动设备下遮罩 -->
       <div class="layadmin-body-shade" layadmin-event="shade"></div>
     </div>
   </div>
 
   <script src="../layui/layui.js"></script>
+  <script type="text/javascript">
+
+    $(function() {
+      $.ajax({
+        type: "post",
+        url: "/user/islogin.do",
+
+        success: function (msg) {
+          var json = $.parseJSON(msg)
+          console.log(json)
+          var name = json.uname;
+
+          $("#name").text(name)
+          console.log(name)
+          return name;
+
+
+
+
+        }, error: function (msg) {
+          console.log("请求失败！")
+        }
+      });
+
+    })
+  </script>
+
+
   <script>
   layui.config({
     base: '../layui/layuiadmin/' //静态资源所在路径

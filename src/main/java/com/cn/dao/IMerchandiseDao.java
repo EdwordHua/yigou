@@ -12,7 +12,7 @@ public interface IMerchandiseDao {
     List<Merchandise> selectAllMerchs();
     List<Merchandise> searchMerchs(String mname);
     List<Merchandise> selectMerchByName(String Uname);
-    List<Merchandise> selectMerchByType(String Type);
+    List<Merchandise> selectMerchByType(String mtype);
     int insertMerch(Merchandise merchandise);
     int updataMerch(Merchandise merchandise);
     int deleteMerch(long Mid);
