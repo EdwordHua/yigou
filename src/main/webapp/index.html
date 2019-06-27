@@ -80,9 +80,13 @@
 
                 }
 
+//                按分类查找图片
                 $(".product_by").click(function(){
                     var mtype = $(this).attr("mtype");
-                    window.location = "byPageShow.html?mtype="+mtype;
+                    var url =  "byPageShow.html?mtype="+mtype;
+
+                    window.location = encodeURI(encodeURI(url));
+
                     console.log("22")
                 });
 //                点击莫一个商品图片
@@ -90,7 +94,17 @@
                     var mid = $(this).find("img").attr("alt");
                     var url = 'showDetail.html?mid='+mid+'';
                     var url = encodeURI(encodeURI(url));
-//                    window.location = url;
+
+                    var mtype = $(this).attr("mtype");
+
+                    if(typeof mtype == "undefined"){
+//                        console.log("mtype:->"+mtype);
+                        window.location = url;
+                    }else{
+//                        console.log(5545);
+                    }
+
+
                 });
 
 
@@ -760,7 +774,7 @@
                 </div>
                 <div class="shopList art_products">
                     <div class="shopListLeft">
-                        <a  class="product_by product" mtype="文学艺术"><img src="image/shopclassbg2.jpg" alt=""></a>
+                        <a  class="product_by product" mtype="文艺图书"><img src="image/shopclassbg2.jpg" alt=""></a>
                         <div class="shopList_info">
                             <h3>618购物享受超低价！</h3>
                             <h3>易购促销来袭</h3>
