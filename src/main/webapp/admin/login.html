@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset=utf-8>
+	<title>login</title>
+	<link rel="stylesheet" href="../css/base.css">
+
+
+	<script src="../js/base.js"></script>
+	<script src="../js/prompt.js"></script>
+	<script src="../js/jquery-1.4.2.min.js"></script>
+	<style type="text/css">
+
+		.sign{
+			width: 100%;
+			height: 100%;
+			font-size: 12px;
+		}
+		.title{
+			width: 500px;
+			height: 46px;
+			position: relative;
+		}
+		.title img{
+			width: 50px;
+			height: 50px;
+			display: inline-block;
+			position: absolute;
+			top: 19px;
+			left: 80px;
+		}
+		.title .logo-title{
+			font-family: "宋体";
+			font-size: 20px;
+			font-weight:bold;
+			margin-bottom: 30px;
+			color: #222222;
+			display: inline-block;
+			position: absolute;
+			left: 150px;
+			top: 29px;
+		}
+
+		/*主体部分*/
+		.main{
+			width: 380px;
+			height: 490px;
+			position: absolute;
+			top: 150px;
+			left: 50%;
+			margin-left: -200px;
+			padding: 40px;
+			padding-bottom: 30px;
+			box-sizing: border-box;
+			background-color: white;
+			box-shadow: 0 0 20px 0 #E5E5E5;
+		}
+		.main .main_title{
+			width: 300px;
+			height: 40px;
+			text-align: center;
+			line-height: 40px;
+			margin-bottom: 50px;
+			box-sizing: border-box;
+			border: 1px solid #ffffff;
+		}
+		.main_title h4{
+			font-size: 18px;
+			font-weight: 700;
+			padding-left: 10px;
+			padding-right: 10px;
+			border-bottom: 2px solid #3E76FD;
+			display: inline-block;
+		}
+		.main_title h4:nth-child(1) a{
+			color: #3E76FD;
+		}
+
+		.main_title h4:nth-child(3) {
+			color: #777777;
+			font-weight: 400;
+			border-bottom: none;
+		}
+		.main_title h4:nth-child(3) a{
+			color: #777777;
+			font-weight: 400;
+		}
+		.main_title h4:nth-child(3):hover{
+			border-bottom: 2px solid #42c02e;
+		}
+		.main .content{
+			width: 300px;
+			height: 320px;
+		}
+
+		.content #new_session{
+			width: 300px;
+			height: 200px;
+
+		}
+		.content #new_session .input-accent{
+			position: relative;
+		}
+		.content #new_session .input-password{
+			position: relative;
+		}
+
+		/*账户*/
+		.content #new_session .input-accent input{
+			width: 300px;
+			height: 50px;
+			border: 1px solid #999999;
+			border-bottom: 0px solid #999999;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
+			padding: 4px 12px 4px 35px;
+			box-sizing: border-box;
+		}
+		/*密码*/
+		.content #new_session .input-password input{
+			width: 300px;
+			height: 50px;
+			border: 1px solid #999999;
+			border-bottom-left-radius: 5px;
+			border-bottom-right-radius: 5px;
+			padding: 4px 12px 4px 35px;
+			box-sizing: border-box;
+		}
+
+		.content #new_session i{
+			position: absolute;
+			height: 25px;
+			width: 20px;
+			top: 16px;
+			left: 10px;
+			font-size: 18px;
+			color: #969696;
+		}
+		.content #new_session .input-accent i{
+			background: url("../image/user1.png") no-repeat left top;
+			background-size: 18px 18px;
+		}
+		.content #new_session .input-password i{
+			background: url("../image/pw.png") no-repeat left top;
+			background-size: 18px 18px;
+		}
+		#new_session .more{
+			width: 300px;
+			height: 50px;
+			position: relative;
+
+		}
+		#new_session .more input{
+			width: 18px;
+			height: 18px;
+			position: absolute;
+			top: 17px;
+			left: 0;
+		}
+		#new_session .more span{
+			font-size: 14px;
+			line-height: 20px;
+			color: #777777;
+		}
+		#new_session .more span:nth-child(2){
+			position: absolute;
+			top: 15px;
+			left: 25px;
+		}
+		#new_session .more span:nth-child(3){
+			position: absolute;
+			top: 15px;
+			right: 0;
+		}
+		#new_session .sing-in-button{
+			width: 300px;
+			height: 43px;
+			background-color: #3194d0;
+			padding: 9px 18px 9px 18px;
+			margin-top: 5px;
+			font-size: 18px;
+			border-radius: 18px;
+			color: #ffffff;
+			border: none;
+			cursor: pointer;
+			clear: both;
+		}
+
+		.content .content_moreSign{
+			width: 100%;
+			height: 73px;
+			margin-top: 50px;
+		}
+
+		.content .content_moreSign h6{
+			text-align: center;
+			color: #777777;
+			font-size: 12px;
+			margin-bottom: 10px;
+		}
+		.content .content_moreSign ul{
+			width: 300px;
+			height: 50px;
+			list-style: none;
+			text-align: center;
+			font-size: 14px;
+			padding-left: 30px;
+			margin-bottom: 10px;
+		}
+		.content .content_moreSign ul li{
+			width: 50px;
+			height: 50px;
+
+			margin: 0 5px 0 5px;
+			float: left;
+			display: inline-block;
+		}
+		.content .content_moreSign ul li:nth-child(1){
+			background: url("../image/wb.png") no-repeat center center;
+			background-size: 30px 30px;
+		}
+		.content .content_moreSign ul li:nth-child(2){
+			background: url("../image/wx.png") no-repeat center center;
+			background-size: 30px 30px;
+		}
+		.content .content_moreSign ul li:nth-child(3){
+			background: url("../image/qq1.png") no-repeat center center;
+			background-size: 30px 30px;
+		}
+		.content .content_moreSign ul li:nth-child(4){
+			line-height: 50px;
+			color: #777777;
+		}
+	</style>
+
+	<script>
+		$(function () {
+
+		})
+	</script>
+	
+
+</head>
+<body>
+	<div class="sign">
+		<div class="title">
+			<a href="index.html"><img src="../image/logo_admin.png"></a>
+			<div class="logo-title">易购 后台管理系统</div>
+		</div>
+
+		<div class="main">
+			<div class="main_title">
+				<h4><a href="login.html">登录</a></h4>	
+			</div>
+
+			<!--登录框区域 !-->
+			<div class="content">
+				<div class="content_sign">
+
+					<form action="/user/adminlogin.do" id="new_session">
+						<div class="input-accent">
+							<input name="uid" class="user-accent" type="text" placeholder="账户" >
+							<i class="ic-user"></i>
+						</div>
+						<div class="input-password" >
+							<input name="upassword" class="user-password" type="password" placeholder="密码">
+							<i class="ic-password"></i>
+						</div>
+
+						<div class="more">
+							<input type="radio" name="单选框"  >
+							<span>记住我</span>
+							<span>登录遇到问题？</span>
+						</div>
+				 
+						<input class="sing-in-button" type="submit" value = "登录">
+					</form>
+
+				</div>
+				<div class="content_moreSign">
+					<h6>————&nbsp;&nbsp;&nbsp;社交帐号登录&nbsp;&nbsp;&nbsp;————</h6>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li>其它</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>
