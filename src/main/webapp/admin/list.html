@@ -39,7 +39,6 @@
 
           <script type="text/html" id="test-table-operate-barDemo">
             <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
           </script>
         </div>
       </div>
@@ -64,11 +63,10 @@
       ,cols: [[ //表头
         {type: 'checkbox', fixed: 'left'}
         ,{field: 'uid', title: 'ID',  sort: true, fixed: 'left'}
-        ,{field: 'uname', title: '用户名',edit: 'text',align:'center'}
-        ,{field: 'upassword', title: '用户密码',edit: 'text',align:'center'}
-        ,{field: 'uaddress', title: '用户地址',edit: 'text',align:'center'}
-        ,{field: 'utime', title: '创建时间',edit: 'text', align:'center'}
-        ,{field: 'uLevel', title: '用户权限',edit: 'text', align:'center'}
+        ,{field: 'uname', title: '用户名',align:'center'}
+        ,{field: 'upassword', title: '用户密码',align:'center'}
+        ,{field: 'uaddress', title: '用户地址',align:'center'}
+        ,{field: 'utime', title: '创建时间', align:'center'}
         ,{field: 'right', title: '操作', align:'center',  toolbar: '#test-table-operate-barDemo'}
       ]]
     });
