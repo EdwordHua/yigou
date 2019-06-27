@@ -10,6 +10,7 @@ import java.util.List;
 public interface IShopcartService {
     Shopcart selectShopBySID(long Sid);
     List<Shopcart> selectShopByUID(long Uid);
+    List<Shopcart> selectShopcartBuyByUID(long Uid);
     int insertShop(Shopcart shopcart);
     int deleteShop(long Sid);
     int updataShop(Shopcart shopcart);

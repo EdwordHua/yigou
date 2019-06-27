@@ -11,6 +11,7 @@ import java.util.List;
 public interface IShopcartDao {
     Shopcart selectShopcartBySID(long Sid);
     List<Shopcart> selectShopcartByUID(long Uid);
+    List<Shopcart> selectShopcartBuyByUID(long Uid);
     int insertShopcart(Shopcart shopcart);
     int deleteShopcart(long Sid);
     int updataShopcart(Shopcart shopcart);
