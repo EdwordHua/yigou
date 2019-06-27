@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- 引入 ECharts 文件 -->
+    <script src="../layui/echarts.js"></script>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+
+    <script src="echarts.min.js"></script>
+
+
+    <script src="../js/jquery-1.4.2.min.js"></script>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="width: 600px;height:400px;"></div>
+<script type="text/javascript">
+    // 指定图表的配置项和数据
+
+    $(function(){
+
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        var all_data = new Array();
+
+            $.ajax({
+                type:"post",
+                url:"/masterMerch/getMerch.do",
+                data:"",
+                success:function(msg){
+                    var json = $.parseJSON(msg);
+
+                    all_data = parseData(json);
+                    console.log("all:"+all_data)
+                    var option = {
+                        title: {
+                            text: '热销数量表'
+                        },
+                        tooltip: {},
+                        legend: {
+                            data:['销量']
+                        },
+                        xAxis: {
+                            data: ["50以内","60以内","70以内","80以内"]
+                        },
+                        yAxis: {},
+                        series: [{
+                            name: '数量',
+                            type: 'bar',
+                            itemStyle: {
+                                normal: {
+//好，这里就是重头戏了，定义一个list，然后根据所以取得不同的值，这样就实现了，
+                    color: function(params) {
+                        // build a color map as your need.
+                        var colorList = [
+                            '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+                            '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+                            '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+                        ];
+                        return colorList[params.dataIndex]
+                    },
+//以下为是否显示，显示位置和显示格式的设置了
+                    label: {
+                        show: true,
+                                position: 'top',
+//                             formatter: '{c}'
+                                formatter: '{b}\n{c}'
+                    }
+                }
+                    },
+                            data: [String(all_data[0]),String(all_data[1]) ,String(all_data[2]), String(all_data[3])]
+                        }]
+
+                    };
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+                },
+                error:function(msg){console.log("请求失败！")}
+
+            })
+
+
+
+
+    });
+
+    function parseData(json){
+        var count1 = 0;
+        var count2 = 0;
+        var count3 = 0;
+        var count4 = 0;
+        var myArray=new Array();
+
+        $.each(json.data, function(key, value){
+            console.log(value)
+            if(value.mprice >= 0&&value.mprice <=50 ){count1++;}
+            if(value.mprice>50&&value.mprice<=100 ){count4++;}
+            if(value.mprice>100&&value.mtype<=200 ){count3++;}
+            if(value.mprice>=200&&value.mprice<=300 ){count2++;}
+        });
+
+
+        myArray[0] = count1;
+        myArray[1] = count2;
+        myArray[2] = count3;
+        myArray[3] = count4;
+        console.log(myArray)
+        return myArray;
+
+    }
+
+
+
+
+</script>
+</body>
+</html>
