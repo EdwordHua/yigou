@@ -25,7 +25,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">粉丝评价</label>
         <div class="layui-input-block">
-            <input type="text" name="mrecommend" id="mrecommend" maxlength="13" onkeyup="this.value=this.value.replace(/[^0-9-]+/,'');" autocomplete="off" placeholder="商品编号" class="layui-input">
+            <input type="text" name="mrecommend" id="mrecommend" maxlength="255"  autocomplete="off" placeholder="粉丝评价" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -123,7 +123,7 @@
         //普通图片上传
         var uploadInst = upload.render({
             elem: '#test-upload-normal'
-            , url: '/upload/'
+            , url: '/masterMerch/uploadimage.do'
             , before: function (obj) {
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
@@ -131,6 +131,7 @@
                 });
             }
             , done: function (res) {
+                console.log("返回"+res);
                 //如果上传失败
                 if (res.code > 0) {
                     return layer.msg('上传失败');

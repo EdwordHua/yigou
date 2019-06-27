@@ -45,9 +45,19 @@ public class indexController {
         }
 
     }
+    //得到类型
     @RequestMapping("/findMerchsByType.do")
     public void findMerchsByType(HttpServletRequest request, HttpServletResponse response)throws Exception{
-
+        request.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=utf-8");
+        String mtype=request.getParameter("mtype");
+        List<Merchandise> merchsAll=merchService.selectMerchByType(mtype);
+        if(merchsAll != null){
+            System.out.println(mapper.writeValueAsString(merchsAll));
+            JSONObject jsonObject=getMerchsJson(merchsAll);
+            response.getWriter().print(jsonObject);
+            response.getWriter().close();
+        }
         }
     //搜索接口
     @RequestMapping("/searchMerchs.do")
