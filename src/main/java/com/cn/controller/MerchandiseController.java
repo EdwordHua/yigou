@@ -123,10 +123,20 @@ public class MerchandiseController {
         long mid = Long.parseLong(request.getParameter("mid"));
         System.out.println(mid);
         Merchandise merch=merchService.selectMerchByID(mid);
-        String fileDir = request.getSession().getServletContext().getRealPath("\\image\\products\\")+merch.getMimage();
-        fileDir.replaceAll("//", "\\");
-        System.out.println(fileDir);
-        deleteFile.delete(fileDir);
+        String fileDir = request.getSession().getServletContext().getRealPath("")+"\\";
+        String data[] = merch.getMimage().split("/");
+        String dir2="";
+        for(int i=0;i<data.length;i++)
+        {
+            if(i+1==data.length){
+                dir2= dir2+data[i];
+            }else {
+                dir2 =  dir2+data[i] + "\\";
+            }
+
+        }
+        System.out.println(fileDir+dir2);
+        deleteFile.delete(fileDir+dir2);
         int res=merchService.deleteMerch(mid);
         System.out.println("res:"+res);
     }
