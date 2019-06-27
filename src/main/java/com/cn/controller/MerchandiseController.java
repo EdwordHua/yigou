@@ -12,10 +12,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -50,27 +47,32 @@ public class MerchandiseController {
     }
 //上传商品
    @RequestMapping("/insertMerch.do")
-    public void insertMerch(HttpServletRequest request, HttpServletResponse response)throws IOException{
+    public void insertMerch(HttpServletRequest request, HttpServletResponse response,@RequestParam(value = "mimage") MultipartFile file)throws Exception{
        request.setCharacterEncoding("UTF-8");
        response.setCharacterEncoding("UTF-8");
        response.setContentType("text/html;charset=utf-8");
        Merchandise merch=new Merchandise();
-       //String savedDir1 = request.getSession().getServletContext().getRealPath("")+"\\webapp\\image\\products\\";
-       String mimage="image/products"+request.getParameter("mimage");
-       System.out.println("mimage:"+mimage);
+
+       int mprice=Integer.valueOf(request.getParameter("mprice"));
+       int mstock=Integer.valueOf(request.getParameter("mstock"));
+
+       String path=request.getSession().getServletContext().getRealPath("\\image\\products\\");
+       String imagename=uploadFile(file,path);
+       System.out.println("path:image/products/"+imagename);
+
+       merch.setMprice(mprice);
+       merch.setMstock(mstock);
        merch.setMname(request.getParameter("mname"));
        merch.setMtime(STime.getTime());
        merch.setMrecommend(request.getParameter("mrecommend"));
        merch.setMtype(request.getParameter("mtype"));
-       int mprice=Integer.valueOf(request.getParameter("mprice"));
-       int mstock=Integer.valueOf(request.getParameter("mstock"));
+       merch.setMimage("image/products/"+imagename);
 
-       merch.setMprice(mprice);
-       merch.setMstock(mstock);
        System.out.println("Mname："+merch.getMname()+"Mtype："+merch.getMtype());
+       System.out.println("Mname："+mapper.writeValueAsString(merch));
 //       System.out.println("路径："+savedDir1);
-     //  merchService.insertMerch(merch);
-
+       int res= merchService.insertMerch(merch);
+       System.out.println("结果："+res);
         response.getWriter().write(mapper.writeValueAsString("true"));
         response.getWriter().close();
     }
@@ -115,35 +117,18 @@ public class MerchandiseController {
         response.getWriter().close();
     }
 
-
-//
-//    @ResponseBody
-//    public Items jsonTest(@RequestBody Items items) {
-//        return items;
-//    }
-
-    @RequestMapping("/Test.do")
-    @ResponseBody
-    public String Test(@RequestBody Map<String,String> params, HttpServletRequest request,HttpServletResponse response) throws Exception{
-        System.out.println("总共获取到："+params.size()+"个参数");
-        for(String key : params.keySet()){
-            System.out.println(key + " : " + params.get(key));
-        }
-        return "";
-    }
-
 //    删除商品
     @RequestMapping("/deleteMerch.do")
     public void deleteMerchs(HttpServletRequest request, HttpServletResponse response)throws IOException{
         long mid = Long.parseLong(request.getParameter("mid"));
         System.out.println(mid);
         Merchandise merch=merchService.selectMerchByID(mid);
-        String fileDir = request.getSession().getServletContext().getRealPath("")+"\\webapp"+merch.getMimage();
+        String fileDir = request.getSession().getServletContext().getRealPath("\\image\\products\\")+merch.getMimage();
+        fileDir.replaceAll("//", "\\");
         System.out.println(fileDir);
-        //deleteFile.delete(fileDir);
+        deleteFile.delete(fileDir);
         int res=merchService.deleteMerch(mid);
         System.out.println("res:"+res);
-       // getMerchs( request,response);
     }
 
     public JSONObject getMerchsJson(List<Merchandise> merchsAll) {
@@ -168,18 +153,6 @@ public class MerchandiseController {
         json.put("msg","");
         json.put("code",0);
         return json;
-    }
-
-@RequestMapping("/uploadimage.do")   //上传图片
-    public Map<String,Object> image(MultipartFile file,HttpServletRequest request,@PathVariable String type)throws  Exception{
-    System.out.println("path:");
-    Map<String,Object> map = new HashMap<String,Object>();
-        String path=request.getSession().getServletContext().getRealPath("\\image\\products\\");
-        String image=uploadFile(file,path);
-        System.out.println("path:"+image);
-        map.put("code",0);
-        map.put("image",image);
-        return map;
     }
 
     public static String uploadFile(MultipartFile file,String path)throws  Exception{

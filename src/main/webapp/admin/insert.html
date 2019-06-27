@@ -9,19 +9,13 @@
     <link rel="stylesheet" href="../layui/css/layui.css" media="all">
 </head>
 <style>
-
 </style>
 <body>
-
-<style>
-    .layui-upload-img{width: 92px; height: 92px; margin: 0 10px 10px 0;}
-</style>
-
 
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
     <legend>添加商品信息</legend>
 </fieldset>
-<form class="layui-form">
+<form class="layui-form" action="/masterMerch/insertMerch.do" enctype="multipart/form-data" method="post">
     <div class="layui-form-item">
         <label class="layui-form-label">粉丝评价</label>
         <div class="layui-input-block">
@@ -40,19 +34,14 @@
             <input type="text" name="mtype" id="mtype" lay-verify="required" autocomplete="off" placeholder="商品类型" class="layui-input">
         </div>
     </div>
-    <label class="layui-form-label">普通图片上传</label>
+    <label class="layui-form-label">图片上传</label>
     <div class="layui-fluid">
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <div class="layui-card">
-                    <div class="layui-card-header">普通图片上传</div>
                     <div class="layui-card-body">
                         <div class="layui-upload">
-                            <button type="button" class="layui-btn" id="test-upload-normal">上传图片</button>
-                            <div class="layui-upload-list">
-                                <img class="layui-upload-img" id="test-upload-normal-img">
-                                <p id="test-upload-demoText"></p>
-                            </div>
+                            <input type = "file" name= 'mimage' />
                         </div>
                     </div>
                 </div>
@@ -74,81 +63,12 @@
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" id="insert" type="button" lay-filter="demo1">立即提交</button>
+            <button class="layui-btn" id="insert" type="submit" lay-filter="demo1">立即提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
 </form>
-<script src="../layui/layui.js" charset="utf-8"></script>
-<script src="../layui/jquery-3.3.1.min.js"></script>
-<script>
-   $("#insert").click(function () {
-       var mrecommend=$("#mrecommend").val();
-       var mname=$("#mname").val();
-       var mtype=$("#mtype").val();
-       var mprice=$("#mprice").val();
-       var mstock=$("#mstock").val();
-       if(mname==""){layer.msg("商品名称不能为空");return;}
-       if(mprice==""){layer.msg("商品价格不能为空");return;}
-       if(mstock==""){layer.msg("商品数量不能为空");return;}
-
-        $.post("/masterMerch/insertMerch.do",{
-            mrecommend:mrecommend,
-            mname:mname,
-            mtype:mtype,
-            mprice:mprice,
-            mstock:mstock
-        },function (data) {
-            if(data.msg=="添加成功"){
-                setTimeout(function () {
-                    location.reload();
-                },1000);
-            }
-            layer.msg(data.msg);
-        })
-   })
-    setTimeout(function () {
-        var form=null;
-        layui.use('form', function(){
-            form = layui.form;
-            form.render();
-        });
-    });
-</script>
-
-<script>
-    $("#test-upload-normal").click(function() {
-        var $ = layui.jquery, upload = layui.upload;
-
-        //普通图片上传
-        var uploadInst = upload.render({
-            elem: '#test-upload-normal'
-            , url: '/masterMerch/uploadimage.do'
-            , before: function (obj) {
-                //预读本地文件示例，不支持ie8
-                obj.preview(function (index, file, result) {
-                    $('#test-upload-normal-img').attr('src', result); //图片链接（base64）
-                });
-            }
-            , done: function (res) {
-                console.log("返回"+res);
-                //如果上传失败
-                if (res.code > 0) {
-                    return layer.msg('上传失败');
-                }
-                //上传成功
-            }
-            , error: function () {
-                //演示失败状态，并实现重传
-                var demoText = $('#test-upload-demoText');
-                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
-                demoText.find('.demo-reload').on('click', function () {
-                    uploadInst.upload();
-                });
-            }
-        });
-    })
-</script>
-
+<!--<script src="../layui/layui.js" charset="utf-8"></script>-->
+<!--<script src="../layui/jquery-3.3.1.min.js"></script>-->
 </body>
 </html>

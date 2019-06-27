@@ -59,7 +59,7 @@ public class indexController {
             response.getWriter().close();
         }
         }
-    //搜索接口
+    //搜索接口　模糊查询
     @RequestMapping("/searchMerchs.do")
     public void searchMerchs(HttpServletRequest request, HttpServletResponse response)throws Exception{
         request.setCharacterEncoding("utf-8");
