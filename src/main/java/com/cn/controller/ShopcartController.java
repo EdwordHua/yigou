@@ -58,6 +58,33 @@ public class ShopcartController {
         response.getWriter().write("true");
         response.getWriter().close();
     }
+    @RequestMapping("/buyShop.do")
+    public void buyShop(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=utf-8");
+        HttpSession session=request.getSession();
+        int snum=1;
+        long uid=0;
+        long mid;
+        User user = (User)session.getAttribute(Constants.USER_SESSION);
+        if(user != null){
+            uid = user.getUid();
+        }else
+        {
+            response.getWriter().write("false");
+            response.getWriter().close();
+        }
+        List<Shopcart>  shoplist=shopcartService.selectShopByUID(uid);
+        for (int i=0;i<shoplist.size();i++)
+        {
+            shoplist.get(i).setSisbuy(1);
+            shopcartService.updataShop(shoplist.get(i));
+        }
+        response.getWriter().write("true");
+        response.getWriter().close();
+    }
+
     @RequestMapping("/delShop.do")
     public void delShopcart(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request.setCharacterEncoding("UTF-8");
@@ -80,6 +107,20 @@ public class ShopcartController {
         HttpSession session=request.getSession();
         User user = (User)session.getAttribute(Constants.USER_SESSION);
         List<Shopcart> shoplist=shopcartService.selectShopByUID(user.getUid());
+        JSONObject jsonObject=getShopJson(shoplist);
+        response.getWriter().print(jsonObject);
+        response.getWriter().close();
+
+    }
+
+    @RequestMapping("/showBuyShop.do")
+    public void showBuyShop(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=utf-8");
+        HttpSession session=request.getSession();
+        User user = (User)session.getAttribute(Constants.USER_SESSION);
+        List<Shopcart> shoplist=shopcartService.selectShopcartBuyByUID(user.getUid());
         JSONObject jsonObject=getShopJson(shoplist);
         response.getWriter().print(jsonObject);
         response.getWriter().close();

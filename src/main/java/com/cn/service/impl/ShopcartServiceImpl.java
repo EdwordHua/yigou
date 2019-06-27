@@ -40,4 +40,9 @@ public class ShopcartServiceImpl implements IShopcartService{
     public int updataShop(Shopcart shopcart) {
         return this.shopDao.updataShopcart(shopcart);
     }
+
+    @Override
+    public List<Shopcart> selectShopcartBuyByUID(long Uid) {
+        return this.shopDao.selectShopcartBuyByUID(Uid);
+    }
 }

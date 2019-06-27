@@ -14,7 +14,10 @@
       SELECT * FROM shopcart WHERE Sid = #{Sid}
     </select>
     <select id="selectShopcartByUID" resultMap="ShopMap" parameterType="long">
-        SELECT * FROM shopcart WHERE Uid = #{Uid}
+        SELECT * FROM shopcart WHERE Uid = #{Uid} AND sisbuy = 0
+    </select>
+    <select id="selectShopcartBuyByUID" resultMap="ShopMap" parameterType="long">
+        SELECT * FROM shopcart WHERE Uid = #{Uid} AND sisbuy = 1
     </select>
     <insert id="insertShopcart" parameterType="Shopcart">
         INSERT INTO  shopcart (Uid,Mid,Snum,Ssum,Sisbuy) VALUES (#{Uid},#{Mid},#{Snum},#{Ssum},#{Sisbuy})
