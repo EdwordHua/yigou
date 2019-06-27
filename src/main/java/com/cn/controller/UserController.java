@@ -74,15 +74,47 @@ public class UserController {
             //response.getWriter().write(mapper.writeValueAsString(user));
             //response.getWriter().close();
             //return "redirect:hello.action";
-           if(user.getULevel()==0)
-           {
-               return "redirect:/admin/index.html";
-           }
+//           if(user.getULevel()==0)
+//           {
+//               return "redirect:/admin/index.html";
+//           }
            return  "redirect:/index.html";
         }else{
             response.getWriter().write(mapper.writeValueAsString("flase"));
             response.getWriter().close();
             return "redirect:/login.html";
+        }
+    }
+    @RequestMapping( "/adminlogin.do")
+    public String adminLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // User user = iUserService.login(userCode, userPassword);
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=utf-8");
+        ObjectMapper mapper = new ObjectMapper();
+        HttpSession session=request.getSession();
+        long userId = Long.parseLong(request.getParameter("uid"));
+        String upassword = request.getParameter("upassword");
+        System.out.println("1:UID:" + userId + ",Upassword:" + upassword);
+        User user = this.userService.checkLogin(userId,upassword); //登录检测
+        String path = request.getServletPath();//获取当前访问路径
+        String root = request.getContextPath();//获取项目的上下文
+        System.out.println("path:"+path+",root:"+root);
+        if (null != user) {
+            session.setAttribute(Constants.USER_SESSION, user);
+            System.out.println("BUG-TEST-json:"+mapper.writeValueAsString(user));
+            //response.getWriter().write(mapper.writeValueAsString(user));
+            //response.getWriter().close();
+            //return "redirect:hello.action";
+            if(user.getULevel()==0)
+            {
+                return "redirect:/admin/index.html";
+            }
+            return  "redirect:/error.html";
+        }else{
+            response.getWriter().write(mapper.writeValueAsString("flase"));
+            response.getWriter().close();
+            return  "redirect:/error.html";
         }
     }
     @RequestMapping( "/islogin.do")
