@@ -80,22 +80,30 @@
 
                 }
 
+                $(".product_by").click(function(){
+                    var mtype = $(this).attr("mtype");
+                    window.location = "byPageShow.html?mtype="+mtype;
+                    console.log("22")
+                });
 //                点击莫一个商品图片
                 $(".product").click(function () {
                     var mid = $(this).find("img").attr("alt");
                     var url = 'showDetail.html?mid='+mid+'';
                     var url = encodeURI(encodeURI(url));
-                    window.location = url;
+//                    window.location = url;
                 });
+
 
             })
         </script>
 
-        <style>
-            .product{
-                /*padding: 20px;*/
-            }
-        </style>
+        <script>
+            $(function(){
+
+            })
+        </script>
+
+
 
     </head>
 
@@ -752,7 +760,7 @@
                 </div>
                 <div class="shopList art_products">
                     <div class="shopListLeft">
-                        <a href="" class="product"><img src="image/shopclassbg2.jpg" alt=""></a>
+                        <a  class="product_by product" mtype="文学艺术"><img src="image/shopclassbg2.jpg" alt=""></a>
                         <div class="shopList_info">
                             <h3>618购物享受超低价！</h3>
                             <h3>易购促销来袭</h3>
@@ -785,7 +793,7 @@
                 </div>
                 <div class="shopList caixukun_products">
                     <div class="shopListLeft">
-                        <a href="byPageShow.html" class="product"><img src="image/caixukun/蔡徐坤-1.jpg" alt=""></a>
+                        <a class="product_by product" mtype="蔡徐坤类"><img src="image/caixukun/蔡徐坤-1.jpg" alt=""></a>
                         <div class="shopList_info">
                             <h3>618购书享受超低价！</h3>
                             <h3>时代独家好书来袭</h3>
@@ -835,7 +843,7 @@
                 </div>
                 <div class="shopList goods_products">
                     <div class="shopListLeft">
-                        <a href="" class="product"><img src="image/caixukun/蔡徐坤-2-1-9.webp.jpg" alt=""></a>
+                        <a class="product_by product" mtype="粉丝服饰"><img src="image/caixukun/蔡徐坤-2-1-9.webp.jpg" alt=""></a>
                          <div class="shopList_info">
                             <h3>618购书享受超低价！</h3>
                             <h3>时代独家好书来袭</h3>
@@ -882,7 +890,7 @@
                 </div>
                 <div class="shopList other_products">
                     <div class="shopListLeft">
-                        <a href="" class="product"><img src="image/caixukun/蔡徐坤-3-1-10.webp.jpg" alt=""></a>
+                        <a class="product_by product" mtype="明星周边"><img src="image/caixukun/蔡徐坤-3-1-10.webp.jpg" alt=""></a>
                          <div class="shopList_info">
                             <h3>618购书享受超低价！</h3>
                             <h3>时代独家好书来袭</h3>

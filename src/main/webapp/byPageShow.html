@@ -12,6 +12,73 @@
         <link href="css/page.css" rel="stylesheet" type="text/css" />
         <script src="js/jquey-1.8.0.min.js"></script>
         <script type="text/javascript" src="js/isLogin.js"></script>
+
+        <script>
+            function getUrlParam(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+                var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+                if (r != null) return unescape(r[2]);
+                return null; //返回参数值
+            }
+
+
+
+            $(function(){
+                var mtype = decodeURI(getUrlParam("mtype"));
+                var url = "";
+                var data = "";
+
+                console.log("mytype:"+mtype+", mtype.length="+mtype.length+",typeof"+typeof mtype);
+
+                //接受后台所有的商品
+                if(mtype === "null"){
+                    url = "generaMerch/findMerchs.do";
+                    setImage(url, data)
+                    console.log("1")
+
+
+                    //传输给后台莫一个商品类型，返回该商品类型所有的数据
+                }else{
+                    url = "generaMerch/findMerchsByType.do";
+                    data = "mtype="+mtype;
+                    setImage(url, data)
+                }
+
+                function setImage(url_path, datas){
+                    $.ajax({
+                        type:"post",
+                        url:url_path,
+                        data:datas,
+                        success:function(msg){
+                            var json = $.parseJSON(msg);
+                            parseAllData(json);
+                        },
+                        error:function(msg){console.log("解析数据接口错误！"+url_path)}
+                    });
+                }
+
+
+                function parseAllData(json){
+                    var box = $(".productItem");
+                    console.log(json)
+                    $("#productNum").text(json.num);
+                    $.each(json.allMerchandise, function(key, value){
+
+                        $(box[key]).find("img").attr("src",value.mimage);
+                        $(box[key]).find("img").attr("alt",value.mid);
+                        $(box[key]).find(".productTitle").text(value.mname);
+                        $($(box[key]).find(".feature")).text(value.mtype);
+                        $($(box[key]).find(".priceNum")).text(value.mprice);
+                        $($(box[key]).find(".userComment")).text("库存："+value.mstock+"条");
+
+                        console.log( $(box[key]).find(".feature"))
+                    })
+                }
+
+            });
+
+        </script>
+
     </head>
 
     <body>
@@ -281,38 +348,7 @@
                 <div class="sales fr"></div>
             </div>
         </div>
-        <!-- /导航条 -->
-        <!-- 焦点图 -->
-        <!-- <div id="section" class="wrap clear">
-                <div class="leftArea">nav</div>
-                <div class="rightArea">
-                    <div class="imgTab clear">
-                        <ul class="imgList clear">
-                            <li><a href=""><img src="../image/bg1.jpg" alt=""></a></li>
-                            <li><a href=""><img src="../image/bg2.jpg" alt=""></a></li>
-                            <li><a href=""><img src="../image/bg3.jpg" alt=""></a></li>
-                            <li><a href=""><img src="../image/bg4.jpg" alt=""></a></li>
-                            <li><a href=""><img src="../image/bg5.jpg" alt=""></a></li>
-                            <li><a href=""><img src="../image/bg6.jpg" alt=""></a></li>
-                            <li><a href=""><img src="../image/bg7.jpg" alt=""></a></li>
-                        </ul>
-                        <div class="imgText">
-                            <p>旅游是一件很快乐的事情</p>
-                            </div>
-                            <p class="imgCtrl">
-                                <a class="active" href=""></a>
-                                <a href=""></a>
-                                <a href=""></a>
-                                <a href=""></a>
-                                <a href=""></a>
-                                <a href=""></a>
-                                <a href=""></a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-        <!-- /焦点图  -->
+        <
         <div id="content" class="wrap clear">
             <div class="leftCont fl">
                 <!-- 筛选条件列表 -->
@@ -322,8 +358,8 @@
                     </div>
                     <div class="productNum fr">
                         <span>共</span>
-                        <b>5937</b>
-                        <span>款产品</span>
+                        <b id="productNum">5937</b>
+                        <span >款产品</span>
                         <span><a class="colorLink" href="">查看全部相关宝贝</a></span>
                     </div>
                 </div>
@@ -520,11 +556,13 @@
                                 </div>
                             </div>
                             <div class="infoRow commentRow">
-                                <a class="userComment" target="_blank" href="">点评<span class="num">2111</span> 条</a>
+                                <a class="userComment" target="_blank" href="">库存<span class="num">2111</span> 条</a>
                                 <span class="userScore"> <span class="iconSuppleXingGrey"></span> <span class="iconSuppleXingLight" style="width: 60.59px"></span> </span>
                             </div>
                             <div class="infoRow seller">
-                                <a class="sellerLink" href="" target="_blank">共有253商家在售</a>
+                                <a class="sellerLink" href="" target="_blank">商家：小明
+                                    <span class="uname"></span>
+                                </a>
                             </div>
                         </div>
                     </div>
