@@ -6,6 +6,7 @@ import com.cn.model.User;
 import com.cn.service.IMerchandiseService;
 import com.cn.service.impl.ShopcartServiceImpl;
 import com.cn.tools.Constants;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ public class ShopcartController {
     private ShopcartServiceImpl shopcartService;
     @Resource
     private IMerchandiseService merchService;
+    ObjectMapper mapper = new ObjectMapper();
     @RequestMapping("/addShop.do")
     public void addShopcart(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request.setCharacterEncoding("UTF-8");
@@ -99,6 +101,7 @@ public class ShopcartController {
         response.getWriter().print(jsonObject);
         response.getWriter().close();
     }
+
     @RequestMapping("/showShop.do")
     public void showShopcart(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request.setCharacterEncoding("UTF-8");
@@ -106,6 +109,7 @@ public class ShopcartController {
         response.setContentType("text/html;charset=utf-8");
         HttpSession session=request.getSession();
         User user = (User)session.getAttribute(Constants.USER_SESSION);
+
         List<Shopcart> shoplist=shopcartService.selectShopByUID(user.getUid());
         JSONObject jsonObject=getShopJson(shoplist);
         response.getWriter().print(jsonObject);
@@ -119,8 +123,13 @@ public class ShopcartController {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
         HttpSession session=request.getSession();
+
         User user = (User)session.getAttribute(Constants.USER_SESSION);
-        List<Shopcart> shoplist=shopcartService.selectShopcartBuyByUID(user.getUid());
+
+        System.out.println("test:"+mapper.writeValueAsString(user));
+        long uid=user.getUid();
+        List<Shopcart> shoplist=shopcartService.selectShopcartBuyByUID(uid);
+        System.out.print(mapper.writeValueAsString(shoplist));
         JSONObject jsonObject=getShopJson(shoplist);
         response.getWriter().print(jsonObject);
         response.getWriter().close();

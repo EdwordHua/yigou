@@ -58,7 +58,7 @@
                     var uid = value.uid;
 
                     $orders = getOrder(sid, mname, mtype, snum, mprice );
-                    $(".append").append($orders);
+                    $(".after_tr").after($orders);
 
 //                    var allSum = json.sum;
 //                    var num = json.num;
@@ -66,13 +66,29 @@
 //                    $(".total_amount").text(num);
 //                    $(".total_price").text("￥" + allSum);
                 });
+                $(".total_amount").text(total_price);
+                $("#cart_total").text(total_price);
+                $("#cart_total2").text(total_price);
+
             }
 
             function getOrder(sid, mname, mtype, snum, mprice){
-                $orders = $("<tr class='cart_item' sid="+ sid +" ><td class='name text_left padd_left'><div style='width:320px;position: relative;line-height: 21px'><a  target='_blank' class='name_hover'>"+mname+" <span class='item_note'>类型："+ mtype +"</span> </a> </div> </td> <td class='number_box'>"+snum+"</td> <td class='price_box'>¥<span class='item-buy-price'>"+mprice+"</span> </td> <td class='count_price_box bold'>¥<span class='item-buy-total'>"+mprice+"</span> </td> </tr>")
+                $orders = $("<tr class='cart_item' sid="+ sid +" ><td class='name text_left padd_left'><div style='width:320px;position: relative;line-height: 21px'><a  target='_blank' class='name_hover' style='font-size: 18px;font-weight: bold'>"+mname+" </a> </div> </td> <td class='number_box'>"+snum+"</td> <td class='price_box'>¥<span class='item-buy-price'>"+mprice+"</span> </td> <td class='count_price_box bold'>¥<span class='item-buy-total'>"+mprice+"</span> </td> </tr>")
                 return $orders;
 
             }
+
+            $(".btn_pink_big").click(function(){
+                $.ajax({
+                    type:"post",
+                    url:"shopcart/buyShop.do",
+                    success:function(msg){
+                        window.location = "result.html";
+                    },error:function(msg){
+                        console.log("请求后台失败");
+                    }
+                })
+            })
 
 
         })
@@ -443,94 +459,35 @@
                                                 <col class="align_right">
                                 </colgroup>
                                 <tbody>
-                                    <tr>
+                                    <tr class="after_tr">
                                         <th width="400" class="text_left padd_left">商品</th>
                                         <th width="110">数量</th>
                                         <th width="140">单价</th>
                                         <th width="140">小计</th>
                                     </tr>
 
-                                    <div class="append">
-                                        <tr class="cart_item" >
-                                            <td class="name text_left padd_left">
-                                                <div style="width:320px;position: relative;line-height: 21px">
-                                                    <a  target="_blank" class="name_hover">
-                                                        Guerisson奇迹马油霜 <span class="item_note">容量：70g</span>
-                                                    </a>
 
-                                                </div>
-                                            </td>
-                                            <td class="number_box">
-                                                1 </td>
-                                            <td class="price_box">
-                                                ¥<span class="item-buy-price">99.00</span>
-                                            </td>
-                                            <td class="count_price_box bold">
-                                                ¥<span class="item-buy-total">99.00</span>
-                                            </td>
-                                        </tr>
-                                        <tr  class="cart_item" >
-                                            <td class="name text_left padd_left">
-                                                <div style="width:320px;position: relative;line-height: 21px">
-                                                    <a  target="_blank" class="name_hover">
-                                                        Guerisson奇迹马油霜 <span class="item_note">容量：70g</span>
-                                                    </a>
+                                        <!--<tr class="cart_item" >-->
+                                            <!--<td class="name text_left padd_left">-->
+                                                <!--<div style="width:320px;position: relative;line-height: 21px">-->
+                                                    <!--<a  target="_blank" class="name_hover">-->
+                                                        <!--Guerisson奇迹马油霜 <span class="item_note">容量：70g</span>-->
+                                                    <!--</a>-->
 
-                                                </div>
-                                            </td>
-                                            <td class="number_box">
-                                                1 </td>
-                                            <td class="price_box">
-                                                ¥<span id="item-buy-price">99.00</span>
-                                            </td>
-                                            <td class="count_price_box bold">
-                                                ¥<span id="item-buy-total">99.00</span>
-                                            </td>
-                                        </tr>
-
-                                        <tr  class="cart_item" deal_hash_id="ht150602p933681t2">
-                                            <td class="name text_left padd_left">
-                                                <div style="width:320px;position: relative;line-height: 21px">
-                                                    <a href="http://www.jumeiglobal.com/deal/ht150602p933681t2.html?from=jmglobal" target="_blank" class="name_hover">
-                                                        Guerisson奇迹马油霜                                            <span class="item_note">容量：70g</span>
-                                                    </a>
-                                                    <div class="pic_hover">
-                                                        <img src="http://p1.jmstatic.com/product/000/933/933681_std/933681_100_100.jpg" alt="Guerisson奇迹马油霜">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="number_box">
-                                                1 </td>
-                                            <td class="price_box">
-                                                ¥<span id="item-buy-price-702001016_ht150602p933681t2">99.00</span>
-                                            </td>
-                                            <td class="count_price_box bold">
-                                                ¥<span id="item-buy-total-702001016_ht150602p933681t2">99.00</span>
-                                            </td>
-                                        </tr>
-                                        <tr class="cart_item" deal_hash_id="ht150602p933681t2">
-                                            <td class="name text_left padd_left">
-                                                <div style="width:320px;position: relative;line-height: 21px">
-                                                    <a href="http://www.jumeiglobal.com/deal/ht150602p933681t2.html?from=jmglobal" target="_blank" class="name_hover">
-                                                        Guerisson奇迹马油霜                                            <span class="item_note">容量：70g</span>
-                                                    </a>
-                                                    <div class="pic_hover">
-                                                        <img src="http://p1.jmstatic.com/product/000/933/933681_std/933681_100_100.jpg" alt="Guerisson奇迹马油霜">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="number_box">
-                                                1 </td>
-                                            <td class="price_box">
-                                                ¥<span id="item-buy-price-702001016_ht150602p933681t2">99.00</span>
-                                            </td>
-                                            <td class="count_price_box bold">
-                                                ¥<span id="item-buy-total-702001016_ht150602p933681t2">99.00</span>
-                                            </td>
-                                        </tr>
+                                                <!--</div>-->
+                                            <!--</td>-->
+                                            <!--<td class="number_box">-->
+                                                <!--1 </td>-->
+                                            <!--<td class="price_box">-->
+                                                <!--¥<span class="item-buy-price">99.00</span>-->
+                                            <!--</td>-->
+                                            <!--<td class="count_price_box bold">-->
+                                                <!--¥<span class="item-buy-total">99.00</span>-->
+                                            <!--</td>-->
+                                        <!--</tr>-->
+                                  <!---->
 
 
-                                    </div>
 
 
                                     <tr>
@@ -645,7 +602,7 @@
                                                 <div class="price_count express_num">
                                                     <div class="price">
                                                         ¥<span id="total_amount_retail_global/0/" class="total_amount">
-                                                                                    99.00                                                                            </span>
+                                                                                    0.00                                                                            </span>
                                                     </div>
                                                 </div>
                                                 <span class="express_tit">本单应付：</span>
@@ -657,7 +614,7 @@
                             </table>
                         </div>
                         <div class="orders_total_amount">
-                            应付总额：<span class="total_count">¥<span id="cart_total">99.00</span></span>
+                            应付总额：<span class="total_count">¥<span id="cart_total">0.00</span></span>
                         </div>
                         <div class="inv_wrap">
                             <input type="checkbox" id="is_need_invoice" class="is_need_inv" name="is_need_invoice" value="1" disabled="">
@@ -947,9 +904,9 @@
                         <div class="clearfix">
                                 <input type="hidden" value="0d9b9deb78d9dd8dd7e07b0405784110" name="token" id="JS_token_data">
                                 <input type="hidden" value="from_cart_confirmation" name="from" id="JS_form_data">
-                                <a class="btn_pink_big" href="result.html">确认交易</a>
+                                <a class="btn_pink_big">确认交易</a>
                             <div class="price_sum">
-                                应付总额：<span class="total_count">¥<span id="cart_total2">99.00</span></span>
+                                应付总额：<span class="total_count">¥<span id="cart_total2">0.00</span></span>
                             </div>
                         </div>
                     </div>
