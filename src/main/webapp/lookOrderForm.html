@@ -15,6 +15,67 @@
     <script type="text/javascript" src="js/jquey-1.8.0.min.js"></script>
     <script type="text/javascript" src="js/isLogin.js"></script>
 
+    <script>
+        $(function(){
+
+
+            $.ajax({
+                url:"shopcart/showShop.do",
+                type:"post",
+                data:"",
+                success:function(msg){
+                    var json = $.parseJSON(msg);
+                    console.log(json)
+                    var merchandise_num = json.num;
+
+                    // 购物车没有商品
+                    if(merchandise_num == "0"){
+                        console.log("订单为空！")
+                        return;
+                    }else{
+                        // var json_allMerch = json.AllMerchandise;
+                        console.log(json);
+                        parseData(json);
+                    }
+
+                },
+                error:function(msg){console.log("请求后台接口失败！")}
+            });
+
+            function parseData(json) {
+                $.each(json.AllMerchandise, function (key, value) {
+                    var sid = value.sid;
+                    var mid = value.mid;
+                    var mname = value.mname;
+                    var mimage = value.mimage;
+                    var mprice = value.mprice;
+                    var snum = value.snum;
+
+//                    总价
+                    var mTotalPrice = value.ssum;
+                    var mtype = value.mtype;
+                    var uid = value.uid;
+
+                    $orders = getOrder(sid, mname, mtype, snum, mprice );
+                    $(".append").append($orders);
+
+//                    var allSum = json.sum;
+//                    var num = json.num;
+//                    $(".group_total_price").text("￥" + allSum)
+//                    $(".total_amount").text(num);
+//                    $(".total_price").text("￥" + allSum);
+                });
+            }
+
+            function getOrder(sid, mname, mtype, snum, mprice){
+                $orders = $("<tr class='cart_item' sid="+ sid +" ><td class='name text_left padd_left'><div style='width:320px;position: relative;line-height: 21px'><a  target='_blank' class='name_hover'>"+mname+" <span class='item_note'>类型："+ mtype +"</span> </a> </div> </td> <td class='number_box'>"+snum+"</td> <td class='price_box'>¥<span class='item-buy-price'>"+mprice+"</span> </td> <td class='count_price_box bold'>¥<span class='item-buy-total'>"+mprice+"</span> </td> </tr>")
+                return $orders;
+
+            }
+
+
+        })
+    </script>
 
 </head>
 
@@ -387,26 +448,90 @@
                                         <th width="140">单价</th>
                                         <th width="140">小计</th>
                                     </tr>
-                                    <tr id="702001016_ht150602p933681t2" class="cart_item" deal_hash_id="ht150602p933681t2">
-                                        <td class="name text_left padd_left">
-                                            <div style="width:320px;position: relative;line-height: 21px">
-                                                <a href="http://www.jumeiglobal.com/deal/ht150602p933681t2.html?from=jmglobal" target="_blank" class="name_hover">
-                                        Guerisson奇迹马油霜                                            <span class="item_note">容量：70g</span>
-                                    </a>
-                                                <div class="pic_hover">
-                                                    <img src="http://p1.jmstatic.com/product/000/933/933681_std/933681_100_100.jpg" alt="Guerisson奇迹马油霜">
+
+                                    <div class="append">
+                                        <tr class="cart_item" >
+                                            <td class="name text_left padd_left">
+                                                <div style="width:320px;position: relative;line-height: 21px">
+                                                    <a  target="_blank" class="name_hover">
+                                                        Guerisson奇迹马油霜 <span class="item_note">容量：70g</span>
+                                                    </a>
+
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td class="number_box">
-                                            1 </td>
-                                        <td class="price_box">
-                                            ¥<span id="item-buy-price-702001016_ht150602p933681t2">99.00</span>
-                                        </td>
-                                        <td class="count_price_box bold">
-                                            ¥<span id="item-buy-total-702001016_ht150602p933681t2">99.00</span>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                            <td class="number_box">
+                                                1 </td>
+                                            <td class="price_box">
+                                                ¥<span class="item-buy-price">99.00</span>
+                                            </td>
+                                            <td class="count_price_box bold">
+                                                ¥<span class="item-buy-total">99.00</span>
+                                            </td>
+                                        </tr>
+                                        <tr  class="cart_item" >
+                                            <td class="name text_left padd_left">
+                                                <div style="width:320px;position: relative;line-height: 21px">
+                                                    <a  target="_blank" class="name_hover">
+                                                        Guerisson奇迹马油霜 <span class="item_note">容量：70g</span>
+                                                    </a>
+
+                                                </div>
+                                            </td>
+                                            <td class="number_box">
+                                                1 </td>
+                                            <td class="price_box">
+                                                ¥<span id="item-buy-price">99.00</span>
+                                            </td>
+                                            <td class="count_price_box bold">
+                                                ¥<span id="item-buy-total">99.00</span>
+                                            </td>
+                                        </tr>
+
+                                        <tr  class="cart_item" deal_hash_id="ht150602p933681t2">
+                                            <td class="name text_left padd_left">
+                                                <div style="width:320px;position: relative;line-height: 21px">
+                                                    <a href="http://www.jumeiglobal.com/deal/ht150602p933681t2.html?from=jmglobal" target="_blank" class="name_hover">
+                                                        Guerisson奇迹马油霜                                            <span class="item_note">容量：70g</span>
+                                                    </a>
+                                                    <div class="pic_hover">
+                                                        <img src="http://p1.jmstatic.com/product/000/933/933681_std/933681_100_100.jpg" alt="Guerisson奇迹马油霜">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="number_box">
+                                                1 </td>
+                                            <td class="price_box">
+                                                ¥<span id="item-buy-price-702001016_ht150602p933681t2">99.00</span>
+                                            </td>
+                                            <td class="count_price_box bold">
+                                                ¥<span id="item-buy-total-702001016_ht150602p933681t2">99.00</span>
+                                            </td>
+                                        </tr>
+                                        <tr class="cart_item" deal_hash_id="ht150602p933681t2">
+                                            <td class="name text_left padd_left">
+                                                <div style="width:320px;position: relative;line-height: 21px">
+                                                    <a href="http://www.jumeiglobal.com/deal/ht150602p933681t2.html?from=jmglobal" target="_blank" class="name_hover">
+                                                        Guerisson奇迹马油霜                                            <span class="item_note">容量：70g</span>
+                                                    </a>
+                                                    <div class="pic_hover">
+                                                        <img src="http://p1.jmstatic.com/product/000/933/933681_std/933681_100_100.jpg" alt="Guerisson奇迹马油霜">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="number_box">
+                                                1 </td>
+                                            <td class="price_box">
+                                                ¥<span id="item-buy-price-702001016_ht150602p933681t2">99.00</span>
+                                            </td>
+                                            <td class="count_price_box bold">
+                                                ¥<span id="item-buy-total-702001016_ht150602p933681t2">99.00</span>
+                                            </td>
+                                        </tr>
+
+
+                                    </div>
+
+
                                     <tr>
                                         <td colspan="4" class="count" style="padding:10px 0 10px 30px;">
                                             <div class="content">
@@ -428,6 +553,8 @@
                                             </div>
                                         </td>
                                     </tr>
+
+
                                     <input type="hidden" class="J_Promo_cardno" name="promo_card[retail_global/0/]" value="">
                                     <input type="hidden" class="J_Red_cardno" name="red_card[retail_global/0/]" value="">
                                     <tr class="order_amount">
