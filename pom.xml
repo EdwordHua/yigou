@@ -19,7 +19,7 @@
     <!-- 设置项目编码编码 -->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <!-- spring版本号 -->
-    <spring.version>4.3.5.RELEASE</spring.version>
+    <spring.version>5.3.19</spring.version>
     <!-- mybatis版本号 -->
     <mybatis.version>3.4.1</mybatis.version>
       <!--文件上传的版本号-->
